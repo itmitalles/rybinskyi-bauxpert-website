@@ -23,7 +23,11 @@ const {
   schema,
   hideChrome = false,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, siteConfig.productionUrl).href;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonicalPath = basePath && Astro.url.pathname.startsWith(basePath)
+  ? Astro.url.pathname.slice(basePath.length) || "/"
+  : Astro.url.pathname;
+const canonical = new URL(canonicalPath, siteConfig.productionUrl).href;
 const ogImage = image.startsWith("http") ? image : new URL(image, Astro.url.origin).href;
 const robots = siteConfig.previewMode ? "noindex,nofollow,noarchive" : "index,follow,max-image-preview:large";
 const baseSchema = {

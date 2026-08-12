@@ -5,13 +5,14 @@ import { withBase } from "@/lib/urls";
 import Icon from "./Icon.astro";
 
 const { project, priority = false } = Astro.props as { project: CollectionEntry<"projects">; priority?: boolean };
+const coverAlt = project.data.images.find((item) => item.src.src === project.data.cover.src)?.alt ?? project.data.title;
 ---
 
 <article class="project-card">
   <a class="project-card-image" href={withBase(`/projekte/${project.data.slug}/`)} aria-label={`${project.data.title} ansehen – ${project.data.images.length} ${project.data.images.length === 1 ? "Foto" : "Fotos"}`}>
     <Image
       src={project.data.cover}
-      alt={project.data.images[0]?.alt ?? project.data.title}
+      alt={coverAlt}
       widths={[480, 720, 960]}
       sizes="(min-width: 900px) 40vw, 100vw"
       loading={priority ? "eager" : "lazy"}

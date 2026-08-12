@@ -34,6 +34,7 @@ for (const htmlPath of htmlFiles) {
   if (!/<meta name="description" content="[^"]+"/.test(html)) failures.push(`${label}: missing meta description`);
   if (!/<meta name="robots" content="noindex,nofollow,noarchive"/.test(html)) failures.push(`${label}: preview robots meta is missing`);
   if (!/<link rel="canonical" href="https:\/\/rybinskyi-bauxpert\.de/.test(html)) failures.push(`${label}: canonical URL is missing`);
+  if (/canonical" href="https:\/\/rybinskyi-bauxpert\.de\/rybinskyi-bauxpert-website\//.test(html)) failures.push(`${label}: canonical contains the GitHub Pages base path`);
   const matches = html.matchAll(/(?:href|src)="([^"]+)"/g);
   for (const [, url] of matches) if (!localTargetExists(htmlPath, url)) failures.push(`${label}: broken local reference ${url}`);
 }
