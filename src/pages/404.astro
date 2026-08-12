@@ -1,0 +1,9 @@
+---
+import Icon from "@/components/Icon.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/lib/urls";
+---
+<BaseLayout title="Seite nicht gefunden | Rybinskyi BauXpert" description="Die angeforderte Seite wurde nicht gefunden.">
+  <section class="not-found"><div class="shell"><p class="error-code">404</p><p class="eyebrow">Seite nicht gefunden</p><h1>Hier ist nichts verbaut.</h1><p>Der Link ist nicht mehr aktuell oder die Adresse wurde falsch eingegeben.</p><a class="button button-primary" href={withBase("/")}>Zur Startseite <Icon name="arrow" size={18}/></a></div></section>
+</BaseLayout>
+<style>.not-found{display:grid;min-height:70vh;place-items:center;text-align:center}.error-code{color:var(--paper-deep);font-family:Arial Black,sans-serif;font-size:clamp(7rem,25vw,20rem);font-weight:900;line-height:.7}.not-found h1{margin-bottom:1rem}.not-found .shell>p:not(.eyebrow,.error-code){margin-bottom:2rem;color:var(--ink-soft)}</style>

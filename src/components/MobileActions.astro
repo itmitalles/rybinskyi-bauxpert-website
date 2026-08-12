@@ -1,0 +1,11 @@
+---
+import { siteConfig } from "@/config/site";
+import { whatsappUrl, withBase } from "@/lib/urls";
+import Icon from "./Icon.astro";
+---
+
+<nav class="mobile-actions" aria-label="Schnellkontakt">
+  <a href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={20} /><span>Anrufen</span></a>
+  <a href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={20} /><span>WhatsApp</span></a>
+  <a href={withBase("/kontakt/#anfrage")}><Icon name="mail" size={20} /><span>Anfrage</span></a>
+</nav>

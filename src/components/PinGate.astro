@@ -1,0 +1,62 @@
+---
+import logo from "@/assets/brand/logo.png";
+import { Image } from "astro:assets";
+import { siteConfig } from "@/config/site";
+
+if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
+  throw new Error("Preview PIN hash must be a SHA-256 hex digest.");
+}
+---
+
+{siteConfig.previewMode && (
+  <div class="pin-gate" data-pin-gate data-pin-hash={siteConfig.previewPinHash} role="dialog" aria-modal="true" aria-labelledby="pin-title">
+    <div class="pin-panel">
+      <Image src={logo} alt="Rybinskyi BauXpert" width={140} height={140} loading="eager" />
+      <p class="eyebrow">Kundenansicht</p>
+      <h1 id="pin-title">Website Preview</h1>
+      <p>Bitte PIN eingeben, um den aktuellen Entwurf anzusehen.</p>
+      <form data-pin-form>
+        <label for="preview-pin">Preview-PIN</label>
+        <div class="pin-input-row">
+          <input id="preview-pin" name="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required autofocus />
+          <button class="button button-primary" type="submit">Öffnen</button>
+        </div>
+        <p class="pin-error" data-pin-error role="alert" hidden>Der PIN ist nicht richtig.</p>
+      </form>
+      <small>Hinweis: Dieser Schutz hält zufällige Besucher fern, ist aber keine sichere Zugangskontrolle.</small>
+    </div>
+  </div>
+)}
+
+<script is:inline>
+  (() => {
+    const gate = document.querySelector("[data-pin-gate]");
+    if (!gate) return;
+    const sessionKey = "rybinskyi-preview-access";
+    if (sessionStorage.getItem(sessionKey) === "granted") {
+      gate.remove();
+      document.documentElement.classList.remove("preview-locked");
+      return;
+    }
+    document.documentElement.classList.add("preview-locked");
+    const form = gate.querySelector("[data-pin-form]");
+    const input = gate.querySelector("input");
+    const error = gate.querySelector("[data-pin-error]");
+    const encodeHex = (bytes) => Array.from(bytes).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input.value));
+      if (encodeHex(new Uint8Array(digest)) === gate.dataset.pinHash) {
+        sessionStorage.setItem(sessionKey, "granted");
+        gate.remove();
+        document.documentElement.classList.remove("preview-locked");
+        return;
+      }
+      error.hidden = false;
+      input.value = "";
+      input.focus();
+      gate.querySelector(".pin-panel")?.classList.add("pin-invalid");
+      window.setTimeout(() => gate.querySelector(".pin-panel")?.classList.remove("pin-invalid"), 250);
+    });
+  })();
+</script>

@@ -1,0 +1,26 @@
+{
+  "name": "rybinskyi-bauxpert-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "lint": "astro check",
+    "test": "node scripts/check-build.mjs",
+    "test:visual": "node scripts/visual-check.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.2.1",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
+    "lighthouse": "^13.4.1",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,32 @@
+---
+import { navigation, siteConfig } from "@/config/site";
+import { whatsappUrl, withBase } from "@/lib/urls";
+import Icon from "./Icon.astro";
+---
+
+<footer class="site-footer">
+  <div class="footer-top shell">
+    <div class="footer-intro">
+      <p class="eyebrow">Rybinskyi BauXpert</p>
+      <h2>Ein Projekt lässt sich am besten konkret besprechen.</h2>
+      <p>Schicken Sie ein paar Fotos per WhatsApp oder rufen Sie direkt an.</p>
+      <div class="button-row">
+        <a class="button button-primary" href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={18} /> Anrufen</a>
+        <a class="button button-ghost-dark" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-contact">
+      <p><span>Telefon</span><a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a></p>
+      <p><span>E-Mail</span><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
+      <p><span>Adresse</span>{siteConfig.address.street}<br />{siteConfig.address.postalCode} {siteConfig.address.city}</p>
+    </div>
+  </div>
+  <div class="footer-links shell">
+    <nav aria-label="Fußnavigation">
+      {navigation.slice(0, 4).map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
+      <a href={withBase("/impressum/")}>Impressum</a>
+      <a href={withBase("/datenschutz/")}>Datenschutz</a>
+    </nav>
+    <p>© {new Date().getFullYear()} {siteConfig.name}. München & Umgebung.</p>
+  </div>
+</footer>

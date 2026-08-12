@@ -1,0 +1,32 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import Icon from "@/components/Icon.astro";
+import { siteConfig } from "@/config/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+<BaseLayout title="Renovierung & Sanierung München | Rybinskyi BauXpert" description="Rybinskyi BauXpert für Renovierung, Sanierung, Innenausbau und Montage in München – unter anderem Giesing, Schwabing, Haidhausen und Sendling.">
+  <div class="page-hero"><div class="shell"><p class="eyebrow">München & Umgebung</p><h1>Handwerksarbeiten in München.</h1><p class="lead">Kurze Wege, direkte Abstimmung und Projekte in verschiedenen Münchner Stadtteilen.</p></div></div>
+  <Breadcrumbs items={[{label:"München"}]} />
+  <section class="section"><div class="shell city-intro"><div><p class="eyebrow">Einsatzgebiet</p><h2>Wo Rybinskyi BauXpert arbeitet.</h2></div><div><p>Die bestehende Website nennt München und Umgebung sowie mehrere konkrete Stadtteile. Eine starre Kilometer- oder Termin-Zusage wird daraus nicht abgeleitet: Ob ein Auftrag sinnvoll in das Einsatzgebiet passt, lässt sich direkt klären.</p><div class="district-grid">{siteConfig.areas.map((area,index)=><div><span>{String(index+1).padStart(2,"0")}</span><strong>{area}</strong><small>München</small></div>)}</div></div></div></section>
+  <section class="section context-section"><div class="shell"><p class="eyebrow">Regional sinnvoll</p><h2>Eine gute München-Seite braucht keine kopierten Stadtteiltexte.</h2><div class="context-grid"><article><Icon name="pin" size={28}/><h3>Projekt vor Ort</h3><p>Untergründe, Maße und Anschlüsse können bei Bedarf direkt am Objekt geprüft werden.</p></article><article><Icon name="camera" size={28}/><h3>Fotos zuerst</h3><p>Für die erste Einordnung helfen Fotos und eine knappe Beschreibung – auch bevor ein Termin vereinbart wird.</p></article><article><Icon name="phone" size={28}/><h3>Direkter Kontakt</h3><p>Kein Callcenter und kein anonymes Ticket-System: Telefon, WhatsApp und E-Mail führen direkt zum Betrieb.</p></article></div></div></section>
+  <ContactBand title="Projekt in München oder Umgebung?" text="Ort oder Stadtteil mitschicken – dann lässt sich die Anfahrt direkt einordnen." />
+</BaseLayout>
+<style>
+  .city-intro { display:grid; grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr); gap:clamp(3rem,8vw,8rem); }
+  .city-intro > div > p { color:var(--ink-soft); }
+  .district-grid { display:grid; grid-template-columns:repeat(2,1fr); margin-top:2rem; border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .district-grid div { display:grid; border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:1rem; }
+  .district-grid span { color:var(--clay); font-family:Georgia,serif; }
+  .district-grid strong { margin-top:.3rem; font-family:Georgia,serif; font-size:1.35rem; }
+  .district-grid small { color:var(--ink-soft); }
+  .context-section { color:white; background:var(--ink); }
+  .context-section .eyebrow { color:#dfbd72; }
+  .context-grid { display:grid; grid-template-columns:repeat(3,1fr); margin-top:3rem; border-top:1px solid rgba(255,255,255,.2); }
+  .context-grid article { border-right:1px solid rgba(255,255,255,.2); padding:2rem; }
+  .context-grid article:first-child { border-left:1px solid rgba(255,255,255,.2); }
+  .context-grid h3 { margin:1rem 0 .5rem; }
+  .context-grid p { color:rgba(255,255,255,.65); font-size:.85rem; }
+  @media(max-width:750px){ .city-intro,.context-grid { grid-template-columns:1fr; } .context-grid article,.context-grid article:first-child { border:0; border-top:1px solid rgba(255,255,255,.2); padding:1.5rem 0; } }
+  @media(max-width:480px){ .district-grid { grid-template-columns:1fr; } }
+</style>

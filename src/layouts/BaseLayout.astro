@@ -1,0 +1,83 @@
+---
+import "@/styles/global.css";
+import { siteConfig } from "@/config/site";
+import { withBase } from "@/lib/urls";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import MobileActions from "@/components/MobileActions.astro";
+import PinGate from "@/components/PinGate.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
+  hideChrome?: boolean;
+}
+const {
+  title = `${siteConfig.name} | Renovierung & Sanierung München`,
+  description = siteConfig.description,
+  image = withBase("/og-default.svg"),
+  type = "website",
+  schema,
+  hideChrome = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, siteConfig.productionUrl).href;
+const ogImage = image.startsWith("http") ? image : new URL(image, Astro.url.origin).href;
+const robots = siteConfig.previewMode ? "noindex,nofollow,noarchive" : "index,follow,max-image-preview:large";
+const baseSchema = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": `${siteConfig.productionUrl}/#business`,
+  name: siteConfig.name,
+  url: siteConfig.productionUrl,
+  telephone: siteConfig.phoneHref,
+  email: siteConfig.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteConfig.address.street,
+    postalCode: siteConfig.address.postalCode,
+    addressLocality: siteConfig.address.city,
+    addressCountry: siteConfig.address.country,
+  },
+  areaServed: [{ "@type": "City", name: "München" }, ...siteConfig.areas.map((area) => ({ "@type": "Place", name: `${area}, München` }))],
+};
+---
+
+<!doctype html>
+<html lang="de" class:list={[siteConfig.previewMode && "preview-locked"]}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#20231f" />
+    <meta name="robots" content={robots} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.name} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={withBase("/favicon.png")} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(baseSchema)} />
+    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Zum Inhalt springen</a>
+    <PinGate />
+    {!hideChrome && <Header />}
+    <main id="content"><slot /></main>
+    {!hideChrome && <Footer />}
+    {!hideChrome && <MobileActions />}
+  </body>
+</html>

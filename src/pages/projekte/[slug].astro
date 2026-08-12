@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import Icon from "@/components/Icon.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+export async function getStaticPaths() { return (await getCollection("projects")).map((project) => ({ params: { slug: project.data.slug }, props: { project } })); }
+const { project } = Astro.props;
+const { Content } = await render(project);
+const stageLabels = { vorher: "Vorher", waehrend: "Während der Arbeiten", detail: "Detail", nachher: "Fertig" };
+---
+<BaseLayout title={`${project.data.title} | Projekt | BauXpert`} description={project.data.summary} type="article">
+  <div class="project-hero"><div class="shell"><div class="project-hero-copy"><p class="eyebrow">Projekt · {project.data.location}</p><h1>{project.data.title}</h1><p>{project.data.summary}</p><ul class="tag-list">{project.data.services.map((item) => <li>{item}</li>)}</ul></div><Image src={project.data.cover} alt={project.data.images[0]?.alt ?? project.data.title} widths={[640,900,1200]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" fetchpriority="high" /></div></div>
+  <Breadcrumbs items={[{ label: "Projekte", href: "/projekte/" }, { label: project.data.title }]} />
+  <section class="section project-facts"><div class="shell facts-grid"><div><p class="eyebrow">Ausgeführte Arbeiten</p><ul>{project.data.work.map((item) => <li><Icon name="check" size={18} /> {item}</li>)}</ul></div><div class="project-description"><p class="eyebrow">Dokumentation</p><Content /></div></div></section>
+  <section class="section gallery-section"><div class="shell"><header class="gallery-heading"><div><p class="eyebrow">Fotodokumentation</p><h2>{project.data.images.length} {project.data.images.length === 1 ? "Aufnahme" : "Aufnahmen"} aus dem Projekt.</h2></div><p>Antippen oder anklicken, um ein Bild größer anzusehen.</p></header><div class="project-gallery">{project.data.images.map((image, index) => <figure><button type="button" data-lightbox-open={index} aria-label={`Bild ${index + 1} vergrößern`}><Image src={image.src} alt={image.alt} widths={[480,760,1100]} sizes="(min-width: 800px) 50vw, 100vw" /></button><figcaption><span>{image.stage ? stageLabels[image.stage] : `Bild ${index + 1}`}</span>{image.alt}</figcaption></figure>)}</div></div></section>
+  <dialog class="lightbox" data-lightbox aria-label="Projektbild"><button type="button" class="lightbox-close" data-lightbox-close aria-label="Großansicht schließen">×</button><button type="button" class="lightbox-prev" data-lightbox-prev aria-label="Vorheriges Bild">‹</button><img data-lightbox-image alt="" /><button type="button" class="lightbox-next" data-lightbox-next aria-label="Nächstes Bild">›</button><p data-lightbox-caption></p></dialog>
+  <ContactBand title="Soll etwas Ähnliches entstehen?" />
+</BaseLayout>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]"); const image = dialog?.querySelector<HTMLImageElement>("[data-lightbox-image]"); const caption = dialog?.querySelector<HTMLElement>("[data-lightbox-caption]"); const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-lightbox-open]")]; let current = 0;
+  const show = (index:number) => { if (!dialog || !image || !caption || !buttons.length) return; current = (index + buttons.length) % buttons.length; const source = buttons[current].querySelector("img"); if (!source) return; image.src = source.currentSrc || source.src; image.alt = source.alt; caption.textContent = source.alt; if (!dialog.open) dialog.showModal(); };
+  buttons.forEach((button,index) => button.addEventListener("click",()=>show(index))); dialog?.querySelector("[data-lightbox-close]")?.addEventListener("click",()=>dialog.close()); dialog?.querySelector("[data-lightbox-prev]")?.addEventListener("click",()=>show(current-1)); dialog?.querySelector("[data-lightbox-next]")?.addEventListener("click",()=>show(current+1)); dialog?.addEventListener("click",(event)=>{ if(event.target===dialog) dialog.close(); });
+</script>
+<style>
+  .project-hero { color: white; background: var(--ink); }
+  .project-hero > .shell { display: grid; grid-template-columns: minmax(0,1fr) minmax(430px,1fr); min-height: 620px; }
+  .project-hero-copy { display: flex; flex-direction: column; justify-content: center; padding: 4rem 4rem 4rem 0; }
+  .project-hero-copy .eyebrow { color: #dfbd72; }
+  .project-hero-copy h1 { font-size: clamp(2.6rem,5.5vw,5.4rem); }
+  .project-hero-copy > p:not(.eyebrow) { max-width: 650px; margin-top: 1.3rem; color: rgba(255,255,255,.72); }
+  .project-hero .tag-list li { border-color: rgba(255,255,255,.25); color: rgba(255,255,255,.72); }
+  .project-hero > .shell > img { width: 100%; height: 100%; object-fit: cover; }
+  .facts-grid { display: grid; grid-template-columns: minmax(260px,.65fr) minmax(0,1.35fr); gap: clamp(3rem,8vw,8rem); }
+  .project-facts ul { list-style: none; }
+  .project-facts li { display: flex; gap: .5rem; border-top: 1px solid var(--line); padding: .7rem 0; }
+  .project-description { color: var(--ink-soft); }
+  .gallery-section { background: var(--paper-deep); }
+  .gallery-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
+  .gallery-heading > p { max-width: 320px; color: var(--ink-soft); font-size: .82rem; }
+  .project-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+  .project-gallery figure { margin: 0; background: var(--white); }
+  .project-gallery button { display: block; width: 100%; border: 0; padding: 0; background: var(--ink); cursor: zoom-in; }
+  .project-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .project-gallery figcaption { display: grid; gap: .15rem; padding: .8rem; color: var(--ink-soft); font-size: .75rem; }
+  .project-gallery figcaption span { color: var(--clay); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+  .lightbox { width: 100vw; max-width: none; height: 100dvh; max-height: none; border: 0; padding: 3.5rem; color: white; background: rgba(13,14,12,.96); }
+  .lightbox::backdrop { background: rgba(13,14,12,.96); }
+  .lightbox[open] { display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr auto; align-items: center; gap: 1rem; }
+  .lightbox img { grid-column: 2; max-width: 100%; max-height: calc(100dvh - 9rem); margin: auto; object-fit: contain; }
+  .lightbox button { border: 0; color: white; background: transparent; font-size: 3rem; cursor: pointer; }
+  .lightbox-close { position: fixed; top: 1rem; right: 1.5rem; }
+  .lightbox p { grid-column: 1/-1; text-align: center; }
+  @media(max-width:850px){ .project-hero > .shell { grid-template-columns:1fr; } .project-hero-copy { padding:4rem 0 2rem; } .project-hero > .shell > img { max-height:520px; } .facts-grid { grid-template-columns:1fr; } }
+  @media(max-width:650px){ .project-gallery { grid-template-columns:1fr; } .gallery-heading { display:block; } .gallery-heading > p { margin-top:1rem; } .lightbox { padding:3rem .5rem 1rem; } .lightbox[open] { grid-template-columns:38px 1fr 38px; } }
+</style>

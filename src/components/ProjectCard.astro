@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { withBase } from "@/lib/urls";
+import Icon from "./Icon.astro";
+
+const { project, priority = false } = Astro.props as { project: CollectionEntry<"projects">; priority?: boolean };
+---
+
+<article class="project-card">
+  <a class="project-card-image" href={withBase(`/projekte/${project.data.slug}/`)} aria-label={`${project.data.title} ansehen – ${project.data.images.length} ${project.data.images.length === 1 ? "Foto" : "Fotos"}`}>
+    <Image
+      src={project.data.cover}
+      alt={project.data.images[0]?.alt ?? project.data.title}
+      widths={[480, 720, 960]}
+      sizes="(min-width: 900px) 40vw, 100vw"
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+    />
+    <span class="photo-count"><Icon name="camera" size={16} /> {project.data.images.length} {project.data.images.length === 1 ? "Foto" : "Fotos"}</span>
+  </a>
+  <div class="project-card-body">
+    <p class="project-location"><Icon name="pin" size={15} /> {project.data.location}</p>
+    <h3><a href={withBase(`/projekte/${project.data.slug}/`)}>{project.data.title}</a></h3>
+    <p>{project.data.summary}</p>
+    <ul class="tag-list">{project.data.services.slice(0, 3).map((service) => <li>{service}</li>)}</ul>
+    <a class="text-link" href={withBase(`/projekte/${project.data.slug}/`)}>Projekt ansehen <Icon name="arrow" size={17} /></a>
+  </div>
+</article>

@@ -1,0 +1,17 @@
+---
+import { siteConfig } from "@/config/site";
+import { whatsappUrl, withBase } from "@/lib/urls";
+import Icon from "./Icon.astro";
+
+const { title = "Was soll gemacht werden?", text = "Ein paar Stichpunkte und Fotos reichen für den ersten Kontakt." } = Astro.props;
+---
+
+<section class="contact-band">
+  <div class="shell contact-band-inner">
+    <div><p class="eyebrow">Direkter Kontakt</p><h2>{title}</h2><p>{text}</p></div>
+    <div class="button-row">
+      <a class="button button-primary" href={withBase("/kontakt/#anfrage")}><Icon name="mail" size={18} /> Anfrage starten</a>
+      <a class="button button-ghost-dark" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+    </div>
+  </div>
+</section>

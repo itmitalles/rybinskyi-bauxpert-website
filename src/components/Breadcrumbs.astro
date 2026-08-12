@@ -1,0 +1,13 @@
+---
+import { withBase } from "@/lib/urls";
+
+interface Item { label: string; href?: string; }
+const { items } = Astro.props as { items: Item[] };
+---
+
+<nav class="breadcrumbs shell" aria-label="Brotkrümelnavigation">
+  <ol>
+    <li><a href={withBase("/")}>Start</a></li>
+    {items.map((item) => <li>{item.href ? <a href={withBase(item.href)}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>)}
+  </ol>
+</nav>
