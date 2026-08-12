@@ -27,6 +27,16 @@ for (const item of cases) {
       const broken = await page.evaluate(() => [...document.images].filter((item) => (item.src || item.srcset) && (!item.complete || !item.naturalWidth)).map((item) => item.currentSrc || item.src));
       throw new Error(`${item.path} has unloaded images: ${broken.join(", ")}`);
     });
+    await page.evaluate(async () => {
+      const step = Math.max(400, Math.floor(innerHeight * .8));
+      for (let y = 0; y < document.documentElement.scrollHeight - innerHeight; y += step) {
+        scrollTo(0, y);
+        await new Promise((resolve) => setTimeout(resolve, 30));
+      }
+      scrollTo(0, document.documentElement.scrollHeight);
+      await new Promise((resolve) => setTimeout(resolve, 60));
+      scrollTo(0, 0);
+    });
     await page.waitForTimeout(250);
   }
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
