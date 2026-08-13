@@ -13,6 +13,7 @@ export const siteConfig = {
     "08103202cf42e3a6f06ead35f9a9bf11a077d0eff1e8170ce73f0f5f19ded4f7",
   phoneDisplay: "+49 178 693 0465",
   phoneHref: "+491786930465",
+  whatsappNumber: "491786930465",
   email: "info@rybinskyi-bauxpert.de",
   address: {
     street: "Pfälzer-Wald-Straße 2",

@@ -28,7 +28,7 @@ import Icon from "./Icon.astro";
   </form>
 </div>
 
-<script is:inline define:vars={{ phone: siteConfig.phoneHref, email: siteConfig.email }}>
+<script is:inline define:vars={{ phone: siteConfig.whatsappNumber, email: siteConfig.email }}>
   const builder = document.querySelector("[data-inquiry-builder]");
   const form = builder?.querySelector("form");
   const whatsapp = builder?.querySelector("[data-whatsapp]");

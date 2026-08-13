@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export function withBase(path: string): string {
@@ -6,5 +8,5 @@ export function withBase(path: string): string {
 }
 
 export function whatsappUrl(text: string): string {
-  return `https://wa.me/491786930465?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
