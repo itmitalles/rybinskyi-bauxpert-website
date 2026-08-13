@@ -4,7 +4,7 @@ shortTitle: Renovierung
 seoTitle: Renovierung München | Rybinskyi BauXpert
 description: Renovierung von Wohnungen, Häusern und Gewerberäumen in München – von Oberflächen und Böden bis zum koordinierten Innenausbau.
 summary: Räume auffrischen, neu aufteilen oder umfassend überarbeiten – mit einem klaren Blick auf die einzelnen Arbeitsschritte.
-intro: Eine Renovierung beginnt nicht mit einem großen Versprechen, sondern mit einer sauberen Bestandsaufnahme. Wir klären, welche Flächen und Bauteile bearbeitet werden sollen, welche Reihenfolge sinnvoll ist und welche Arbeiten zusammengehören.
+intro: Eine Renovierung beginnt nicht mit einem großen Versprechen, sondern mit einer sauberen Bestandsaufnahme. Gemeinsam wird geklärt, welche Flächen und Bauteile bearbeitet werden sollen, welche Reihenfolge sinnvoll ist und welche Arbeiten zusammengehören.
 typicalWork:
   - Rückbau und Vorbereitung
   - Spachtel- und Malerarbeiten

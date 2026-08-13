@@ -2,6 +2,8 @@
 
 Statische Astro-Website für Rybinskyi BauXpert in München. Die GitHub-Pages-Fassung ist eine `noindex`-Kundenpreview mit einfachem PIN-Gate. Der PIN-Schutz hält nur zufällige Besucher fern und ist keine sichere Zugriffskontrolle.
 
+Nach Eingabe der PIN stehen zwei Entwürfe zur Auswahl: die bodenständige Werkstatt-Version unter `/` und die stärker auf hochwertigen Innenausbau ausgerichtete Premium-Version unter `/premium/`. Die Auswahl kann über den Preview-Schalter erneut geöffnet werden.
+
 ## Entwicklung
 
 ```bash
@@ -16,7 +18,7 @@ npm run build
 npm test
 ```
 
-`npm run typecheck` und `npm run lint` führen die strenge Astro-Prüfung aus. `npm run test:visual` prüft vier Zielgrößen mit lokal installiertem Google Chrome; dafür muss die Seite parallel unter `http://127.0.0.1:4321` laufen.
+`npm run typecheck` und `npm run lint` führen die strenge Astro-Prüfung aus. `npm run test:visual` prüft beide Varianten in vier Zielgrößen mit lokal installiertem Google Chrome; dafür muss die Seite parallel unter `http://127.0.0.1:4321` laufen.
 
 ## Projekte hinzufügen
 

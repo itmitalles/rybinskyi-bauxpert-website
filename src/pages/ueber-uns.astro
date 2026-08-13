@@ -1,36 +1,23 @@
 ---
-import logo from "@/assets/brand/logo.png";
-import { Image } from "astro:assets";
-import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import ContactBand from "@/components/ContactBand.astro";
 import { siteConfig } from "@/config/site";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/lib/urls";
+
+const target = withBase("/ueber-mich/");
+const robots = siteConfig.previewMode ? "noindex,nofollow,noarchive" : "noindex,follow";
 ---
-<BaseLayout title="Über Rybinskyi BauXpert | Denys Rybinskyi München" description="Rybinskyi BauXpert in München: direkter Kontakt zu Inhaber Denys Rybinskyi und ein ehrlicher Überblick über Arbeitsweise und noch fehlende persönliche Inhalte.">
-  <div class="page-hero"><div class="shell"><p class="eyebrow">Über uns</p><h1>Rybinskyi BauXpert ist kein anonymer Baukonzern.</h1><p class="lead">Der öffentlich benannte Inhaber ist Denys Rybinskyi. Persönliche Team- oder Inhaberfotos liegen auf der bestehenden Website noch nicht vor.</p></div></div>
-  <Breadcrumbs items={[{label:"Über uns"}]} />
-  <section class="section about-section"><div class="shell about-grid"><div class="logo-field"><Image src={logo} alt="Logo von Rybinskyi BauXpert" width={520} height={520}/></div><div><p class="eyebrow">Der Betrieb</p><h2>Direkter Ansprechpartner in München.</h2><p>Im Impressum der bestehenden Website wird <strong>{siteConfig.owner}</strong> als Inhaber von {siteConfig.name} genannt. Der Betrieb ist unter einer Münchner Anschrift erreichbar und zeigt auf der bisherigen Website eigene ausgeführte Arbeiten aus Renovierung, Ausbau und Montage.</p><p>Mehr zur Unternehmensgeschichte, zum Team oder zu formalen Qualifikationen ist dort nicht belastbar veröffentlicht. Diese Lücken füllt die neue Website nicht mit Marketingtext, sondern lässt Platz für echte Informationen und persönliche Fotos.</p><dl><div><dt>Inhaber</dt><dd>{siteConfig.owner}</dd></div><div><dt>Sitz</dt><dd>{siteConfig.address.postalCode} München</dd></div><div><dt>Kontakt</dt><dd>{siteConfig.phoneDisplay}</dd></div></dl></div></div></section>
-  <section class="section principles"><div class="shell"><p class="eyebrow">Worauf die Seite setzt</p><h2>Vertrauen durch nachvollziehbare Arbeit.</h2><div><article><span>01</span><h3>Echte Bilder</h3><p>Projektfotos werden nicht als Dekoration behandelt, sondern nach Auftrag geordnet und beschrieben.</p></article><article><span>02</span><h3>Klare Grenzen</h3><p>Unbelegte Zahlen, Garantien, Titel oder Zertifizierungen werden nicht übernommen.</p></article><article><span>03</span><h3>Direkter Weg</h3><p>Besucher können ohne Formulardienst per Telefon, WhatsApp oder E-Mail Kontakt aufnehmen.</p></article></div></div></section>
-  <ContactBand title="Lernen wir Ihr Projekt kennen." />
-</BaseLayout>
-<style>
-  .about-grid { display:grid; grid-template-columns:minmax(320px,.7fr) minmax(0,1.3fr); align-items:center; gap:clamp(3rem,8vw,8rem); }
-  .logo-field { display:grid; place-items:center; min-height:480px; background:var(--ink); }
-  .logo-field img { width:min(86%,430px); }
-  .about-grid h2 + p { margin-top:1.4rem; }
-  .about-grid p { color:var(--ink-soft); }
-  .about-grid p + p { margin-top:1rem; }
-  dl { margin:2rem 0 0; }
-  dl div { display:grid; grid-template-columns:110px 1fr; border-top:1px solid var(--line); padding:.7rem 0; }
-  dt { color:var(--ink-soft); font-size:.72rem; font-weight:800; text-transform:uppercase; }
-  dd { margin:0; font-weight:700; }
-  .principles { color:white; background:var(--moss); }
-  .principles .eyebrow { color:white; }
-  .principles .shell > div { display:grid; grid-template-columns:repeat(3,1fr); margin-top:3rem; border-top:1px solid rgba(255,255,255,.25); }
-  .principles article { border-right:1px solid rgba(255,255,255,.25); padding:2rem; }
-  .principles article:first-child { border-left:1px solid rgba(255,255,255,.25); }
-  .principles span { color:#f2d18b; font-family:Georgia,serif; font-size:1.3rem; }
-  .principles h3 { margin:1rem 0 .5rem; }
-  .principles p { color:rgba(255,255,255,.7); }
-  @media(max-width:800px){ .about-grid,.principles .shell > div { grid-template-columns:1fr; } .logo-field { min-height:360px; } .principles article,.principles article:first-child { border:0; border-top:1px solid rgba(255,255,255,.25); padding:1.5rem 0; } }
-</style>
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content={robots} />
+    <meta name="description" content="Weiterleitung zur persönlichen Seite von Denys Rybinskyi." />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={`${siteConfig.productionUrl}/ueber-mich/`} />
+    <title>Weiterleitung zu Über mich | Rybinskyi BauXpert</title>
+  </head>
+  <body>
+    <p>Die Seite heißt jetzt <a href={target}>Über mich</a>.</p>
+  </body>
+</html>

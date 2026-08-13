@@ -6,6 +6,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import MobileActions from "@/components/MobileActions.astro";
 import PinGate from "@/components/PinGate.astro";
+import ConceptSwitcher from "@/components/ConceptSwitcher.astro";
 
 interface Props {
   title?: string;
@@ -83,5 +84,6 @@ const baseSchema = {
     <main id="content"><slot /></main>
     {!hideChrome && <Footer />}
     {!hideChrome && <MobileActions />}
+    <ConceptSwitcher />
   </body>
 </html>

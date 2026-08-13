@@ -30,9 +30,11 @@ const localTargetExists = (htmlPath, rawUrl) => {
 for (const htmlPath of htmlFiles) {
   const html = readFileSync(htmlPath, "utf8");
   const label = relative(root, htmlPath);
-  if (!/<html lang="de"/.test(html)) failures.push(`${label}: missing German document language`);
-  if (!/<meta name="description" content="[^"]+"/.test(html)) failures.push(`${label}: missing meta description`);
-  if (!/<meta name="robots" content="noindex,nofollow,noarchive"/.test(html)) failures.push(`${label}: preview robots meta is missing`);
+  const isRedirect = /<meta http-equiv="refresh"/.test(html);
+  if (!isRedirect && !/<html lang="de"/.test(html)) failures.push(`${label}: missing German document language`);
+  if (!isRedirect && !/<meta name="description" content="[^"]+"/.test(html)) failures.push(`${label}: missing meta description`);
+  if (!isRedirect && !/<meta name="robots" content="noindex,nofollow,noarchive"/.test(html)) failures.push(`${label}: preview robots meta is missing`);
+  if (isRedirect && !/<meta name="robots" content="noindex(?:,|")/.test(html)) failures.push(`${label}: redirect is indexable`);
   if (!/<link rel="canonical" href="https:\/\/rybinskyi-bauxpert\.de/.test(html)) failures.push(`${label}: canonical URL is missing`);
   if (/canonical" href="https:\/\/rybinskyi-bauxpert\.de\/rybinskyi-bauxpert-website\//.test(html)) failures.push(`${label}: canonical contains the GitHub Pages base path`);
   const matches = html.matchAll(/(?:href|src)="([^"]+)"/g);

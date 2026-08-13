@@ -8,18 +8,27 @@ mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: "/usr/bin/google-chrome", headless: true });
 const cases = [
   { name: "pin-mobile", path: "/", width: 390, height: 844, locked: true },
+  { name: "concepts-mobile", path: "/", width: 390, height: 844, selector: true },
   { name: "project-wide", path: "/projekte/sauna-ausbau-muenchen/", width: 1920, height: 1080 },
   { name: "home-mobile", path: "/", width: 390, height: 844 },
+  { name: "premium-mobile", path: "/premium/", width: 390, height: 844, concept: "premium" },
+  { name: "premium-desktop", path: "/premium/", width: 1440, height: 900, concept: "premium" },
   { name: "projects-tablet", path: "/projekte/", width: 768, height: 1024 },
   { name: "contact-desktop", path: "/kontakt/", width: 1440, height: 900 },
 ];
 
 for (const item of cases) {
   const page = await browser.newPage({ viewport: { width: item.width, height: item.height } });
-  if (!item.locked) await page.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
+  if (item.selector) await page.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
+  else if (!item.locked) await page.addInitScript((concept) => {
+    sessionStorage.setItem("rybinskyi-preview-access", "granted");
+    sessionStorage.setItem("rybinskyi-preview-concept", concept);
+  }, item.concept ?? "workshop");
   const response = await page.goto(`${baseUrl}${item.path}`, { waitUntil: "networkidle" });
   if (!response?.ok()) throw new Error(`${item.path} returned ${response?.status()}`);
-  if (item.locked) {
+  if (item.selector) {
+    if (!(await page.locator("[data-concept-panel]").isVisible())) throw new Error("Concept selection is not visible");
+  } else if (item.locked) {
     if (!(await page.locator("[data-pin-gate]").isVisible())) throw new Error("PIN gate is not visible");
   } else {
     await page.evaluate(() => document.querySelectorAll("img").forEach((item) => item.loading = "eager"));
@@ -46,7 +55,10 @@ for (const item of cases) {
 }
 
 const interactionPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
-await interactionPage.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
+await interactionPage.addInitScript(() => {
+  sessionStorage.setItem("rybinskyi-preview-access", "granted");
+  sessionStorage.setItem("rybinskyi-preview-concept", "workshop");
+});
 await interactionPage.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
 await interactionPage.locator("[data-menu-toggle]").click();
 if (!(await interactionPage.locator("[data-mobile-menu]").isVisible())) {
@@ -61,7 +73,10 @@ if (!(await interactionPage.locator("[data-mobile-menu]").isVisible())) {
 await interactionPage.close();
 
 const builderPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-await builderPage.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
+await builderPage.addInitScript(() => {
+  sessionStorage.setItem("rybinskyi-preview-access", "granted");
+  sessionStorage.setItem("rybinskyi-preview-concept", "workshop");
+});
 await builderPage.goto(`${baseUrl}/kontakt/`, { waitUntil: "networkidle" });
 await builderPage.locator('input[name="name"]').fill("Testname");
 await builderPage.locator('select[name="project"]').selectOption({ label: "Renovierung" });
@@ -70,7 +85,10 @@ if (!builderHref?.includes("Testname") || !builderHref.includes("Renovierung")) 
 await builderPage.close();
 
 const galleryPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-await galleryPage.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
+await galleryPage.addInitScript(() => {
+  sessionStorage.setItem("rybinskyi-preview-access", "granted");
+  sessionStorage.setItem("rybinskyi-preview-concept", "workshop");
+});
 await galleryPage.goto(`${baseUrl}/projekte/sauna-ausbau-muenchen/`, { waitUntil: "networkidle" });
 await galleryPage.locator("[data-lightbox-open]").first().click();
 if (!(await galleryPage.locator("[data-lightbox]").isVisible())) throw new Error("Project lightbox did not open");
@@ -85,7 +103,11 @@ if (process.env.PREVIEW_PIN) {
   if (!(await pinPage.locator("[data-pin-error]").isVisible())) throw new Error("Incorrect PIN did not show an error");
   await pinPage.locator("#preview-pin").fill(process.env.PREVIEW_PIN);
   await pinPage.locator("[data-pin-form]").press("Enter");
-  await pinPage.locator("[data-pin-gate]").waitFor({ state: "detached" });
+  if (!(await pinPage.locator("[data-concept-panel]").isVisible())) throw new Error("Concept selection did not open after entering the PIN");
+  if ((await pinPage.locator("[data-concept-link]").count()) !== 2) throw new Error("Concept selection does not offer two variants");
+  await pinPage.locator('[data-concept-link="premium"]').click();
+  await pinPage.waitForURL(/\/premium\/$/);
+  if (!(await pinPage.locator(".premium-page").isVisible())) throw new Error("Premium concept did not open from the concept selection");
   await pinPage.close();
 }
 await browser.close();

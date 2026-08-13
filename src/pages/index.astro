@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import heroImage from "@/assets/projects/spielhaus/aufbau.jpeg";
-import detailImage from "@/assets/projects/sauna/saunabaenke.jpeg";
+import heroImage from "@/assets/projects/sauna/innenansicht.jpeg";
+import detailImage from "@/assets/projects/boden/fischgraet-parkett.png";
 import ContactBand from "@/components/ContactBand.astro";
 import Icon from "@/components/Icon.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
@@ -34,8 +34,8 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
         </ul>
       </div>
       <figure class="home-hero-figure">
-        <Image src={heroImage} alt="Montage eines Stelzen-Spielhauses während der Arbeiten" widths={[640, 900, 1200]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" fetchpriority="high" />
-        <figcaption><span>Während der Arbeit</span> Spielhaus-Montage · München & Umgebung</figcaption>
+        <Image src={heroImage} alt="Fertig ausgebauter Saunainnenraum mit Saunabänken aus Holz" widths={[640, 900, 1200]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" fetchpriority="high" />
+        <figcaption><span>Fertiges Projekt</span> Sauna-Ausbau · München & Umgebung</figcaption>
       </figure>
     </div>
     <div class="hero-workmark" aria-hidden="true">BAU<span>X</span>PERT</div>
@@ -43,7 +43,7 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
 
   <section class="section services-home">
     <div class="shell">
-      <SectionHeading eyebrow="Leistungen" title="Was wir konkret machen." intro="Renovierung und Ausbau funktionieren am besten, wenn die Arbeitsschritte zusammenpassen. Diese Bereiche können einzeln oder in einem abgestimmten Projekt angefragt werden." />
+      <SectionHeading eyebrow="Leistungen" title="Was ich konkret mache." intro="Renovierung und Ausbau funktionieren am besten, wenn die Arbeitsschritte zusammenpassen. Diese Bereiche können einzeln oder in einem abgestimmten Projekt angefragt werden." />
       <div class="service-index">
         {services.map((service, index) => (
           <a href={withBase(`/leistungen/${service.id}/`)}>
@@ -79,8 +79,8 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
         </ol>
       </div>
       <figure class="work-detail">
-        <Image src={detailImage} alt="Detailaufnahme fertig montierter Saunabänke aus Massivholz" widths={[540, 760]} sizes="(min-width: 900px) 38vw, 100vw" />
-        <figcaption>Echte Detailaufnahme: Sauna-Ausbau</figcaption>
+        <Image src={detailImage} alt="Verlegter Fischgrätparkettboden mit sichtbarem Holzbild" widths={[540, 760]} sizes="(min-width: 900px) 38vw, 100vw" />
+        <figcaption>Echte Detailaufnahme: Fischgrätparkett in Schwabing</figcaption>
       </figure>
     </div>
   </section>

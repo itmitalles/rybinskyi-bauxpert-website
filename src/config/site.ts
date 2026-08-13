@@ -38,6 +38,6 @@ export const navigation = [
   { label: "Leistungen", href: "/leistungen/" },
   { label: "Projekte", href: "/projekte/" },
   { label: "München", href: "/muenchen/" },
-  { label: "Über uns", href: "/ueber-uns/" },
+  { label: "Über mich", href: "/ueber-mich/" },
   { label: "Kontakt", href: "/kontakt/" },
 ] as const;
