@@ -16,7 +16,7 @@ work:
   - Fliesenarbeiten
   - Montage im abgestimmten Leistungsumfang
 featured: true
-order: 4
+order: 2
 ---
 
 Das bisher veröffentlichte Projekt enthält nur eine Abschlussaufnahme. Einzelheiten zum ursprünglichen Zustand, zu Materialien und beteiligten Fachgewerken sind nicht dokumentiert.

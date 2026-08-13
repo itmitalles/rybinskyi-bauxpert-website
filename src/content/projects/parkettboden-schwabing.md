@@ -13,8 +13,8 @@ images:
 work:
   - Parkett verlegen
   - Fläche und Randanschlüsse ausführen
-featured: false
-order: 5
+featured: true
+order: 3
 ---
 
 Die bestehende Website bezeichnet den Boden als verlegt, geschliffen und versiegelt. Weitere Detailaufnahmen oder Materialdaten sind derzeit nicht vorhanden.

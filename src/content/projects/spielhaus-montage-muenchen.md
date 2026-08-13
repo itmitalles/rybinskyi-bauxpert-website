@@ -18,8 +18,8 @@ work:
   - Unterkonstruktion aufbauen
   - Spielhaus montieren
   - Treppe, Geländer und Überdachung ergänzen
-featured: true
-order: 3
+featured: false
+order: 10
 ---
 
 Die zwei Aufnahmen machen den Projektfortschritt nachvollziehbar. Exakter Ort, Hersteller und Ausführungsjahr sind nicht veröffentlicht.

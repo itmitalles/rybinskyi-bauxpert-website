@@ -15,7 +15,7 @@ work:
   - Schiebetüren einsetzen und ausrichten
   - Gesamtfunktion kontrollieren
 featured: false
-order: 10
+order: 8
 ---
 
 Die bestehende Referenz nennt einen PAX-Kleiderschrank. Weitere Angaben zum Modell und zum Ausführungsjahr liegen nicht vor.

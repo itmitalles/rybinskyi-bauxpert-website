@@ -19,8 +19,8 @@ work:
   - Innenausbau im Gewerberaum
   - Montage von Theke und Einbauten
   - Boden- und Detailarbeiten
-featured: true
-order: 2
+featured: false
+order: 5
 ---
 
 Die Bilder stammen aus der bisherigen Referenzgalerie und werden dort ausdrücklich als eigene ausgeführte Arbeit bezeichnet. Weitergehende Angaben zum Auftraggeber werden nicht veröffentlicht.

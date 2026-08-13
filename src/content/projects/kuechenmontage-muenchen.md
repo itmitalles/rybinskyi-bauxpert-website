@@ -18,8 +18,8 @@ work:
   - Küchenmöbel montieren und ausrichten
   - Arbeitsflächen und Einbauten einsetzen
   - Abschluss- und Detailmontage
-featured: false
-order: 6
+featured: true
+order: 4
 ---
 
 Die Bilder dokumentieren zwei fertige Montagen. Zulassungspflichtige Anschlussarbeiten werden auf dieser Seite nicht als eigene Leistung behauptet.

@@ -19,7 +19,7 @@ work:
   - Überdachungs- und Montagearbeiten im veröffentlichten Projekt
   - Einbauten im Terrassen-Essbereich
 featured: false
-order: 7
+order: 6
 ---
 
 Die Fotos zeigen zwei getrennte Außenbereiche. Projektdauer und exakter Leistungsumfang sind nicht ausreichend dokumentiert und werden nicht ergänzt.

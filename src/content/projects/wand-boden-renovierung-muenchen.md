@@ -16,7 +16,7 @@ work:
   - Bodenrenovierung
   - Abschlussarbeiten
 featured: false
-order: 8
+order: 7
 ---
 
 Der Originaldateiname bezeichnet die Aufnahme als Vorher-Nachher-Bild; sichtbar veröffentlicht ist jedoch nur die fertige Raumansicht. Deshalb wird sie hier als Abschlussaufnahme eingeordnet.
