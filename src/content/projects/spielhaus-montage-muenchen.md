@@ -19,7 +19,7 @@ work:
   - Spielhaus montieren
   - Treppe, Geländer und Überdachung ergänzen
 featured: false
-order: 10
+order: 18
 ---
 
 Die zwei Aufnahmen machen den Projektfortschritt nachvollziehbar. Exakter Ort, Hersteller und Ausführungsjahr sind nicht veröffentlicht.

@@ -5,7 +5,7 @@ export const siteConfig = {
   description:
     "Renovierung, Sanierung, Innenausbau und Montage in München und Umgebung – mit echten Projektbeispielen und direktem Kontakt.",
   productionUrl: "https://rybinskyi-bauxpert.de",
-  githubOwner: "itmitalles",
+  githubOwner: "rybinskyi-bauxpert-de",
   repositoryName: "rybinskyi-bauxpert-website",
   previewMode: true,
   previewPinHash:

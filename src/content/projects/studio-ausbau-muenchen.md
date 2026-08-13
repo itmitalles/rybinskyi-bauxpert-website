@@ -20,7 +20,7 @@ work:
   - Montage von Theke und Einbauten
   - Boden- und Detailarbeiten
 featured: false
-order: 5
+order: 19
 ---
 
 Die Bilder stammen aus der bisherigen Referenzgalerie und werden dort ausdrücklich als eigene ausgeführte Arbeit bezeichnet. Weitergehende Angaben zum Auftraggeber werden nicht veröffentlicht.

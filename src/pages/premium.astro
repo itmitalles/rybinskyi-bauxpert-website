@@ -2,9 +2,12 @@
 import { Image } from "astro:assets";
 import sauna from "@/assets/projects/sauna/innenansicht.jpeg";
 import saunaDetail from "@/assets/projects/sauna/leuchte-detail.jpeg";
-import bad from "@/assets/projects/bad/bad.png";
-import parkett from "@/assets/projects/boden/fischgraet-parkett.png";
-import kueche from "@/assets/projects/kueche/kueche-grau.jpeg";
+import kitchenUFinished from "@/assets/projects/kuechenmontage-u-form/fertig.jpg";
+import kitchenUProcess from "@/assets/projects/kuechenmontage-u-form/waehrend.jpg";
+import kitchenOak from "@/assets/projects/kueche-holzfronten/fertig.jpg";
+import kitchenL from "@/assets/projects/kuechenmontage-l-form/fertig.jpg";
+import kitchenTallUnit from "@/assets/projects/kuechen-hochschrank/waehrend.jpg";
+import wallConsoleProcess from "@/assets/projects/wandkonsole-spiegel/waehrend.jpg";
 import ContactBand from "@/components/ContactBand.astro";
 import Icon from "@/components/Icon.astro";
 import { siteConfig } from "@/config/site";
@@ -30,11 +33,19 @@ import { whatsappUrl, withBase } from "@/lib/urls";
 
     <section class="premium-work section">
       <div class="shell">
-        <header class="premium-heading"><div><p class="premium-kicker">Ausgewählte Arbeiten</p><h2>Nicht behauptet.<br/>Tatsächlich gebaut.</h2></div><p>Die Bilder stammen aus der bestehenden Referenzsammlung von Rybinskyi BauXpert. Keine Stockfotos, keine künstlichen Luxusräume.</p></header>
+        <header class="premium-heading"><div><p class="premium-kicker">Ausgewählte Arbeiten</p><h2>Nicht behauptet.<br/>Tatsächlich gebaut.</h2></div><p>Die Bilder stammen aus der Referenzsammlung und der gewerblichen Kundenanzeige von Rybinskyi BauXpert. Keine Stockfotos, keine künstlichen Luxusräume.</p></header>
         <div class="premium-projects">
-          <a class="premium-project premium-project-large" href={withBase("/projekte/sauna-ausbau-muenchen/")}><Image src={saunaDetail} alt="Saunaleuchte und Aufgusskübel vor heller Holzverkleidung" widths={[700,1000,1400]} sizes="(min-width:900px) 58vw, 100vw"/><span><small>Innenausbau · 5 Aufnahmen</small><strong>Sauna-Ausbau in München</strong><em>Projekt ansehen →</em></span></a>
-          <a class="premium-project" href={withBase("/projekte/badsanierung-haidhausen/")}><Image src={bad} alt="Ausgebautes Bad unter einer Dachschräge" widths={[540,760,1000]} sizes="(min-width:900px) 38vw, 100vw"/><span><small>Bad · München-Haidhausen</small><strong>Badsanierung</strong><em>Projekt ansehen →</em></span></a>
-          <a class="premium-project" href={withBase("/projekte/parkettboden-schwabing/")}><Image src={parkett} alt="Fischgrätparkett mit lebendigem Holzbild" widths={[540,760,1000]} sizes="(min-width:900px) 38vw, 100vw"/><span><small>Boden · München-Schwabing</small><strong>Fischgrätparkett</strong><em>Projekt ansehen →</em></span></a>
+          <a class="premium-project premium-project-large" href={withBase("/projekte/kuechenmontage-u-form-muenchen/")}><Image src={kitchenUFinished} alt="Fertig montierte graue Küche über drei Raumseiten mit weißen Oberschränken" widths={[700,1000,1400]} sizes="(min-width:900px) 58vw, 100vw" loading="lazy"/><span><small>Küchenmontage · Aufbau und Ergebnis</small><strong>U-Küche in München</strong><em>Projekt ansehen →</em></span></a>
+          <a class="premium-project" href={withBase("/projekte/kueche-holzfronten-muenchen/")}><Image src={kitchenOak} alt="Gerade Küchenzeile mit Holzdekor-Fronten, schwarzer Spüle und dunkler Arbeitsfläche" widths={[540,760,1000]} sizes="(min-width:900px) 38vw, 100vw" loading="lazy"/><span><small>Küche · München</small><strong>Holzdekor & dunkle Details</strong><em>Projekt ansehen →</em></span></a>
+          <a class="premium-project" href={withBase("/projekte/kuechenmontage-l-form-muenchen/")}><Image src={kitchenL} alt="Fertig montierte L-Küche mit weißen Oberschränken und grauen Unterschränken" widths={[540,760,1000]} sizes="(min-width:900px) 38vw, 100vw" loading="lazy"/><span><small>Küche · München</small><strong>Montage in L-Form</strong><em>Projekt ansehen →</em></span></a>
+        </div>
+        <div class="premium-process-proof">
+          <header class="premium-process-heading"><div><p class="premium-kicker">Montagezustände</p><h3>Auch der Weg ist echt.</h3></div><p>Ein Zwischenstand aus der gezeigten U-Küche und zwei Montagedetails aus getrennten Aufträgen. Keine künstlichen Vorher-Bilder, keine nachträglich erfundene Geschichte.</p></header>
+          <div class="premium-process-grid">
+            <figure><Image src={kitchenUProcess} alt="Teilweise aufgebaute graue Unterschränke, Beschläge und Werkzeuge in einem Küchenraum" widths={[420,620,820]} sizes="(min-width:900px) 33vw, 100vw" loading="lazy"/><figcaption><span>Küche</span> Schrankelemente während des Aufbaus</figcaption></figure>
+            <figure><Image src={kitchenTallUnit} alt="Geöffneter Kühlschrank in einem noch nicht vollständig verkleideten Küchenhochschrank" widths={[420,620,820]} sizes="(min-width:900px) 33vw, 100vw" loading="lazy"/><figcaption><span>Detail</span> Hochschrank während der Montage</figcaption></figure>
+            <figure><Image src={wallConsoleProcess} alt="Schwarze Wandkonsole zwischen zwei Spiegeln während der Montage im Flur" widths={[420,620,820]} sizes="(min-width:900px) 33vw, 100vw" loading="lazy"/><figcaption><span>Möbel</span> Wandkonsole und Spiegel im Montagezustand</figcaption></figure>
+          </div>
         </div>
       </div>
     </section>
@@ -52,7 +63,7 @@ import { whatsappUrl, withBase } from "@/lib/urls";
 
     <section class="premium-person section">
       <div class="shell premium-person-grid">
-        <figure><Image src={kueche} alt="Fertig montierte graue Küche mit Arbeitsplatte" widths={[650,900,1200]} sizes="(min-width:900px) 47vw, 100vw"/><figcaption>Montageprojekt aus München</figcaption></figure>
+        <figure><Image src={saunaDetail} alt="Saunaleuchte und Aufgusskübel vor heller Holzverkleidung" widths={[650,900,1200]} sizes="(min-width:900px) 47vw, 100vw" loading="lazy"/><figcaption>Detail aus dem Sauna-Ausbau</figcaption></figure>
         <div><p class="premium-kicker">Persönlich</p><h2>Hallo, ich bin Denys Rybinskyi.</h2><p>Ich komme aus der Ukraine. Dort habe ich mir eine Baufirma mit mehreren Mitarbeitern aufgebaut. Wegen der Lage im Donbass musste ich den Betrieb leider aufgeben.</p><p>In München baue ich mir nun ein neues Leben und einen neuen Handwerksbetrieb auf. Die Erfahrung aus meiner früheren Firma bringe ich heute persönlich in jedes Projekt ein.</p><a class="premium-text-link" href={withBase("/ueber-mich/")}>Mehr über mich <Icon name="arrow" size={18}/></a></div>
       </div>
     </section>
@@ -61,7 +72,7 @@ import { whatsappUrl, withBase } from "@/lib/urls";
       <div class="shell"><p class="premium-kicker">Leistungsschwerpunkte</p><div class="premium-service-list"><a href={withBase("/leistungen/renovierung/")}><span>01</span>Renovierung & Sanierung<Icon name="arrow" size={20}/></a><a href={withBase("/leistungen/fliesenarbeiten/")}><span>02</span>Bad & Fliesen<Icon name="arrow" size={20}/></a><a href={withBase("/leistungen/bodenverlegung/")}><span>03</span>Hochwertige Böden<Icon name="arrow" size={20}/></a><a href={withBase("/leistungen/montage/")}><span>04</span>Innenausbau & Montage<Icon name="arrow" size={20}/></a></div></div>
     </section>
 
-    <ContactBand title="Ihr Projekt persönlich besprechen." text="Ein paar Fotos und eine kurze Beschreibung reichen für den ersten direkten Kontakt." />
+    <ContactBand title="Ihr Projekt persönlich besprechen." text="Schicken Sie Fotos, eine kurze Beschreibung, Ort oder Stadtteil und den gewünschten Zeitraum für eine erste Einordnung." />
   </div>
 </BaseLayout>
 
@@ -93,6 +104,15 @@ import { whatsappUrl, withBase } from "@/lib/urls";
   .premium-project small { color:rgba(255,255,255,.72); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; }
   .premium-project strong { margin:.25rem 0 .6rem; font-family:Georgia,serif; font-size:clamp(1.6rem,3vw,2.7rem); font-weight:500; }
   .premium-project em { color:#e1b68e; font-size:.72rem; font-style:normal; font-weight:800; }
+  .premium-process-proof { margin-top:clamp(3.5rem,7vw,6rem); border-top:1px solid var(--premium-line); padding-top:clamp(2.5rem,5vw,4rem); }
+  .premium-process-heading { display:grid; grid-template-columns:1.1fr .9fr; align-items:end; gap:3rem; margin-bottom:2rem; }
+  .premium-process-heading h3 { margin-top:.55rem; font-size:clamp(2rem,4vw,3.6rem); }
+  .premium-process-heading > p { max-width:500px; color:var(--ink-soft); }
+  .premium-process-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+  .premium-process-grid figure { margin:0; background:#e6e1d8; }
+  .premium-process-grid img { width:100%; aspect-ratio:3/4; object-fit:cover; }
+  .premium-process-grid figcaption { display:grid; gap:.2rem; border-top:1px solid var(--premium-line); padding:.8rem; color:var(--ink-soft); font-size:.75rem; }
+  .premium-process-grid figcaption span { color:var(--premium-bronze); font-size:.65rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
   .premium-standard { color:white; background:var(--premium-dark); }
   .premium-standard .premium-kicker { color:var(--premium-bronze-light); }
   .premium-standard-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:clamp(3rem,8vw,8rem); }
@@ -117,6 +137,6 @@ import { whatsappUrl, withBase } from "@/lib/urls";
   .premium-service-list span { color:var(--premium-bronze); font-size:1rem; }
   .premium-service-list a:hover { background:rgba(255,255,255,.6); }
   :global(.premium-page .contact-band) { background:#756a5b; }
-  @media(max-width:900px){ .premium-hero { grid-template-columns:1fr; grid-template-rows:auto auto auto; } .premium-hero-media { grid-column:1; grid-row:1; min-height:55vw; } .premium-hero-copy { grid-column:1; grid-row:2; } .premium-proof { grid-column:1; grid-row:3; } .premium-projects,.premium-standard-grid,.premium-person-grid { grid-template-columns:1fr; } .premium-project-large { grid-row:auto; min-height:520px; } }
-  @media(max-width:650px){ .premium-hero-media { min-height:72vw; } .premium-hero h1 { font-size:clamp(2.8rem,13vw,4.3rem); } .premium-proof { grid-template-columns:auto 1fr; } .premium-heading { grid-template-columns:1fr; gap:1.2rem; } .premium-project,.premium-project-large { min-height:420px; } .premium-service-list a { grid-template-columns:40px 1fr auto; font-size:1.35rem; } }
+  @media(max-width:900px){ .premium-hero { grid-template-columns:1fr; grid-template-rows:auto auto auto; } .premium-hero-media { grid-column:1; grid-row:1; min-height:55vw; } .premium-hero-copy { grid-column:1; grid-row:2; } .premium-proof { grid-column:1; grid-row:3; } .premium-projects,.premium-standard-grid,.premium-person-grid { grid-template-columns:1fr; } .premium-project-large { grid-row:auto; min-height:520px; } .premium-process-heading { grid-template-columns:1fr; gap:1.2rem; } }
+  @media(max-width:650px){ .premium-hero-media { min-height:72vw; } .premium-hero h1 { font-size:clamp(2.8rem,13vw,4.3rem); } .premium-proof { grid-template-columns:auto 1fr; } .premium-heading { grid-template-columns:1fr; gap:1.2rem; } .premium-project,.premium-project-large { min-height:420px; } .premium-process-grid { grid-template-columns:1fr; } .premium-service-list a { grid-template-columns:40px 1fr auto; font-size:1.35rem; } }
 </style>

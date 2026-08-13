@@ -8,12 +8,16 @@ mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: "/usr/bin/google-chrome", headless: true });
 const cases = [
   { name: "pin-mobile", path: "/", width: 390, height: 844, locked: true },
+  { name: "pin-desktop", path: "/", width: 1440, height: 900, locked: true },
   { name: "concepts-mobile", path: "/", width: 390, height: 844, selector: true },
-  { name: "project-wide", path: "/projekte/sauna-ausbau-muenchen/", width: 1920, height: 1080 },
   { name: "home-mobile", path: "/", width: 390, height: 844 },
+  { name: "home-desktop", path: "/", width: 1440, height: 900 },
   { name: "premium-mobile", path: "/premium/", width: 390, height: 844, concept: "premium" },
   { name: "premium-desktop", path: "/premium/", width: 1440, height: 900, concept: "premium" },
-  { name: "projects-tablet", path: "/projekte/", width: 768, height: 1024 },
+  { name: "projects-mobile", path: "/projekte/", width: 390, height: 844 },
+  { name: "projects-desktop", path: "/projekte/", width: 1440, height: 900 },
+  { name: "kitchen-project-mobile", path: "/projekte/kuechenmontage-u-form-muenchen/", width: 390, height: 844 },
+  { name: "kitchen-project-desktop", path: "/projekte/kuechenmontage-u-form-muenchen/", width: 1440, height: 900 },
   { name: "contact-desktop", path: "/kontakt/", width: 1440, height: 900 },
 ];
 
@@ -36,21 +40,21 @@ for (const item of cases) {
       const broken = await page.evaluate(() => [...document.images].filter((item) => (item.src || item.srcset) && (!item.complete || !item.naturalWidth)).map((item) => item.currentSrc || item.src));
       throw new Error(`${item.path} has unloaded images: ${broken.join(", ")}`);
     });
-    await page.evaluate(async () => {
-      const step = Math.max(400, Math.floor(innerHeight * .8));
-      for (let y = 0; y < document.documentElement.scrollHeight - innerHeight; y += step) {
-        scrollTo(0, y);
-        await new Promise((resolve) => setTimeout(resolve, 30));
-      }
-      scrollTo(0, document.documentElement.scrollHeight);
-      await new Promise((resolve) => setTimeout(resolve, 60));
-      scrollTo(0, 0);
+    const pageImages = page.locator("img[src], img[srcset]");
+    for (let index = 0; index < await pageImages.count(); index += 1) {
+      await pageImages.nth(index).evaluate((element) => element.scrollIntoView({ block: "center" }));
+      await page.waitForTimeout(40);
+    }
+    await page.waitForFunction(() => [...document.images].every((item) => (!item.src && !item.srcset) || (item.complete && item.naturalWidth > 0)), undefined, { timeout: 20_000 }).catch(async () => {
+      const broken = await page.evaluate(() => [...document.images].filter((item) => (item.src || item.srcset) && (!item.complete || !item.naturalWidth)).map((item) => item.currentSrc || item.src));
+      throw new Error(`${item.path} has unloaded images after scrolling: ${broken.join(", ")}`);
     });
+    await page.evaluate(() => scrollTo(0, 0));
     await page.waitForTimeout(250);
   }
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   if (overflow > 1) throw new Error(`${item.path} has ${overflow}px horizontal overflow at ${item.width}px`);
-  await page.screenshot({ path: `${output}/${item.name}.png`, fullPage: true });
+  await page.screenshot({ path: `${output}/${item.name}.png`, fullPage: !item.locked });
   await page.close();
 }
 
@@ -89,7 +93,7 @@ await galleryPage.addInitScript(() => {
   sessionStorage.setItem("rybinskyi-preview-access", "granted");
   sessionStorage.setItem("rybinskyi-preview-concept", "workshop");
 });
-await galleryPage.goto(`${baseUrl}/projekte/sauna-ausbau-muenchen/`, { waitUntil: "networkidle" });
+await galleryPage.goto(`${baseUrl}/projekte/kuechenmontage-u-form-muenchen/`, { waitUntil: "networkidle" });
 await galleryPage.locator("[data-lightbox-open]").first().click();
 if (!(await galleryPage.locator("[data-lightbox]").isVisible())) throw new Error("Project lightbox did not open");
 await galleryPage.locator("[data-lightbox-close]").click();

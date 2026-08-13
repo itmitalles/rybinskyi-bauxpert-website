@@ -3,6 +3,9 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import heroImage from "@/assets/projects/sauna/innenansicht.jpeg";
 import detailImage from "@/assets/projects/boden/fischgraet-parkett.png";
+import kitchenResult from "@/assets/projects/kuechenmontage-u-form/fertig.jpg";
+import kitchenProcess from "@/assets/projects/kuechenmontage-u-form/waehrend.jpg";
+import furnitureResult from "@/assets/projects/hochbett-montage/fertig.jpg";
 import ContactBand from "@/components/ContactBand.astro";
 import Icon from "@/components/Icon.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
@@ -12,7 +15,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { whatsappUrl, withBase } from "@/lib/urls";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
-const featuredProjects = (await getCollection("projects")).filter((project) => project.data.featured).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const featuredProjects = (await getCollection("projects"))
+  .filter((project) => project.data.featured && project.data.slug !== "kuechenmontage-u-form-muenchen")
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
 ---
 
 <BaseLayout>
@@ -59,9 +65,24 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
 
   <section class="section proof-section">
     <div class="shell">
-      <SectionHeading eyebrow="Aus der Praxis" title="Arbeiten, nicht Werbeversprechen." intro="Die Fotos stammen aus der bisherigen Referenzgalerie und werden dort ausdrücklich als eigene ausgeführte Arbeiten bezeichnet. Mehrere Aufnahmen desselben Projekts bleiben zusammen." />
+      <SectionHeading eyebrow="Aus der Praxis" title="Küchenmontage & Möbelaufbau – sichtbar dokumentiert." intro="Keine Stockfotos: Hier stehen ein fertiges Ergebnis, derselbe Küchenauftrag während der Montage und ein separates Möbelprojekt nebeneinander." />
+      <div class="practice-showcase">
+        <a class="practice-photo practice-photo-main" href={withBase("/projekte/kuechenmontage-u-form-muenchen/")}>
+          <Image src={kitchenResult} alt="Fertig montierte graue Küche über drei Raumseiten mit weißen Oberschränken" widths={[540, 760, 1000]} sizes="(min-width: 900px) 58vw, 100vw" loading="lazy" />
+          <span><small>Fertiges Ergebnis</small><strong>Küchenmontage in U-Form</strong></span>
+        </a>
+        <a class="practice-photo practice-photo-process" href={withBase("/projekte/kuechenmontage-u-form-muenchen/")}>
+          <Image src={kitchenProcess} alt="Teilweise aufgebaute graue Unterschränke, Beschläge und Werkzeuge in einem Küchenraum" widths={[420, 640, 800]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
+          <span><small>Während der Montage</small><strong>Derselbe Auftrag im Aufbau</strong></span>
+        </a>
+        <a class="practice-photo practice-photo-furniture" href={withBase("/projekte/hochbett-montage-muenchen/")}>
+          <Image src={furnitureResult} alt="Weißes Kinder-Hochbett mit Treppe, Stauraum und Arbeitsbereich" widths={[420, 640, 800]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
+          <span><small>Möbelmontage</small><strong>Hochbett mit Stauraum</strong></span>
+        </a>
+      </div>
+      <h3 class="more-projects-title">Weitere echte Arbeiten</h3>
       <div class="project-grid home-project-grid">
-        {featuredProjects.map((project, index) => <ProjectCard project={project} priority={index === 0} />)}
+        {featuredProjects.map((project) => <ProjectCard project={project} />)}
       </div>
       <div class="section-more"><a class="button button-secondary" href={withBase("/projekte/")}>Alle Projekte ansehen <Icon name="arrow" size={18} /></a></div>
     </div>
@@ -70,7 +91,7 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
   <section class="section workflow-section">
     <div class="shell workflow-grid">
       <div>
-        <SectionHeading eyebrow="Arbeitsweise" title="Erst verstehen. Dann machen." intro="Fotos und ein kurzes Gespräch reichen oft für die erste Einordnung. Vor dem Start werden Umfang, Schnittstellen und offene Punkte geklärt." />
+        <SectionHeading eyebrow="Arbeitsweise" title="Erst verstehen. Dann machen." intro="Fotos, eine kurze Beschreibung, Ort oder Stadtteil und der gewünschte Zeitraum reichen oft für die erste Einordnung. Vor dem Start werden Umfang, Schnittstellen und offene Punkte geklärt." />
         <ol class="workflow-list">
           <li><span>01</span><div><h3>Projekt beschreiben</h3><p>Ort, Umfang, ein paar Fotos und Ihr gewünschter Zeitraum.</p></div></li>
           <li><span>02</span><div><h3>Vor Ort klären</h3><p>Wenn nötig, werden Flächen, Untergründe und Anschlüsse am Objekt geprüft.</p></div></li>
@@ -79,8 +100,8 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
         </ol>
       </div>
       <figure class="work-detail">
-        <Image src={detailImage} alt="Verlegter Fischgrätparkettboden mit sichtbarem Holzbild" widths={[540, 760]} sizes="(min-width: 900px) 38vw, 100vw" />
-        <figcaption>Echte Detailaufnahme: Fischgrätparkett in Schwabing</figcaption>
+        <Image src={detailImage} alt="Verlegter Fischgrätparkettboden mit sichtbarem Holzbild" widths={[540, 760]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
+        <figcaption>Echte Detailaufnahme: verlegter Fischgrätboden in München</figcaption>
       </figure>
     </div>
   </section>
@@ -102,7 +123,7 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
     </div>
   </section>
 
-  <ContactBand title="Erzählen Sie kurz, was ansteht." text="Telefonisch, per WhatsApp oder mit dem Anfrage-Builder – ohne externes Formular und ohne Tracking." />
+  <ContactBand title="Erzählen Sie kurz, was ansteht." text="Schicken Sie Fotos, eine kurze Beschreibung, Ort oder Stadtteil und Ihren gewünschten Zeitraum – per WhatsApp oder vorbereitet mit dem Anfrage-Builder." />
 </BaseLayout>
 
 <style>
@@ -129,6 +150,17 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
   .service-index strong { font-family: Georgia, serif; font-size: 1.22rem; font-weight: 500; }
   .service-index p { color: var(--ink-soft); font-size: .86rem; }
   .proof-section { background: var(--paper-deep); }
+  .practice-showcase { display: grid; grid-template-columns: minmax(0,1.18fr) minmax(320px,.82fr); grid-template-rows: repeat(2,minmax(260px,1fr)); gap: .85rem; min-height: 690px; margin-bottom: clamp(3rem,6vw,5rem); }
+  .practice-photo { position: relative; display: block; min-height: 0; overflow: hidden; color: white; background: var(--ink); text-decoration: none; }
+  .practice-photo-main { grid-row: 1 / -1; }
+  .practice-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+  .practice-photo:hover img { transform: scale(1.018); }
+  .practice-photo > span { position: absolute; inset: auto 0 0; display: grid; gap: .2rem; padding: 4rem 1.1rem 1.1rem; background: linear-gradient(transparent,rgba(20,20,18,.9)); }
+  .practice-photo small { color: #f3cc7a; font-size: .66rem; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+  .practice-photo strong { font-family: Georgia,serif; font-size: clamp(1.25rem,2.3vw,2.1rem); font-weight: 500; }
+  .practice-photo-main img { object-position: center; }
+  .practice-photo-process img { object-position: center 62%; }
+  .more-projects-title { margin-bottom: 1.2rem; font-size: clamp(1.5rem,3vw,2.2rem); }
   .home-project-grid .project-card:first-child { grid-row: span 2; }
   .home-project-grid .project-card:first-child .project-card-image { aspect-ratio: auto; flex: 1; min-height: 440px; }
   .section-more { margin-top: 2rem; text-align: center; }
@@ -158,6 +190,8 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
     .home-hero-grid { grid-template-columns: 1fr; }
     .home-hero-figure { aspect-ratio: 4 / 3; }
     .workflow-grid, .local-grid { grid-template-columns: 1fr; }
+    .practice-showcase { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(470px,62vw) minmax(260px,38vw); min-height: 0; }
+    .practice-photo-main { grid-column: 1 / -1; grid-row: 1; }
     .work-detail { position: static; margin-top: 0; }
     .work-detail img { aspect-ratio: 4 / 3; }
     .local-grid aside { border-top: 1px solid rgba(255,255,255,.2); border-left: 0; padding: 2rem 0 0; }
@@ -168,6 +202,9 @@ const featuredProjects = (await getCollection("projects")).filter((project) => p
     .hero-phone { width: 100%; margin-top: .5rem; margin-left: 0; }
     .trust-line { display: grid; gap: .55rem; }
     .home-hero-figure { aspect-ratio: 3 / 4; }
+    .practice-showcase { display: flex; flex-direction: column; }
+    .practice-photo { min-height: 310px; }
+    .practice-photo-main { min-height: 520px; }
     .service-index a { grid-template-columns: 34px 1fr auto; }
     .service-index p { display: none; }
     .home-project-grid .project-card:first-child { grid-row: auto; }
