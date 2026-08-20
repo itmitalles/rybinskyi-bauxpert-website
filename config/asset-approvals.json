@@ -20,27 +20,45 @@
       "approved": true
     },
     {
-      "sourcePath": "public/preview/kleinanzeigen/kueche-fertig-visualisierung.webp",
-      "outputPath": "preview/kleinanzeigen/kueche-fertig-visualisierung.webp",
-      "kind": "generated-preview-visual",
+      "sourcePath": "public/brand/rybinskyi-bauxpert-logo.webp",
+      "outputPath": "brand/rybinskyi-bauxpert-logo.webp",
+      "kind": "customer-preview-brand",
       "approved": true
     },
     {
-      "sourcePath": "public/preview/kleinanzeigen/kueche-montage-visualisierung.webp",
-      "outputPath": "preview/kleinanzeigen/kueche-montage-visualisierung.webp",
-      "kind": "generated-preview-visual",
+      "sourcePath": "public/preview/customer/kuechenmontage-u-form-fertig.webp",
+      "outputPath": "preview/customer/kuechenmontage-u-form-fertig.webp",
+      "kind": "customer-preview-photo",
       "approved": true
     },
     {
-      "sourcePath": "public/preview/kleinanzeigen/moebelmontage-visualisierung.webp",
-      "outputPath": "preview/kleinanzeigen/moebelmontage-visualisierung.webp",
-      "kind": "generated-preview-visual",
+      "sourcePath": "public/preview/customer/kuechenmontage-u-form-waehrend.webp",
+      "outputPath": "preview/customer/kuechenmontage-u-form-waehrend.webp",
+      "kind": "customer-preview-photo",
       "approved": true
     },
     {
-      "sourcePath": "public/preview/kleinanzeigen/boden-innenausbau-visualisierung.webp",
-      "outputPath": "preview/kleinanzeigen/boden-innenausbau-visualisierung.webp",
-      "kind": "generated-preview-visual",
+      "sourcePath": "public/preview/customer/eckkueche-grau-fertig.webp",
+      "outputPath": "preview/customer/eckkueche-grau-fertig.webp",
+      "kind": "customer-preview-photo",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/customer/hochbett-montage-fertig.webp",
+      "outputPath": "preview/customer/hochbett-montage-fertig.webp",
+      "kind": "customer-preview-photo",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/customer/fischgraet-parkett.webp",
+      "outputPath": "preview/customer/fischgraet-parkett.webp",
+      "kind": "customer-preview-photo",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/customer/sauna-innenansicht.webp",
+      "outputPath": "preview/customer/sauna-innenansicht.webp",
+      "kind": "customer-preview-photo",
       "approved": true
     }
   ],

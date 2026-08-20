@@ -33,10 +33,24 @@ const services = [
         </div>
         <p class="standard-contact"><a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a><span>·</span><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
       </div>
-      <figure class="standard-visual" data-asset-status="approved-placeholder">
-        <img src={withBase("/hero-kitchen-placeholder.svg")} alt="Schematische Küchenillustration als Platzhalter für ein noch freizugebendes Küchenfoto" width="1600" height="1200" loading="eager" fetchpriority="high" />
-        <figcaption>Platzhalter · reales Küchenfoto erst nach Bildfreigabe</figcaption>
+      <figure class="standard-visual" data-customer-photo>
+        <img src={withBase("/preview/customer/kuechenmontage-u-form-fertig.webp")} alt="Fertig montierte U-förmige Küche als Kundenprojekt" width="1200" height="1600" loading="eager" fetchpriority="high" />
+        <figcaption>Projektfoto · Küchenmontage</figcaption>
       </figure>
+    </section>
+
+    <section class="standard-projects" aria-labelledby="standard-projects-title">
+      <div class="shell">
+        <header class="standard-section-heading">
+          <p class="standard-kicker">Einblicke</p>
+          <h2 id="standard-projects-title">Ausgewählte Arbeiten.</h2>
+        </header>
+        <div class="standard-photo-grid">
+          <figure data-customer-photo><img src={withBase("/preview/customer/eckkueche-grau-fertig.webp")} alt="Fertig montierte graue Eckküche" width="1600" height="1200" loading="lazy" /><figcaption>Küchenmontage</figcaption></figure>
+          <figure data-customer-photo><img src={withBase("/preview/customer/hochbett-montage-fertig.webp")} alt="Fertig aufgebautes Hochbett mit Stauraum" width="1600" height="1200" loading="lazy" /><figcaption>Möbelmontage</figcaption></figure>
+          <figure data-customer-photo><img src={withBase("/preview/customer/fischgraet-parkett.webp")} alt="Verlegter Boden im Fischgrätmuster" width="503" height="614" loading="lazy" /><figcaption>Bodenarbeiten</figcaption></figure>
+        </div>
+      </div>
     </section>
 
     <section class="standard-services" aria-labelledby="standard-services-title">
@@ -110,6 +124,11 @@ const services = [
   .standard-grid span { color: var(--standard-orange); font-size: .76rem; font-weight: 900; }
   .standard-grid h3 { margin: 2.8rem 0 .8rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.35rem; font-weight: 900; }
   .standard-grid p { color: #62655f; font-size: .85rem; }
+  .standard-projects { padding-block: 0 clamp(4rem, 9vw, 8rem); }
+  .standard-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+  .standard-photo-grid figure { position: relative; min-width: 0; aspect-ratio: 4 / 3; margin: 0; overflow: hidden; background: #d8d1c5; }
+  .standard-photo-grid img { width: 100%; height: 100%; object-fit: cover; }
+  .standard-photo-grid figcaption { position: absolute; inset: auto 0 0; padding: 2.5rem .8rem .7rem; color: white; background: linear-gradient(transparent, rgba(20,22,19,.86)); font-size: .75rem; font-weight: 850; }
   .standard-info { padding-block: clamp(4rem, 8vw, 7rem); color: white; background: var(--standard-dark); }
   .standard-info .standard-kicker { color: #efa476; }
   .standard-info-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(3rem, 8vw, 8rem); }
@@ -127,6 +146,8 @@ const services = [
     .standard-hero { grid-template-columns: 1fr; }
     .standard-visual { grid-row: 1; min-height: 55vw; }
     .standard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .standard-photo-grid { grid-template-columns: 1fr 1fr; }
+    .standard-photo-grid figure:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
     .standard-info-grid { grid-template-columns: 1fr; gap: 2rem; }
   }
 
@@ -134,6 +155,8 @@ const services = [
     .standard-copy h1 { font-size: clamp(2.8rem, 15vw, 4.4rem); }
     .standard-visual { min-height: 76vw; }
     .standard-grid { grid-template-columns: 1fr; }
+    .standard-photo-grid { grid-template-columns: 1fr; }
+    .standard-photo-grid figure:first-child { grid-column: auto; aspect-ratio: 4 / 3; }
     .standard-grid article { min-height: 210px; }
     .standard-boundary .shell { grid-template-columns: 1fr; gap: .6rem; }
     .standard-button { width: 100%; }

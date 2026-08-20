@@ -9,7 +9,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(
 <header class="site-header" data-header>
   <div class="header-inner shell">
     <a class="brand" href={withBase("/")} aria-label={`${siteConfig.name} – Startseite`}>
-      <span class="brand-mark" aria-hidden="true">RB</span>
+      <img class="brand-logo" src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
       <span class="brand-copy"><strong>Rybinskyi</strong><span>BauXpert · München</span></span>
     </a>
 

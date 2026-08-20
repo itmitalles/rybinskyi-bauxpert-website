@@ -17,7 +17,7 @@ Status: 2026-08-20. Every item below is a live-release blocker until Denys has c
 | Umgang mit Elektroarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Umgang mit Sanitärarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Servicegebiet | München und Umgebung; bisher acht Stadtteile genannt | nein | — | Welche Orte oder welcher Radius werden tatsächlich bedient? |
-| Bildrechte | keine Projektgruppe freigegeben; vier generierte Kleinanzeigen-Visualisierungen nur für die gekennzeichnete PIN-Preview allowlistet | nein | — | Welche exakten Projektfotos dürfen für Website und OG-Vorschau verwendet werden? Dürfen die vier Visualisierungen auch in einer realen Anzeige erscheinen? |
+| Bildrechte | bestehendes Logo und sechs ausgewählte Projektfotos auf ausdrückliche Nutzeranweisung in der PIN/noindex-Preview; keine finale Bestätigung von Denys | nein | — | Darf Denys die in `docs/ASSET_APPROVAL.md` exakt benannten Dateien auf Website und Kleinanzeigen veröffentlichen? |
 | Biografie | nicht im öffentlichen Build | nein | — | Soll überhaupt eine Biografie erscheinen? Falls ja: exakten Text ausdrücklich bestätigen. |
 | Finale Designfreigabe | Auswahlübersicht mit Standard-, Premium- und Kleinanzeigenvariante | nein | — | Eine Website-Richtung sowie den separaten Anzeigenentwurf ausdrücklich freigeben; Variantenübersicht danach wieder entfernen. |
 
@@ -28,7 +28,7 @@ Until all applicable rows are confirmed:
 - `previewMode` remains `true`.
 - Every page remains `noindex,nofollow,noarchive` and `robots.txt` disallows crawling.
 - No custom domain is configured or switched.
-- No unconfirmed project photo or biography enters `dist`.
+- The expressly requested preview copies of the logo and selected project photos may remain in `dist`; no additional unconfirmed image or biography enters the build.
 - GitHub Pages may host only the explicitly labelled PIN/noindex customer preview. Any release that disables these safeguards, enables the custom domain, or presents the site as final remains blocked.
 - The visible imprint contains no placeholder section; missing legal facts are managed here as a release blocker instead.
 

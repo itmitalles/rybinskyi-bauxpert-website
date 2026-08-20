@@ -124,8 +124,10 @@ for (const variant of ["standard", "premium", "kleinanzeigen"]) {
 const listingPath = htmlPathForUrl("/kleinanzeigen/");
 if (listingPath) {
   const listingHtml = readFileSync(listingPath, "utf8");
-  if ((listingHtml.match(/data-generated-visual/g) ?? []).length !== 4) failures.push("kleinanzeigen: expected four generated visual markers");
-  if ((listingHtml.match(/Visualisierung · kein Referenzfoto/g) ?? []).length !== 4) failures.push("kleinanzeigen: every generated image needs a visible disclosure label");
+  if ((listingHtml.match(/data-customer-photo/g) ?? []).length !== 4) failures.push("kleinanzeigen: expected four customer preview photos");
+  if ((listingHtml.match(/data-copy-button=/g) ?? []).length !== 2) failures.push("kleinanzeigen: title and advert text need copy controls");
+  if ((listingHtml.match(/ download(?:\s|=|>)/g) ?? []).length !== 4) failures.push("kleinanzeigen: every selected photo needs a download link");
+  if (/data-generated-visual|Visualisierung · kein Referenzfoto/.test(listingHtml)) failures.push("kleinanzeigen: obsolete generated-visual presentation remains");
   if (!/Anzeigenentwurf · nicht veröffentlicht/.test(listingHtml)) failures.push("kleinanzeigen: draft publication status is missing");
   if (/Sauna|Ukraine|Donbass|Baufirma|mehreren Mitarbeiter/i.test(listingHtml)) failures.push("kleinanzeigen: unrelated or unapproved narrative is present");
 }

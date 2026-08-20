@@ -58,15 +58,15 @@ const services = [
         <a class="final-phone" href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={18} /> {siteConfig.phoneDisplay}</a>
       </div>
 
-      <figure class="final-hero-media" data-asset-status="approved-placeholder">
-        <img src={withBase("/hero-kitchen-placeholder.svg")} alt="Schematische Küchenillustration als Platzhalter für ein noch freizugebendes reales Projektfoto" width="1600" height="1200" loading="eager" fetchpriority="high" />
-        <figcaption><span>Küchenmontage im Fokus</span><strong>Gestaltungsplatzhalter bis zur Bildfreigabe</strong></figcaption>
+      <figure class="final-hero-media" data-customer-photo>
+        <img src={withBase("/preview/customer/kuechenmontage-u-form-fertig.webp")} alt="Fertig montierte U-förmige Küche als Kundenprojekt" width="1200" height="1600" loading="eager" fetchpriority="high" />
+        <figcaption><span>Küchenmontage im Fokus</span><strong>Fertig montierte Küche</strong></figcaption>
       </figure>
 
       <div class="final-proof" aria-label="Wichtige Informationen">
         <span>01</span><p>München & Umgebung</p>
         <span>02</span><p>Telefon · WhatsApp · E-Mail</p>
-        <span>03</span><p>Projektfotos erst nach Freigabe</p>
+        <span>03</span><p>Ausgewählte Projektaufnahmen</p>
       </div>
     </section>
 
@@ -103,15 +103,15 @@ const services = [
     <section class="section final-references" aria-labelledby="references-title">
       <div class="shell">
         <header class="final-heading">
-          <div><p class="final-kicker">Referenzen</p><h2 id="references-title">Die Bildauswahl wartet auf Freigabe.</h2></div>
-          <p>Die vorhandenen Projektaufnahmen bleiben aus dem öffentlichen Build, bis Denys die Rechte für jede Projektgruppe ausdrücklich bestätigt hat.</p>
+          <div><p class="final-kicker">Referenzen</p><h2 id="references-title">Ausgewählte Arbeiten im Überblick.</h2></div>
+          <p>Projektaufnahmen aus dem vorhandenen Kundenmaterial für die gemeinsame Preview. Die finale Bildauswahl wird mit Denys abgestimmt.</p>
         </header>
         <div class="reference-list">
-          <article><span>01</span><div><p>Kernreferenz</p><h3>Küchenmontage</h3><small>Reales Küchenfoto nach dokumentierter Bildfreigabe.</small></div></article>
-          <article><span>02</span><div><p>Ergänzende Referenz</p><h3>Möbelmontage & Innenausbau</h3><small>Vorhandene Aufnahmen werden erst nach Rechteklärung eingebunden.</small></div></article>
-          <article class="reference-secondary"><span>03</span><div><p>Weitere Referenz</p><h3>Sauna-Ausbau</h3><small>Nicht als Hauptleistung und nicht als erster Eindruck.</small></div></article>
+          <figure data-customer-photo><img src={withBase("/preview/customer/eckkueche-grau-fertig.webp")} alt="Fertig montierte graue Eckküche" width="1600" height="1200" loading="lazy" /><figcaption><span>01</span><div><p>Kernreferenz</p><h3>Küchenmontage</h3></div></figcaption></figure>
+          <figure data-customer-photo><img src={withBase("/preview/customer/hochbett-montage-fertig.webp")} alt="Fertig aufgebautes Hochbett mit Stauraum" width="1600" height="1200" loading="lazy" /><figcaption><span>02</span><div><p>Ergänzende Referenz</p><h3>Möbelmontage</h3></div></figcaption></figure>
+          <figure class="reference-secondary" data-customer-photo><img src={withBase("/preview/customer/sauna-innenansicht.webp")} alt="Innenansicht einer fertig ausgebauten Sauna als weiteres Projekt" width="1280" height="720" loading="lazy" /><figcaption><span>03</span><div><p>Weitere Referenz</p><h3>Sauna-Ausbau</h3></div></figcaption></figure>
         </div>
-        <a class="final-text-link" href={withBase("/projekte/")}>Zum Status der Referenzen <Icon name="arrow" size={18} /></a>
+        <a class="final-text-link" href={withBase("/projekte/")}>Weitere Projekte ansehen <Icon name="arrow" size={18} /></a>
       </div>
     </section>
 
@@ -170,13 +170,13 @@ const services = [
   .final-principles h3 { margin-bottom:.35rem; font-size:1.5rem; }
   .final-principles p { color:rgba(255,255,255,.64); }
   .final-references { background:#dedbd3; }
-  .reference-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--premium-line); border-left:1px solid var(--premium-line); }
-  .reference-list article { display:grid; min-height:280px; grid-template-rows:auto 1fr; border-right:1px solid var(--premium-line); border-bottom:1px solid var(--premium-line); padding:1.4rem; background:rgba(255,255,255,.18); }
-  .reference-list article > span { color:var(--premium-bronze); font-family:Georgia,serif; }
-  .reference-list article > div { align-self:end; }
-  .reference-list p { color:var(--premium-bronze); font-size:.66rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
-  .reference-list h3 { margin:.4rem 0 .8rem; }
-  .reference-list small { color:var(--ink-soft); }
+  .reference-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--premium-line); }
+  .reference-list figure { position:relative; min-width:0; min-height:390px; margin:0; overflow:hidden; background:#c8c4ba; }
+  .reference-list img { width:100%; height:100%; object-fit:cover; }
+  .reference-list figcaption { position:absolute; inset:auto 0 0; display:grid; grid-template-columns:40px 1fr; gap:.6rem; padding:5rem 1.1rem 1rem; color:white; background:linear-gradient(transparent,rgba(12,14,12,.9)); }
+  .reference-list figcaption > span { color:#e1b68e; font-family:Georgia,serif; }
+  .reference-list p { color:#e1b68e; font-size:.62rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
+  .reference-list h3 { margin:.3rem 0 0; color:white; }
   .reference-secondary { background:rgba(20,24,22,.045); }
   .final-text-link { display:inline-flex; align-items:center; gap:.45rem; margin-top:1.5rem; color:var(--premium-bronze); font-weight:850; text-decoration:none; }
   .final-process { background:var(--premium-cream); }
@@ -196,7 +196,7 @@ const services = [
     .final-proof { grid-column:1; grid-row:3; }
     .final-heading,.final-boundaries-grid,.final-process-grid { grid-template-columns:1fr; gap:1.3rem; }
     .reference-list { grid-template-columns:1fr; }
-    .reference-list article { min-height:220px; }
+    .reference-list figure { min-height:340px; }
   }
   @media(max-width:700px){
     .final-hero-media { min-height:76vw; }

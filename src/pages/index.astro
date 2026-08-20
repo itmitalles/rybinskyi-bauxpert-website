@@ -22,10 +22,10 @@ const variants = [
   },
   {
     key: "kleinanzeigen",
-    eyebrow: "Variante C",
-    title: "Kleinanzeigen",
-    description: "Ein überarbeiteter Anzeigenauftritt mit neuem Text, klarer Leistungsabgrenzung und eigens erzeugten Vorschaubildern.",
-    note: "Anzeigenentwurf · nicht veröffentlicht",
+    eyebrow: "Zusatz",
+    title: "Kleinanzeigen-Paket",
+    description: "Ein fertiger Anzeigentext zum Kopieren und vier ausgewählte Kundenfotos zum Herunterladen.",
+    note: "Text & Bilder · nicht veröffentlicht",
     href: "/kleinanzeigen/",
   },
 ] as const;
@@ -39,7 +39,7 @@ const variants = [
   <div class="variant-overview" data-variant-overview>
     <header class="overview-header">
       <a class="overview-brand" href={withBase("/")} aria-label="Rybinskyi BauXpert Variantenübersicht">
-        <span aria-hidden="true">RB</span>
+        <img src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
         <strong>Rybinskyi BauXpert</strong>
       </a>
       <span class="preview-status">Kundenpreview · noindex</span>
@@ -47,9 +47,9 @@ const variants = [
 
     <main class="overview-main" aria-labelledby="overview-title">
       <div class="overview-intro">
-        <p class="overview-kicker">Ein Link · drei Ansichten</p>
-        <h1 id="overview-title">Welche Richtung überzeugt?</h1>
-        <p>Öffnen Sie jede Variante in Ruhe. Ganz oben führt auf jeder Seite eine große, farbige Leiste wieder hierher zurück.</p>
+        <p class="overview-kicker">Ein Link · zwei Website-Versionen · ein Anzeigenpaket</p>
+        <h1 id="overview-title">Alles auf einen Blick.</h1>
+        <p>Vergleichen Sie Standard und Premium. Das Kleinanzeigen-Paket enthält separat den kopierfertigen Text und die passenden Bilder. Ganz oben führt auf jeder Seite eine große Leiste zurück.</p>
       </div>
 
       <div class="variant-grid" aria-label="Drei Preview-Varianten">
@@ -71,7 +71,7 @@ const variants = [
 
       <aside class="overview-notice" aria-label="Hinweise zur Preview">
         <strong>Noch keine Live-Freigabe.</strong>
-        <p>Kontaktdaten, Anbieterangaben, Leistungsumfang, Bildrechte und finale Gestaltung müssen vor einer Veröffentlichung von Denys bestätigt werden. Die Bilder der Kleinanzeigenvariante sind gekennzeichnete Visualisierungen und keine Referenzfotos.</p>
+        <p>Kontaktdaten, Anbieterangaben, Leistungsumfang, Bildrechte und finale Gestaltung müssen vor einer Veröffentlichung von Denys bestätigt werden. Die Kundenfotos sind auf ausdrückliche Anweisung in dieser PIN-Preview enthalten und werden vor dem endgültigen Livegang gemeinsam abgestimmt.</p>
       </aside>
     </main>
 
@@ -118,14 +118,12 @@ const variants = [
     text-decoration: none;
   }
 
-  .overview-brand span {
-    display: grid;
+  .overview-brand img {
     width: 45px;
     height: 45px;
-    place-items: center;
-    border: 1px solid rgba(255, 255, 255, .28);
-    font-family: Georgia, serif;
-    letter-spacing: .08em;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #171b18;
   }
 
   .overview-brand strong { font-size: .9rem; letter-spacing: .04em; }
