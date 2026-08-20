@@ -15,13 +15,13 @@ const inferredBasePath =
     : "";
 const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
 const sitePath = (path: string) => `${basePath}${path}`;
-const contentPaths = ["/", "/leistungen/", "/projekte/", "/kontakt/", "/impressum/", "/datenschutz/"];
+const contentPaths = ["/", "/standard/", "/premium/", "/kleinanzeigen/", "/leistungen/", "/projekte/", "/kontakt/", "/impressum/", "/datenschutz/"];
 
 const unlock = async (page: Page) => {
   await page.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
 };
 
-test("PIN gate rejects an invalid PIN and opens only the final concept", async ({ page }) => {
+test("PIN gate rejects an invalid PIN and opens the three-variant overview", async ({ page }) => {
   await page.goto(sitePath("/"));
   await expect(page.locator("[data-pin-gate]")).toBeVisible();
   await page.locator("#preview-pin").fill("000000");
@@ -33,26 +33,60 @@ test("PIN gate rejects an invalid PIN and opens only the final concept", async (
     await page.locator("#preview-pin").fill(previewPin);
     await page.locator("[data-pin-form]").press("Enter");
     await expect(page.locator("[data-pin-gate]")).toHaveCount(0);
-    await expect(page.locator('[data-final-concept="premium-grounded"]')).toBeVisible();
-    await expect(page.locator("[data-concept-panel], [data-change-concept]")).toHaveCount(0);
+    await expect(page.locator("[data-variant-overview]")).toBeVisible();
+    await expect(page.locator("[data-variant-card]")).toHaveCount(3);
   }
 });
 
-test("home shows one kitchen-led concept and keeps sauna below the main area", async ({ page }) => {
+test("overview exposes exactly three variants and every variant has a prominent return bar", async ({ page }) => {
   await unlock(page);
   await page.goto(sitePath("/"));
-  await expect(page.locator("[data-final-concept]")).toHaveCount(1);
-  const hero = page.locator('[data-hero-kind="kitchen"]');
-  await expect(hero).toBeVisible();
-  await expect(hero.locator("img")).toHaveAttribute("alt", /Küchen/i);
-  await expect(hero).not.toContainText(/Sauna/i);
-  await expect(page.locator('a[href*="/premium/"]')).toHaveCount(0);
-  await expect(page.locator("[data-change-concept], [data-concept-panel]")).toHaveCount(0);
-  const heroBox = await hero.boundingBox();
-  const saunaBox = await page.getByRole("heading", { name: "Sauna-Ausbau" }).boundingBox();
-  expect(heroBox).not.toBeNull();
-  expect(saunaBox).not.toBeNull();
-  expect(saunaBox!.y).toBeGreaterThan(heroBox!.y + heroBox!.height);
+  await expect(page.locator("[data-variant-card]")).toHaveCount(3);
+  await expect(page.locator("[data-variant-link]")).toHaveCount(3);
+  await expect(page.locator("[data-final-concept], [data-change-concept], [data-concept-panel]")).toHaveCount(0);
+
+  for (const variant of ["standard", "premium", "kleinanzeigen"] as const) {
+    await page.locator(`[data-variant-link="${variant}"]`).click();
+    await expect(page.locator(`[data-preview-variant="${variant}"]`)).toBeVisible();
+    const returnBar = page.locator("[data-variant-back]");
+    await expect(returnBar).toBeVisible();
+    await expect(returnBar).toContainText("Zurück zur Variantenübersicht");
+    const box = await returnBar.boundingBox();
+    const viewport = page.viewportSize();
+    expect(box).not.toBeNull();
+    expect(viewport).not.toBeNull();
+    expect(box!.y).toBeLessThanOrEqual(1);
+    expect(box!.height).toBeGreaterThanOrEqual(60);
+    expect(box!.width).toBeGreaterThanOrEqual(viewport!.width - 1);
+
+    const hero = page.locator('[data-hero-kind="kitchen"]');
+    await expect(hero).toBeVisible();
+    await expect(hero.locator("img").first()).toHaveAttribute("alt", /Küch/i);
+    await expect(hero).not.toContainText(/Sauna/i);
+    await returnBar.getByRole("link", { name: /Zurück zur Variantenübersicht/ }).click();
+    await expect(page.locator("[data-variant-overview]")).toBeVisible();
+  }
+});
+
+test("Kleinanzeigen proposal labels every generated image and keeps contact deliberate", async ({ page, context }) => {
+  await unlock(page);
+  const externalRequests: string[] = [];
+  context.on("request", (request) => {
+    const target = new URL(request.url());
+    if (target.origin !== "http://127.0.0.1:4321") externalRequests.push(request.url());
+  });
+  await page.goto(sitePath("/kleinanzeigen/"), { waitUntil: "networkidle" });
+  await expect(page.getByText("Anzeigenentwurf · nicht veröffentlicht", { exact: true })).toBeVisible();
+  await expect(page.locator("[data-generated-visual]")).toHaveCount(4);
+  await expect(page.locator("[data-generated-visual] .visual-label")).toHaveCount(4);
+  for (const label of await page.locator("[data-generated-visual] .visual-label").all()) {
+    await expect(label).toBeVisible();
+    await expect(label).toHaveText("Visualisierung · kein Referenzfoto");
+  }
+  await expect(page.locator(`a[href="tel:${phone}"]`)).toBeVisible();
+  await expect(page.locator(`a[href="mailto:${email}"]`)).toBeVisible();
+  await expect(page.locator(`a[href^="https://wa.me/${whatsappNumber}?text="]`)).toBeVisible();
+  expect(externalRequests).toEqual([]);
 });
 
 for (const path of contentPaths) {
@@ -74,10 +108,10 @@ for (const path of contentPaths) {
   });
 }
 
-test("mobile menu opens and exposes the final navigation", async ({ page }, testInfo) => {
+test("mobile menu opens on a website variant and exposes the shared navigation", async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith("mobile"), "Mobile navigation check");
   await unlock(page);
-  await page.goto(sitePath("/"));
+  await page.goto(sitePath("/standard/"));
   await page.locator("[data-menu-toggle]").click();
   await expect(page.locator("[data-menu-toggle]")).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("[data-mobile-menu]")).toBeVisible();
@@ -119,24 +153,31 @@ test("preview metadata, legal routes, sitemap, robots and 404 stay coherent", as
   await page.goto(sitePath("/"));
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,nofollow,noarchive");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://rybinskyi-bauxpert.de/");
+  await page.goto(sitePath("/kleinanzeigen/"));
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,nofollow,noarchive");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://rybinskyi-bauxpert.de/kleinanzeigen/");
 
   const sitemap = await request.get(sitePath("/sitemap.xml"));
   expect(sitemap.ok()).toBeTruthy();
   const sitemapBody = await sitemap.text();
   expect(sitemapBody).toContain("https://rybinskyi-bauxpert.de/");
+  expect(sitemapBody).not.toContain("/standard/");
   expect(sitemapBody).not.toContain("/premium/");
+  expect(sitemapBody).not.toContain("/kleinanzeigen/");
 
   const robots = await request.get(sitePath("/robots.txt"));
   expect(await robots.text()).toBe("User-agent: *\nDisallow: /\n");
   expect((await request.get(sitePath("/impressum/"))).ok()).toBeTruthy();
   expect((await request.get(sitePath("/datenschutz/"))).ok()).toBeTruthy();
-  expect((await request.get(sitePath("/premium/"))).status()).toBe(404);
+  expect((await request.get(sitePath("/standard/"))).ok()).toBeTruthy();
+  expect((await request.get(sitePath("/premium/"))).ok()).toBeTruthy();
+  expect((await request.get(sitePath("/kleinanzeigen/"))).ok()).toBeTruthy();
   expect((await request.get(sitePath("/release-gate-missing-page/"))).status()).toBe(404);
 });
 
-test("visual screenshots cover final desktop and mobile layouts", async ({ page }, testInfo) => {
+test("visual screenshots cover overview, all variants and contact on desktop and mobile", async ({ page }, testInfo) => {
   await unlock(page);
-  for (const [name, path] of [["home", "/"], ["services", "/leistungen/"], ["contact", "/kontakt/"]] as const) {
+  for (const [name, path] of [["overview", "/"], ["standard", "/standard/"], ["premium", "/premium/"], ["kleinanzeigen", "/kleinanzeigen/"], ["contact", "/kontakt/"]] as const) {
     await page.goto(sitePath(path), { waitUntil: "networkidle" });
     const screenshotPath = testInfo.outputPath(`${name}.png`);
     await page.screenshot({ path: screenshotPath, fullPage: true });

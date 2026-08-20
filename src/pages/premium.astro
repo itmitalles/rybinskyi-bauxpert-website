@@ -1,0 +1,209 @@
+---
+import ContactBand from "@/components/ContactBand.astro";
+import Icon from "@/components/Icon.astro";
+import { siteConfig } from "@/config/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { whatsappUrl, withBase } from "@/lib/urls";
+
+const services = [
+  {
+    title: "Küchenmontage",
+    summary: "Küchenelemente aufbauen, ausrichten und im vereinbarten Umfang an den Raum anpassen.",
+    href: "/leistungen/kuechenmontage/",
+  },
+  {
+    title: "Möbelmontage & Maßanpassung",
+    summary: "Schränke, Regale, Betten und geeignete Einbauteile montieren und passend ausrichten.",
+    href: "/leistungen/moebelmontage/",
+  },
+  {
+    title: "Innenausbau",
+    summary: "Innenräume mit abgestimmten Ausbau-, Verkleidungs- und Montagearbeiten weiterentwickeln.",
+    href: "/leistungen/innenausbau/",
+  },
+  {
+    title: "Böden",
+    summary: "Bodenflächen vorbereiten, geeignete Beläge verlegen und Übergänge sowie Sockelleisten ausführen.",
+    href: "/leistungen/bodenverlegung/",
+  },
+  {
+    title: "Renovierung",
+    summary: "Bestehende Räume in klar abgegrenzten Arbeitsschritten auffrischen und überarbeiten.",
+    href: "/leistungen/renovierung/",
+  },
+  {
+    title: "Kleinere Montage- & Ausbauprojekte",
+    summary: "Überschaubare Montage-, Anpassungs- und Ausbauarbeiten nach vorheriger Prüfung übernehmen.",
+    href: "/leistungen/montage-ausbauprojekte/",
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Küchenmontage, Möbelmontage & Innenausbau München | Rybinskyi BauXpert"
+  description="Küchenmontage, Möbelmontage, Innenausbau, Böden und Renovierung in München und Umgebung – direkt per Telefon, WhatsApp oder E-Mail anfragen."
+  showVariantBack={true}
+  variantLabel="Variante B · Premium"
+>
+  <div class="final-preview" data-preview-variant="premium">
+    <section class="final-hero" data-hero-kind="kitchen">
+      <div class="final-hero-copy">
+        <p class="final-kicker">München & Umgebung</p>
+        <h1>Küchenmontage, Möbelmontage & Innenausbau.</h1>
+        <p class="final-lead">Konkrete Arbeiten für Wohnung und Haus – von der Montage über passende Ausbauarbeiten bis zur Renovierung.</p>
+        <div class="button-row">
+          <a class="final-button" href={withBase("/kontakt/#anfrage")}>Projekt anfragen <Icon name="arrow" size={18} /></a>
+          <a class="final-button final-button-quiet" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+        </div>
+        <a class="final-phone" href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={18} /> {siteConfig.phoneDisplay}</a>
+      </div>
+
+      <figure class="final-hero-media" data-asset-status="approved-placeholder">
+        <img src={withBase("/hero-kitchen-placeholder.svg")} alt="Schematische Küchenillustration als Platzhalter für ein noch freizugebendes reales Projektfoto" width="1600" height="1200" loading="eager" fetchpriority="high" />
+        <figcaption><span>Küchenmontage im Fokus</span><strong>Gestaltungsplatzhalter bis zur Bildfreigabe</strong></figcaption>
+      </figure>
+
+      <div class="final-proof" aria-label="Wichtige Informationen">
+        <span>01</span><p>München & Umgebung</p>
+        <span>02</span><p>Telefon · WhatsApp · E-Mail</p>
+        <span>03</span><p>Projektfotos erst nach Freigabe</p>
+      </div>
+    </section>
+
+    <section class="section final-services">
+      <div class="shell">
+        <header class="final-heading">
+          <div><p class="final-kicker">Leistungsschwerpunkte</p><h2>Was konkret angefragt werden kann.</h2></div>
+          <p>Der genaue Umfang wird für jedes Projekt einzeln geklärt. Die Reihenfolge zeigt, worauf die finale Website ihren Schwerpunkt legt.</p>
+        </header>
+        <div class="final-service-list">
+          {services.map((service, index) => (
+            <a href={withBase(service.href)}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{service.title}</strong>
+              <p>{service.summary}</p>
+              <Icon name="arrow" size={20} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-boundaries">
+      <div class="shell final-boundaries-grid">
+        <div><p class="final-kicker">Klare Abgrenzung</p><h2>Montage und Ausbau ohne pauschale Fachgewerk-Versprechen.</h2></div>
+        <div class="final-principles">
+          <article><span>01</span><div><h3>Aufgabe zuerst klären</h3><p>Fotos, Maße, Ort und die gewünschte Arbeit helfen dabei, den tatsächlichen Umfang einzuordnen.</p></div></article>
+          <article><span>02</span><div><h3>Eigenleistung benennen</h3><p>Ausgeführt werden nur Arbeiten, die für das konkrete Projekt tatsächlich angeboten und vereinbart sind.</p></div></article>
+          <article><span>03</span><div><h3>Facharbeiten trennen</h3><p>Elektro- und Sanitärfacharbeiten sind kein pauschaler Bestandteil. Erforderliche Arbeiten werden mit geeigneten Fachbetrieben abgestimmt.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-references" aria-labelledby="references-title">
+      <div class="shell">
+        <header class="final-heading">
+          <div><p class="final-kicker">Referenzen</p><h2 id="references-title">Die Bildauswahl wartet auf Freigabe.</h2></div>
+          <p>Die vorhandenen Projektaufnahmen bleiben aus dem öffentlichen Build, bis Denys die Rechte für jede Projektgruppe ausdrücklich bestätigt hat.</p>
+        </header>
+        <div class="reference-list">
+          <article><span>01</span><div><p>Kernreferenz</p><h3>Küchenmontage</h3><small>Reales Küchenfoto nach dokumentierter Bildfreigabe.</small></div></article>
+          <article><span>02</span><div><p>Ergänzende Referenz</p><h3>Möbelmontage & Innenausbau</h3><small>Vorhandene Aufnahmen werden erst nach Rechteklärung eingebunden.</small></div></article>
+          <article class="reference-secondary"><span>03</span><div><p>Weitere Referenz</p><h3>Sauna-Ausbau</h3><small>Nicht als Hauptleistung und nicht als erster Eindruck.</small></div></article>
+        </div>
+        <a class="final-text-link" href={withBase("/projekte/")}>Zum Status der Referenzen <Icon name="arrow" size={18} /></a>
+      </div>
+    </section>
+
+    <section class="section final-process">
+      <div class="shell final-process-grid">
+        <div><p class="final-kicker">Kontakt & Ablauf</p><h2>Vom ersten Überblick zum klaren Auftrag.</h2><p>Der Anfrage-Builder bleibt vollständig lokal. Erst der bewusste Klick öffnet WhatsApp oder das E-Mail-Programm mit dem vorbereiteten Text.</p></div>
+        <ol>
+          <li><span>01</span><div><h3>Projekt beschreiben</h3><p>Arbeit, Ort, Maße und vorhandene Fotos zusammenstellen.</p></div></li>
+          <li><span>02</span><div><h3>Umfang klären</h3><p>Eigenleistungen, Schnittstellen und offene Facharbeiten abgrenzen.</p></div></li>
+          <li><span>03</span><div><h3>Ausführung abstimmen</h3><p>Material, Reihenfolge und Zuständigkeiten projektbezogen festlegen.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <ContactBand title="Was soll montiert oder ausgebaut werden?" text="Schicken Sie eine kurze Beschreibung, Ort oder Stadtteil und – nach eigener Entscheidung – passende Fotos per WhatsApp oder E-Mail." />
+  </div>
+</BaseLayout>
+
+<style>
+  .final-preview { --premium-dark:#141816; --premium-cream:#f3f0e9; --premium-bronze:#7d4a32; --premium-bronze-light:#d19a6d; --premium-line:rgba(20,24,22,.16); background:var(--premium-cream); }
+  .final-kicker { color:var(--premium-bronze); font-size:.7rem; font-weight:850; letter-spacing:.17em; text-transform:uppercase; }
+  .final-hero { position:relative; display:grid; min-height:min(830px,calc(100dvh - var(--header-height))); grid-template-columns:minmax(380px,.9fr) minmax(0,1.1fr); grid-template-rows:1fr auto; color:white; background:var(--premium-dark); }
+  .final-hero-copy { display:flex; grid-column:1; grid-row:1; flex-direction:column; justify-content:center; padding:clamp(3rem,7vw,7.5rem) clamp(2rem,4vw,4.5rem); }
+  .final-hero .final-kicker { color:var(--premium-bronze-light); }
+  .final-hero h1 { max-width:760px; margin:.8rem 0 1.4rem; font-size:clamp(3rem,4.8vw,5.4rem); }
+  .final-lead { max-width:620px; color:rgba(255,255,255,.7); font-size:clamp(1rem,1.5vw,1.2rem); }
+  .final-hero .button-row { margin-top:2rem; }
+  .final-button { display:inline-flex; min-height:50px; align-items:center; justify-content:center; gap:.55rem; border:1px solid var(--premium-bronze); padding:.75rem 1rem; color:white; background:var(--premium-bronze); font-size:.82rem; font-weight:800; text-decoration:none; }
+  .final-button-quiet { border-color:rgba(255,255,255,.35); background:transparent; }
+  .final-phone { display:inline-flex; align-items:center; gap:.5rem; width:fit-content; margin-top:1.3rem; color:rgba(255,255,255,.82); font-size:.82rem; font-weight:800; text-decoration:none; }
+  .final-hero-media { position:relative; grid-column:2; grid-row:1/-1; min-height:680px; margin:0; overflow:hidden; background:#262c28; }
+  .final-hero-media img { width:100%; height:100%; object-fit:cover; }
+  .final-hero-media figcaption { position:absolute; inset:auto 0 0; display:grid; gap:.2rem; padding:5rem 1.4rem 1.4rem; background:linear-gradient(transparent,rgba(10,12,11,.9)); }
+  .final-hero-media figcaption span { color:#e1b68e; font-size:.65rem; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
+  .final-hero-media figcaption strong { font-family:Georgia,serif; font-size:clamp(1rem,1.8vw,1.35rem); font-weight:500; }
+  .final-proof { display:grid; grid-column:1; grid-row:2; grid-template-columns:auto 1fr auto 1fr auto 1fr; align-items:center; gap:.65rem; border-top:1px solid rgba(255,255,255,.15); padding:1.3rem clamp(2rem,4vw,4.5rem); }
+  .final-proof span { color:var(--premium-bronze-light); font-family:Georgia,serif; }
+  .final-proof p { color:rgba(255,255,255,.62); font-size:.68rem; line-height:1.3; }
+  .final-heading { display:grid; grid-template-columns:1.2fr .8fr; align-items:end; gap:3rem; margin-bottom:3rem; }
+  .final-heading h2 { max-width:820px; margin-top:.7rem; }
+  .final-heading > p { max-width:500px; color:var(--ink-soft); }
+  .final-services { background:var(--premium-cream); }
+  .final-service-list { border-top:1px solid var(--premium-line); }
+  .final-service-list a { display:grid; grid-template-columns:58px minmax(220px,.7fr) minmax(0,1.3fr) auto; align-items:center; gap:1rem; border-bottom:1px solid var(--premium-line); padding:1.25rem .4rem; text-decoration:none; transition:background .18s ease,padding .18s ease; }
+  .final-service-list a:hover { padding-inline:.8rem; background:rgba(255,255,255,.62); }
+  .final-service-list span { color:var(--premium-bronze); font-family:Georgia,serif; }
+  .final-service-list strong { font-family:Georgia,serif; font-size:clamp(1.25rem,2.2vw,1.9rem); font-weight:500; }
+  .final-service-list p { color:var(--ink-soft); font-size:.84rem; }
+  .final-boundaries { color:white; background:var(--premium-dark); }
+  .final-boundaries .final-kicker { color:var(--premium-bronze-light); }
+  .final-boundaries-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(3rem,8vw,8rem); }
+  .final-boundaries h2 { margin-top:.8rem; }
+  .final-principles { border-top:1px solid rgba(255,255,255,.2); }
+  .final-principles article { display:grid; grid-template-columns:55px 1fr; gap:1rem; border-bottom:1px solid rgba(255,255,255,.2); padding:1.6rem 0; }
+  .final-principles span { color:#d1a37d; font-family:Georgia,serif; }
+  .final-principles h3 { margin-bottom:.35rem; font-size:1.5rem; }
+  .final-principles p { color:rgba(255,255,255,.64); }
+  .final-references { background:#dedbd3; }
+  .reference-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--premium-line); border-left:1px solid var(--premium-line); }
+  .reference-list article { display:grid; min-height:280px; grid-template-rows:auto 1fr; border-right:1px solid var(--premium-line); border-bottom:1px solid var(--premium-line); padding:1.4rem; background:rgba(255,255,255,.18); }
+  .reference-list article > span { color:var(--premium-bronze); font-family:Georgia,serif; }
+  .reference-list article > div { align-self:end; }
+  .reference-list p { color:var(--premium-bronze); font-size:.66rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
+  .reference-list h3 { margin:.4rem 0 .8rem; }
+  .reference-list small { color:var(--ink-soft); }
+  .reference-secondary { background:rgba(20,24,22,.045); }
+  .final-text-link { display:inline-flex; align-items:center; gap:.45rem; margin-top:1.5rem; color:var(--premium-bronze); font-weight:850; text-decoration:none; }
+  .final-process { background:var(--premium-cream); }
+  .final-process-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(3rem,8vw,8rem); }
+  .final-process-grid > div > h2 { margin:.7rem 0 1.2rem; }
+  .final-process-grid > div > p:last-child { max-width:560px; color:var(--ink-soft); }
+  .final-process ol { list-style:none; border-top:1px solid var(--premium-line); }
+  .final-process li { display:grid; grid-template-columns:55px 1fr; gap:1rem; border-bottom:1px solid var(--premium-line); padding:1.4rem 0; }
+  .final-process li > span { color:var(--premium-bronze); font-family:Georgia,serif; }
+  .final-process h3 { margin-bottom:.35rem; }
+  .final-process li p { color:var(--ink-soft); }
+  :global(.final-preview .contact-band) { background:#756a5b; }
+  @media(max-width:900px){
+    .final-hero { grid-template-columns:1fr; grid-template-rows:auto auto auto; }
+    .final-hero-media { grid-column:1; grid-row:1; min-height:55vw; }
+    .final-hero-copy { grid-column:1; grid-row:2; }
+    .final-proof { grid-column:1; grid-row:3; }
+    .final-heading,.final-boundaries-grid,.final-process-grid { grid-template-columns:1fr; gap:1.3rem; }
+    .reference-list { grid-template-columns:1fr; }
+    .reference-list article { min-height:220px; }
+  }
+  @media(max-width:700px){
+    .final-hero-media { min-height:76vw; }
+    .final-hero h1 { font-size:clamp(2.7rem,13vw,4.25rem); }
+    .final-proof { grid-template-columns:auto 1fr; }
+    .final-service-list a { grid-template-columns:40px 1fr auto; }
+    .final-service-list p { display:none; }
+    .final-hero .button-row .final-button { flex:1; }
+  }
+</style>

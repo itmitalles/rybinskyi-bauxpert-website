@@ -34,16 +34,26 @@ for (const [outputPath, asset] of approved) {
   if (!builtImages.includes(outputPath)) failures.push(`Approved output is missing from dist: ${outputPath}`);
 }
 
+for (const outputPath of builtImages.filter((path) => /\.(?:avif|gif|jpe?g|png|webp)$/i.test(path))) {
+  const asset = approved.get(outputPath);
+  if (!asset) continue;
+  if (asset.kind === "generated-preview-visual" && !outputPath.startsWith("preview/kleinanzeigen/")) {
+    failures.push(`Generated preview visual is outside its isolated preview path: ${outputPath}`);
+  }
+  if (!new Set(["generated-preview-visual", "customer-approved-photo"]).has(asset.kind)) {
+    failures.push(`Raster image has an invalid approval kind: ${outputPath}`);
+  }
+}
+
 for (const pendingRoot of manifest.pendingRoots) {
   const absolute = join(projectRoot, pendingRoot);
   if (!existsSync(absolute)) failures.push(`Pending asset root is missing: ${pendingRoot}`);
 }
 
-if (builtImages.some((path) => /\.(?:avif|gif|jpe?g|png|webp)$/i.test(path))) failures.push("Raster image found in dist while all customer raster assets are pending approval");
 if (builtImages.some((path) => path.includes("premium"))) failures.push("Legacy premium asset found in dist");
 
 if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);
 }
-console.log(`Asset gate passed: ${builtImages.length} approved vector assets in dist; no customer raster image was published.`);
+console.log(`Asset gate passed: ${builtImages.length} allowlisted image assets in dist; no unapproved customer raster image was published.`);

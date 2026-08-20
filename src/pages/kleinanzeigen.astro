@@ -1,0 +1,200 @@
+---
+import Icon from "@/components/Icon.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+import { whatsappUrl, withBase } from "@/lib/urls";
+
+const gallery = [
+  {
+    src: "/preview/kleinanzeigen/kueche-fertig-visualisierung.webp",
+    alt: "KI-Visualisierung einer fertig montierten Küche in einer Wohnung",
+    caption: "Möglicher Titelauftritt: fertige Küchenmontage",
+    hero: true,
+  },
+  {
+    src: "/preview/kleinanzeigen/kueche-montage-visualisierung.webp",
+    alt: "KI-Visualisierung ausgerichteter Küchenschränke während der Möbelmontage",
+    caption: "Küchenmöbel ausrichten und montieren",
+    hero: false,
+  },
+  {
+    src: "/preview/kleinanzeigen/moebelmontage-visualisierung.webp",
+    alt: "KI-Visualisierung eines aufgebauten und ausgerichteten Kleiderschranks",
+    caption: "Möbelmontage und geeignete Anpassung",
+    hero: false,
+  },
+  {
+    src: "/preview/kleinanzeigen/boden-innenausbau-visualisierung.webp",
+    alt: "KI-Visualisierung eines Bodenabschlusses mit Sockelleiste und Übergang",
+    caption: "Böden und kleinere Ausbauarbeiten",
+    hero: false,
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Kleinanzeigen-Vorschlag | Rybinskyi BauXpert Preview"
+  description="Nicht veröffentlichter Anzeigenentwurf für Küchenmontage, Möbelmontage und Innenausbau in München mit gekennzeichneten Visualisierungen."
+  hideChrome={true}
+  showVariantBack={true}
+  variantLabel="Variante C · Kleinanzeigen"
+>
+  <div class="listing-preview" data-preview-variant="kleinanzeigen">
+    <header class="listing-preview-header">
+      <div class="listing-logo"><span aria-hidden="true">RB</span><strong>Rybinskyi BauXpert</strong></div>
+      <div class="listing-draft"><span></span>Anzeigenentwurf · nicht veröffentlicht</div>
+    </header>
+
+    <main class="listing-shell">
+      <div class="listing-breadcrumb" aria-label="Einordnung">
+        <span>Dienstleistungen</span><span aria-hidden="true">›</span><span>Haus & Garten</span><span aria-hidden="true">›</span><strong>München</strong>
+      </div>
+
+      <section class="listing-title" aria-labelledby="listing-title">
+        <p>Überarbeiteter Kleinanzeigen-Auftritt</p>
+        <h1 id="listing-title">Küchenmontage, Möbelmontage & Innenausbau in München</h1>
+        <div><span>München & Umgebung</span><span>Vorschau · Stand 20.08.2026</span></div>
+      </section>
+
+      <aside class="visual-disclosure" id="visualisierung-hinweis">
+        <Icon name="camera" size={21} />
+        <div><strong>Visualisierungen – keine Referenzfotos</strong><p>Diese vier Bilder wurden eigens für den Entwurf erzeugt. Sie zeigen keine ausgeführten Kundenprojekte und dürfen nicht als Arbeitsnachweis verstanden werden.</p></div>
+      </aside>
+
+      <section class="listing-gallery" data-hero-kind="kitchen" aria-label="Gekennzeichnete Bildvisualisierungen">
+        {gallery.map((image) => (
+          <figure class:list={["listing-image", image.hero && "listing-image-hero"]} data-generated-visual>
+            <img src={withBase(image.src)} alt={image.alt} width="1448" height="1086" loading={image.hero ? "eager" : "lazy"} fetchpriority={image.hero ? "high" : undefined} />
+            <span class="visual-label">Visualisierung · kein Referenzfoto</span>
+            <figcaption>{image.caption}</figcaption>
+          </figure>
+        ))}
+      </section>
+
+      <div class="listing-layout">
+        <article class="listing-body">
+          <section>
+            <h2>Beschreibung</h2>
+            <p>Sie möchten eine Küche montieren, Möbel aufbauen oder einen klar abgegrenzten Ausbau- oder Renovierungsschritt umsetzen?</p>
+            <p>Rybinskyi BauXpert nimmt in München Anfragen für folgende Arbeiten entgegen:</p>
+          </section>
+
+          <section class="listing-services" aria-label="Leistungsschwerpunkte">
+            <article><span>01</span><div><h3>Küchenmontage</h3><p>Küchenmöbel aufbauen und ausrichten, Schrankelemente verbinden sowie Fronten, Griffe und Innenausstattung montieren. Geeignete Blenden und Passstücke werden nur nach vorheriger Prüfung angepasst.</p></div></article>
+            <article><span>02</span><div><h3>Möbelmontage & Maßanpassung</h3><p>Schränke, Regale, Betten und geeignete Einbauteile montieren und ausrichten. Maßanpassungen werden abhängig von Material und Konstruktion geprüft.</p></div></article>
+            <article><span>03</span><div><h3>Innenausbau</h3><p>Abgestimmte Verkleidungs-, Montage- und Ausbauarbeiten für bestehende Räume.</p></div></article>
+            <article><span>04</span><div><h3>Bodenarbeiten</h3><p>Flächen vorbereiten, geeignete Beläge verlegen sowie Sockelleisten und Übergänge ausführen.</p></div></article>
+            <article><span>05</span><div><h3>Renovierung</h3><p>Bestehende Räume in klar vereinbarten Arbeitsschritten überarbeiten.</p></div></article>
+            <article><span>06</span><div><h3>Kleinere Montage- und Ausbauprojekte</h3><p>Einzelne Möbel, Einbauten und überschaubare Anpassungen nach vorheriger Prüfung.</p></div></article>
+          </section>
+
+          <section class="listing-request">
+            <h2>Für eine erste Einordnung hilfreich</h2>
+            <ul>
+              <li>Ort oder Stadtteil</li>
+              <li>Kurze Beschreibung der gewünschten Arbeiten</li>
+              <li>Maße und gegebenenfalls Plan oder Lieferumfang</li>
+              <li>Fotos des aktuellen Zustands</li>
+              <li>Gewünschter Zeitraum</li>
+            </ul>
+          </section>
+
+          <section class="listing-boundary">
+            <h2>Leistungsumfang klar abgrenzen</h2>
+            <p>Der genaue Leistungsumfang wird für jedes Projekt einzeln geklärt. Elektro- und Sanitärfacharbeiten sind kein pauschaler Bestandteil. Es werden nur tatsächlich angebotene und erlaubte Eigenleistungen vereinbart; erforderliche Facharbeiten werden getrennt und mit geeigneten Fachbetrieben abgestimmt.</p>
+            <p>Eine Anfrage ist noch keine Ausführungszusage.</p>
+          </section>
+        </article>
+
+        <aside class="listing-contact" aria-label="Kontakt im Anzeigenentwurf">
+          <p class="contact-label">Kontaktvorschlag</p>
+          <h2>Projekt kurz beschreiben</h2>
+          <p>Ort, gewünschte Arbeiten, Maße und vorhandene Fotos helfen bei der ersten Einordnung.</p>
+          <div class="listing-actions">
+            <a class="listing-action listing-action-primary" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={20} /> Per WhatsApp anfragen</a>
+            <a class="listing-action" href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={20} /> {siteConfig.phoneDisplay}</a>
+            <a class="listing-action" href={`mailto:${siteConfig.email}`}><Icon name="mail" size={20} /> E-Mail schreiben</a>
+          </div>
+          <small>Die Kontaktdaten sind derzeit Preview-Arbeitswerte und müssen vor Veröffentlichung bestätigt werden. Erst der bewusste Klick öffnet Telefon, WhatsApp oder das E-Mail-Programm.</small>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="listing-footer">
+      <div><strong>{siteConfig.name}</strong><span>Preview für die Kundenentscheidung</span></div>
+      <nav aria-label="Rechtliche Informationen"><a href={withBase("/impressum/")}>Impressum</a><a href={withBase("/datenschutz/")}>Datenschutz</a></nav>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .listing-preview { --listing-teal: #176b65; --listing-orange: #a94718; --listing-ink: #242823; min-height: 100dvh; color: var(--listing-ink); background: #f3f3f1; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  .listing-preview-header { display: flex; min-height: 78px; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #d9ddd9; padding: .8rem max(20px, calc((100vw - 1180px) / 2)); background: white; }
+  .listing-logo { display: flex; align-items: center; gap: .7rem; }
+  .listing-logo > span { display: grid; width: 43px; height: 43px; place-items: center; color: white; background: var(--listing-teal); font-family: Georgia, serif; letter-spacing: .08em; }
+  .listing-logo strong { font-size: .88rem; }
+  .listing-draft { display: flex; align-items: center; gap: .5rem; color: #785039; font-size: .7rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+  .listing-draft > span { width: 9px; height: 9px; border-radius: 50%; background: var(--listing-orange); box-shadow: 0 0 0 4px rgba(217,109,47,.16); }
+  .listing-shell { width: min(100% - 40px, 1180px); margin-inline: auto; padding-block: 1.2rem clamp(4rem, 8vw, 7rem); }
+  .listing-breadcrumb { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.4rem; color: #626762; font-size: .72rem; }
+  .listing-title { border: 1px solid #d9ddd9; padding: clamp(1.3rem, 3vw, 2.4rem); background: white; }
+  .listing-title > p { color: var(--listing-teal); font-size: .68rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .listing-title h1 { max-width: 1000px; margin: .55rem 0 1.2rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(2.25rem, 5vw, 4.8rem); font-weight: 900; letter-spacing: -.045em; line-height: .98; }
+  .listing-title > div { display: flex; flex-wrap: wrap; gap: .65rem 1.5rem; color: #727772; font-size: .75rem; font-weight: 750; }
+  .visual-disclosure { display: grid; grid-template-columns: auto 1fr; gap: .8rem; margin-block: 1rem; border: 1px solid #bdd8d1; border-left: 5px solid var(--listing-teal); padding: .9rem 1rem; color: #214b46; background: #e8f3f0; }
+  .visual-disclosure strong { display: block; margin-bottom: .2rem; }
+  .visual-disclosure p { color: #496b66; font-size: .8rem; }
+  .listing-gallery { display: grid; grid-template-columns: 1.55fr 1fr 1fr; grid-template-rows: repeat(2, minmax(185px, 260px)); gap: .55rem; }
+  .listing-image { position: relative; min-width: 0; margin: 0; overflow: hidden; background: #d7dad6; }
+  .listing-image-hero { grid-row: 1 / 3; }
+  .listing-image:nth-child(2) { grid-row: 1 / 3; }
+  .listing-image img { width: 100%; height: 100%; object-fit: cover; transition: scale .25s ease; }
+  .listing-image:hover img { scale: 1.02; }
+  .visual-label { position: absolute; top: .7rem; left: .7rem; max-width: calc(100% - 1.4rem); border: 1px solid rgba(255,255,255,.65); padding: .42rem .55rem; color: white; background: rgba(24,31,28,.88); font-size: .61rem; font-weight: 900; letter-spacing: .055em; text-transform: uppercase; }
+  .listing-image figcaption { position: absolute; inset: auto 0 0; padding: 2.2rem .75rem .65rem; color: white; background: linear-gradient(transparent, rgba(10,14,12,.86)); font-size: .72rem; font-weight: 800; }
+  .listing-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; align-items: start; gap: 1.2rem; margin-top: 1.2rem; }
+  .listing-body { display: grid; gap: 1rem; }
+  .listing-body > section { border: 1px solid #d9ddd9; padding: clamp(1.35rem, 3vw, 2.3rem); background: white; }
+  .listing-body h2 { margin-bottom: 1rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 900; letter-spacing: -.025em; }
+  .listing-body section > p + p { margin-top: .85rem; }
+  .listing-services { padding-block: .3rem !important; }
+  .listing-services article { display: grid; grid-template-columns: 46px 1fr; gap: .8rem; border-bottom: 1px solid #e1e4e1; padding-block: 1.25rem; }
+  .listing-services article:last-child { border-bottom: 0; }
+  .listing-services article > span { color: var(--listing-orange); font-size: .72rem; font-weight: 900; }
+  .listing-services h3 { margin-bottom: .35rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.08rem; font-weight: 900; }
+  .listing-services p, .listing-body > section > p { color: #5e645f; font-size: .88rem; }
+  .listing-request ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 1.2rem; padding-left: 1.15rem; color: #4f5550; font-size: .88rem; }
+  .listing-request li::marker { color: var(--listing-orange); }
+  .listing-boundary { border-left: 5px solid #b28263 !important; background: #f7eee7 !important; }
+  .listing-contact { position: sticky; top: calc(var(--variant-bar-height) + 1rem); border: 1px solid #d9ddd9; padding: 1.4rem; background: white; box-shadow: 0 12px 36px rgba(28,34,29,.08); }
+  .contact-label { color: var(--listing-teal); font-size: .66rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .listing-contact h2 { margin: .45rem 0 .65rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.7rem; font-weight: 900; letter-spacing: -.03em; }
+  .listing-contact > p:not(.contact-label) { color: #646a65; font-size: .83rem; }
+  .listing-actions { display: grid; gap: .55rem; margin-block: 1.2rem; }
+  .listing-action { display: flex; min-height: 49px; align-items: center; justify-content: center; gap: .5rem; border: 2px solid var(--listing-teal); padding: .65rem .8rem; color: var(--listing-teal); font-size: .82rem; font-weight: 900; text-decoration: none; }
+  .listing-action-primary { color: white; background: var(--listing-teal); }
+  .listing-contact small { display: block; color: #686d69; font-size: .68rem; line-height: 1.55; }
+  .listing-footer { display: flex; min-height: 100px; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid #d9ddd9; padding: 1rem max(20px, calc((100vw - 1180px) / 2)); background: white; }
+  .listing-footer > div { display: grid; gap: .15rem; }
+  .listing-footer span { color: #686d69; font-size: .68rem; }
+  .listing-footer nav { display: flex; gap: 1rem; font-size: .74rem; }
+  .listing-footer a { color: inherit; }
+
+  @media (max-width: 920px) {
+    .listing-gallery { grid-template-columns: repeat(2, 1fr); grid-template-rows: minmax(300px, 56vw) repeat(2, minmax(180px, 36vw)); }
+    .listing-image-hero { grid-column: 1 / 3; grid-row: 1; }
+    .listing-image:nth-child(2) { grid-row: 2; }
+    .listing-layout { grid-template-columns: 1fr; }
+    .listing-contact { position: static; }
+  }
+
+  @media (max-width: 600px) {
+    .listing-preview-header { align-items: flex-start; flex-direction: column; padding-block: 1rem; }
+    .listing-shell { width: min(100% - 24px, 1180px); }
+    .listing-title h1 { font-size: clamp(2rem, 10vw, 3.4rem); }
+    .listing-gallery { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(245px, 72vw)); }
+    .listing-image-hero, .listing-image:nth-child(2) { grid-column: 1; grid-row: auto; }
+    .listing-request ul { grid-template-columns: 1fr; }
+    .listing-footer { align-items: flex-start; flex-direction: column; padding-block: 1.2rem; }
+  }
+</style>

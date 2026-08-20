@@ -93,13 +93,42 @@ for (const htmlPath of htmlFiles) {
 
 const indexPath = join(root, "index.html");
 const indexHtml = readFileSync(indexPath, "utf8");
-if ((indexHtml.match(/data-final-concept=/g) ?? []).length !== 1) failures.push("index.html: expected exactly one final concept marker");
-if (/data-change-concept|data-concept-panel|href="[^"]*\/premium\//.test(indexHtml)) failures.push("index.html: legacy concept selection is present");
-const hero = indexHtml.match(/<section class="final-hero"[\s\S]*?<\/section>/)?.[0] ?? "";
-if (!/data-hero-kind="kitchen"/.test(hero) || !/alt="[^"]*Küchen/i.test(hero)) failures.push("index.html: hero is not identified as a kitchen visual");
-if (/Sauna/i.test(hero)) failures.push("index.html: sauna appears in the first hero section");
-if (indexHtml.indexOf("Sauna-Ausbau") !== -1 && indexHtml.indexOf("Sauna-Ausbau") < indexHtml.indexOf("</section>", indexHtml.indexOf("final-hero"))) failures.push("index.html: sauna appears before the hero ends");
+if ((indexHtml.match(/data-variant-overview/g) ?? []).length !== 1) failures.push("index.html: variant overview marker is missing");
+if ((indexHtml.match(/data-variant-card=/g) ?? []).length !== 3) failures.push("index.html: expected exactly three preview variant cards");
+for (const variant of ["standard", "premium", "kleinanzeigen"]) {
+  if (!new RegExp(`data-variant-link="${variant}"`).test(indexHtml)) failures.push(`index.html: ${variant} variant link is missing`);
+}
+if (/data-final-concept|data-change-concept|data-concept-panel/.test(indexHtml)) failures.push("index.html: obsolete concept selector markup is present");
 if (!/data-pin-gate/.test(indexHtml)) failures.push("index.html: PIN gate is missing");
+
+for (const variant of ["standard", "premium", "kleinanzeigen"]) {
+  const variantPath = htmlPathForUrl(`/${variant}/`);
+  if (!variantPath) {
+    failures.push(`${variant}: preview route is missing`);
+    continue;
+  }
+  const html = readFileSync(variantPath, "utf8");
+  if ((html.match(new RegExp(`data-preview-variant="${variant}"`, "g")) ?? []).length !== 1) failures.push(`${variant}: expected one matching variant marker`);
+  if (!/data-variant-back/.test(html) || !/Zurück zur Variantenübersicht/.test(html)) failures.push(`${variant}: prominent overview return link is missing`);
+  const heroStart = html.indexOf('data-hero-kind="kitchen"');
+  if (heroStart === -1) failures.push(`${variant}: kitchen-led hero is missing`);
+  else {
+    const heroEnd = html.indexOf("</section>", heroStart);
+    const hero = html.slice(heroStart, heroEnd === -1 ? html.length : heroEnd);
+    if (!/alt="[^"]*(?:Küchen|Küche)/i.test(hero)) failures.push(`${variant}: hero has no kitchen alternative text`);
+    if (/Sauna/i.test(hero)) failures.push(`${variant}: sauna appears in the first hero area`);
+  }
+  if (!/data-pin-gate/.test(html)) failures.push(`${variant}: PIN gate is missing`);
+}
+
+const listingPath = htmlPathForUrl("/kleinanzeigen/");
+if (listingPath) {
+  const listingHtml = readFileSync(listingPath, "utf8");
+  if ((listingHtml.match(/data-generated-visual/g) ?? []).length !== 4) failures.push("kleinanzeigen: expected four generated visual markers");
+  if ((listingHtml.match(/Visualisierung · kein Referenzfoto/g) ?? []).length !== 4) failures.push("kleinanzeigen: every generated image needs a visible disclosure label");
+  if (!/Anzeigenentwurf · nicht veröffentlicht/.test(listingHtml)) failures.push("kleinanzeigen: draft publication status is missing");
+  if (/Sauna|Ukraine|Donbass|Baufirma|mehreren Mitarbeiter/i.test(listingHtml)) failures.push("kleinanzeigen: unrelated or unapproved narrative is present");
+}
 
 const imprintPath = htmlPathForUrl("/impressum/");
 const privacyPath = htmlPathForUrl("/datenschutz/");
@@ -122,7 +151,9 @@ if (existsSync(sitemapPath)) {
   if (!locations.length) failures.push("sitemap.xml: no locations found");
   if (new Set(locations).size !== locations.length) failures.push("sitemap.xml: duplicate locations found");
   if (locations.some((location) => !location.startsWith(`${productionOrigin}/`))) failures.push("sitemap.xml: non-production origin found");
-  if (locations.some((location) => location.includes("/premium/"))) failures.push("sitemap.xml: legacy premium route found");
+  for (const previewRoute of ["/standard/", "/premium/", "/kleinanzeigen/"]) {
+    if (locations.some((location) => location.endsWith(previewRoute))) failures.push(`sitemap.xml: preview-only route found ${previewRoute}`);
+  }
   for (const location of locations) {
     const url = new URL(location);
     const pagePath = htmlPathForUrl(url.pathname);

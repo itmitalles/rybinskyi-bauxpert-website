@@ -17,7 +17,10 @@ const inferredBasePath =
     ? `/${githubRepository}`
     : "";
 const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
-const url = `http://127.0.0.1:${previewPort}${basePath}/`;
+const targets = [
+  { name: "overview", url: `http://127.0.0.1:${previewPort}${basePath}/` },
+  { name: "kleinanzeigen", url: `http://127.0.0.1:${previewPort}${basePath}/kleinanzeigen/` },
+];
 const profile = mkdtempSync(join(tmpdir(), "rybinskyi-lighthouse-"));
 const outputDirectory = resolve("test-results/lighthouse");
 mkdirSync(outputDirectory, { recursive: true });
@@ -70,34 +73,36 @@ const budgets = {
 };
 
 try {
-  await Promise.all([waitFor(url), waitFor(`http://127.0.0.1:${debuggingPort}/json/version`)]);
-  const result = await lighthouse(url, {
-    port: debuggingPort,
-    output: "json",
-    logLevel: "error",
-    disableStorageReset: true,
-    onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
-  });
-  if (!result?.lhr) throw new Error("Lighthouse returned no report");
-  const { lhr } = result;
-  const failures = [];
-  for (const category of ["performance", "accessibility", "best-practices", "seo"]) {
-    const minimum = budgets[category];
-    const score = lhr.categories[category]?.score;
-    if (typeof score !== "number" || score < minimum) failures.push(`${category}: ${score ?? "missing"} < ${minimum}`);
-  }
-  const totalBytes = lhr.audits["total-byte-weight"]?.numericValue;
-  const lcp = lhr.audits["largest-contentful-paint"]?.numericValue;
-  const cls = lhr.audits["cumulative-layout-shift"]?.numericValue;
-  if (typeof totalBytes !== "number" || totalBytes > budgets.totalBytes) failures.push(`total bytes: ${totalBytes ?? "missing"} > ${budgets.totalBytes}`);
-  if (typeof lcp !== "number" || lcp > budgets.largestContentfulPaint) failures.push(`LCP: ${lcp ?? "missing"}ms > ${budgets.largestContentfulPaint}ms`);
-  if (typeof cls !== "number" || cls > budgets.cumulativeLayoutShift) failures.push(`CLS: ${cls ?? "missing"} > ${budgets.cumulativeLayoutShift}`);
+  await Promise.all([...targets.map((target) => waitFor(target.url)), waitFor(`http://127.0.0.1:${debuggingPort}/json/version`)]);
+  for (const target of targets) {
+    const result = await lighthouse(target.url, {
+      port: debuggingPort,
+      output: "json",
+      logLevel: "error",
+      disableStorageReset: true,
+      onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
+    });
+    if (!result?.lhr) throw new Error(`Lighthouse returned no report for ${target.name}`);
+    const { lhr } = result;
+    const failures = [];
+    for (const category of ["performance", "accessibility", "best-practices", "seo"]) {
+      const minimum = budgets[category];
+      const score = lhr.categories[category]?.score;
+      if (typeof score !== "number" || score < minimum) failures.push(`${category}: ${score ?? "missing"} < ${minimum}`);
+    }
+    const totalBytes = lhr.audits["total-byte-weight"]?.numericValue;
+    const lcp = lhr.audits["largest-contentful-paint"]?.numericValue;
+    const cls = lhr.audits["cumulative-layout-shift"]?.numericValue;
+    if (typeof totalBytes !== "number" || totalBytes > budgets.totalBytes) failures.push(`total bytes: ${totalBytes ?? "missing"} > ${budgets.totalBytes}`);
+    if (typeof lcp !== "number" || lcp > budgets.largestContentfulPaint) failures.push(`LCP: ${lcp ?? "missing"}ms > ${budgets.largestContentfulPaint}ms`);
+    if (typeof cls !== "number" || cls > budgets.cumulativeLayoutShift) failures.push(`CLS: ${cls ?? "missing"} > ${budgets.cumulativeLayoutShift}`);
 
-  writeFileSync(join(outputDirectory, "report.json"), JSON.stringify(lhr, null, 2));
-  const summary = Object.fromEntries(Object.entries(lhr.categories).map(([name, category]) => [name, category.score]));
-  writeFileSync(join(outputDirectory, "summary.json"), JSON.stringify({ ...summary, totalBytes, lcp, cls, budgets }, null, 2));
-  if (failures.length) throw new Error(`Lighthouse budgets failed:\n${failures.join("\n")}`);
-  console.log(`Lighthouse budgets passed: ${JSON.stringify(summary)}, bytes=${Math.round(totalBytes)}, LCP=${Math.round(lcp)}ms, CLS=${cls}.`);
+    writeFileSync(join(outputDirectory, `report-${target.name}.json`), JSON.stringify(lhr, null, 2));
+    const summary = Object.fromEntries(Object.entries(lhr.categories).map(([name, category]) => [name, category.score]));
+    writeFileSync(join(outputDirectory, `summary-${target.name}.json`), JSON.stringify({ ...summary, totalBytes, lcp, cls, budgets }, null, 2));
+    if (failures.length) throw new Error(`Lighthouse budgets failed for ${target.name}:\n${failures.join("\n")}`);
+    console.log(`Lighthouse budgets passed for ${target.name}: ${JSON.stringify(summary)}, bytes=${Math.round(totalBytes)}, LCP=${Math.round(lcp)}ms, CLS=${cls}.`);
+  }
 } finally {
   await Promise.all([stopProcess(preview), stopProcess(chrome)]);
   rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });

@@ -18,6 +18,30 @@
       "outputPath": "og-default.svg",
       "kind": "original-vector",
       "approved": true
+    },
+    {
+      "sourcePath": "public/preview/kleinanzeigen/kueche-fertig-visualisierung.webp",
+      "outputPath": "preview/kleinanzeigen/kueche-fertig-visualisierung.webp",
+      "kind": "generated-preview-visual",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/kleinanzeigen/kueche-montage-visualisierung.webp",
+      "outputPath": "preview/kleinanzeigen/kueche-montage-visualisierung.webp",
+      "kind": "generated-preview-visual",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/kleinanzeigen/moebelmontage-visualisierung.webp",
+      "outputPath": "preview/kleinanzeigen/moebelmontage-visualisierung.webp",
+      "kind": "generated-preview-visual",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/preview/kleinanzeigen/boden-innenausbau-visualisierung.webp",
+      "outputPath": "preview/kleinanzeigen/boden-innenausbau-visualisierung.webp",
+      "kind": "generated-preview-visual",
+      "approved": true
     }
   ],
   "pendingRoots": [

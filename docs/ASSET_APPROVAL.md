@@ -5,8 +5,9 @@ Status: 2026-08-20. This register is the release record for visual assets. A rep
 ## Build policy
 
 - Only assets marked `Verwendung freigegeben: ja` may enter `dist`.
-- Current build allowlist: `public/favicon.svg`, `public/hero-kitchen-placeholder.svg`, and `public/og-default.svg`.
-- All raster images remain in the repository or its Git history but outside the current build.
+- Current build allowlist: three original vectors plus four newly generated and visibly labelled Kleinanzeigen preview visualizations under `public/preview/kleinanzeigen/`.
+- All customer/project raster images remain in the repository or its Git history but outside the current build.
+- Generated preview visuals are not reference photos, are isolated to `/kleinanzeigen/`, and require Denys' final design/publication approval before any real advert is placed.
 - A real kitchen photograph replaces the neutral hero only after the exact file has a documented rights approval.
 - Preferred real hero after approval: `src/assets/projects/kuechenmontage-u-form/fertig.jpg`. It shows a finished kitchen, is suitable for the vertical split-hero, and has a related process image. This is a design recommendation, not a publication approval.
 
@@ -17,6 +18,10 @@ Status: 2026-08-20. This register is the release record for visual assets. A rep
 | `public/hero-kitchen-placeholder.svg` | Für diesen Branch eigenständig als Vektorgrafik erstellt | Projekt/Repository; vertragliche Zuordnung bei Bedarf klären | nein | ja | 2026-08-20 | Neutraler Gestaltungsplatzhalter, ausdrücklich kein Referenzfoto. |
 | `public/favicon.svg` | Für diesen Branch eigenständig als Vektorgrafik erstellt | Projekt/Repository; vertragliche Zuordnung bei Bedarf klären | nein | ja | 2026-08-20 | Kein fremdes Bildmaterial. |
 | `public/og-default.svg` | Codebasierte Vektorgrafik aus dem Repository, in diesem Branch textlich aktualisiert | Projekt/Repository; vertragliche Zuordnung bei Bedarf klären | nein | ja | 2026-08-20 | Kein Projektfoto, keine externe Quelle. |
+| `public/preview/kleinanzeigen/kueche-fertig-visualisierung.webp` | OpenAI-Bildgenerierung für diesen Entwurf; Prompt und ursprüngliche Arbeitsdatei `exec-efbbd84d-4b42-44d8-b711-1ac41e1c7e4b.png` dokumentiert | Projektauftraggeber gemäß den anwendbaren Bedingungen des Erzeugungswerkzeugs; Rechtsprüfung für externe Veröffentlichung offen | nein | ja, ausschließlich gekennzeichnete PIN-Preview | 2026-08-20 | Fertige Küche; im UI dauerhaft „Visualisierung · kein Referenzfoto“. Keine Marke, Person oder Kundenreferenz beabsichtigt. |
+| `public/preview/kleinanzeigen/kueche-montage-visualisierung.webp` | OpenAI-Bildgenerierung für diesen Entwurf; Prompt und ursprüngliche Arbeitsdatei `exec-a4071f00-45f1-47e7-b4af-30d0853e868a.png` dokumentiert | Projektauftraggeber gemäß den anwendbaren Bedingungen des Erzeugungswerkzeugs; Rechtsprüfung für externe Veröffentlichung offen | nein | ja, ausschließlich gekennzeichnete PIN-Preview | 2026-08-20 | Montagesituation ohne Person; im UI dauerhaft als Visualisierung gekennzeichnet. |
+| `public/preview/kleinanzeigen/moebelmontage-visualisierung.webp` | OpenAI-Bildgenerierung für diesen Entwurf; Prompt und ursprüngliche Arbeitsdatei `exec-38e7330e-ead8-4774-b917-8137ec97d57a.png` dokumentiert | Projektauftraggeber gemäß den anwendbaren Bedingungen des Erzeugungswerkzeugs; Rechtsprüfung für externe Veröffentlichung offen | nein | ja, ausschließlich gekennzeichnete PIN-Preview | 2026-08-20 | Möbelmontage ohne Person; im UI dauerhaft als Visualisierung gekennzeichnet. |
+| `public/preview/kleinanzeigen/boden-innenausbau-visualisierung.webp` | OpenAI-Bildgenerierung für diesen Entwurf; Prompt und ursprüngliche Arbeitsdatei `exec-48512e2e-b2a8-4687-98f1-f7bd894ae0d7.png` dokumentiert | Projektauftraggeber gemäß den anwendbaren Bedingungen des Erzeugungswerkzeugs; Rechtsprüfung für externe Veröffentlichung offen | nein | ja, ausschließlich gekennzeichnete PIN-Preview | 2026-08-20 | Boden-/Sockelleistendetail; im UI dauerhaft als Visualisierung gekennzeichnet. |
 | `src/assets/brand/logo.png` | Initialimport in Commit `5fb03fa`; Originalquelle nicht dokumentiert | unbekannt | nein | nein | — | Bleibt unverändert im Repository, wird nicht importiert. |
 | `src/assets/pending/legacy-favicon.png` | Früheres `public/favicon.png`, Initialimport in Commit `5fb03fa` | unbekannt | nein | nein | — | Unverändert aus `public/` verschoben, damit es nicht in `dist` kopiert wird. |
 

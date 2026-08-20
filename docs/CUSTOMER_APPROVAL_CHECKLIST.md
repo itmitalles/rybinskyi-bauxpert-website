@@ -17,9 +17,9 @@ Status: 2026-08-20. Every item below is a live-release blocker until Denys has c
 | Umgang mit Elektroarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Umgang mit Sanitärarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Servicegebiet | München und Umgebung; bisher acht Stadtteile genannt | nein | — | Welche Orte oder welcher Radius werden tatsächlich bedient? |
-| Bildrechte | keine Projektgruppe freigegeben | nein | — | Welche exakten Dateien dürfen für Website, OG-Vorschau und Kundenkommunikation verwendet werden? |
+| Bildrechte | keine Projektgruppe freigegeben; vier generierte Kleinanzeigen-Visualisierungen nur für die gekennzeichnete PIN-Preview allowlistet | nein | — | Welche exakten Projektfotos dürfen für Website und OG-Vorschau verwendet werden? Dürfen die vier Visualisierungen auch in einer realen Anzeige erscheinen? |
 | Biografie | nicht im öffentlichen Build | nein | — | Soll überhaupt eine Biografie erscheinen? Falls ja: exakten Text ausdrücklich bestätigen. |
-| Finale Designfreigabe | eine Premium-basierte, bodenständige Fassung | nein | — | Layout, Texte, Farbwelt, Hero und Leistungsreihenfolge freigeben. |
+| Finale Designfreigabe | Auswahlübersicht mit Standard-, Premium- und Kleinanzeigenvariante | nein | — | Eine Website-Richtung sowie den separaten Anzeigenentwurf ausdrücklich freigeben; Variantenübersicht danach wieder entfernen. |
 
 ## Release block
 

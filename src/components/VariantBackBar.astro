@@ -1,0 +1,97 @@
+---
+import { withBase } from "@/lib/urls";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<aside class="variant-back" data-variant-back aria-label="Preview-Navigation">
+  <a href={withBase("/")}>
+    <span class="variant-back-arrow" aria-hidden="true">←</span>
+    <span class="variant-back-copy">
+      <strong>Zurück zur Variantenübersicht</strong>
+      <small>{label}</small>
+    </span>
+  </a>
+</aside>
+
+<style>
+  .variant-back {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    min-height: var(--variant-bar-height);
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    background: #8b3f26;
+    box-shadow: 0 8px 24px rgba(18, 20, 18, .22);
+  }
+
+  .variant-back a {
+    display: flex;
+    min-height: var(--variant-bar-height);
+    align-items: center;
+    justify-content: center;
+    gap: .85rem;
+    padding: .65rem 1rem;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  .variant-back a:hover,
+  .variant-back a:focus-visible {
+    background: rgba(0, 0, 0, .14);
+  }
+
+  .variant-back-arrow {
+    font-size: 2rem;
+    line-height: 1;
+    transition: translate .18s ease;
+  }
+
+  .variant-back a:hover .variant-back-arrow,
+  .variant-back a:focus-visible .variant-back-arrow {
+    translate: -.25rem 0;
+  }
+
+  .variant-back-copy {
+    display: grid;
+    gap: .08rem;
+  }
+
+  .variant-back strong {
+    font-size: clamp(.98rem, 2vw, 1.2rem);
+    letter-spacing: .01em;
+  }
+
+  .variant-back small {
+    color: rgba(255, 255, 255, .78);
+    font-size: .68rem;
+    font-weight: 750;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  :global(.has-variant-back .site-header) {
+    top: var(--variant-bar-height);
+  }
+
+  :global(.has-variant-back .mobile-menu) {
+    height: calc(100dvh - var(--header-height) - var(--variant-bar-height));
+  }
+
+  @media (max-width: 700px) {
+    .variant-back a {
+      justify-content: flex-start;
+      padding-inline: 1rem;
+    }
+
+    .variant-back-arrow {
+      font-size: 2.15rem;
+    }
+  }
+</style>
