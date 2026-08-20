@@ -43,6 +43,20 @@ const waitFor = async (target, attempts = 80) => {
   throw new Error(`Timed out waiting for ${target}`);
 };
 
+const stopProcess = (child) =>
+  new Promise((resolvePromise) => {
+    if (child.exitCode !== null || child.signalCode !== null) {
+      resolvePromise();
+      return;
+    }
+    const forceKill = setTimeout(() => child.kill("SIGKILL"), 5_000);
+    child.once("exit", () => {
+      clearTimeout(forceKill);
+      resolvePromise();
+    });
+    child.kill("SIGTERM");
+  });
+
 const budgets = {
   performance: 0.8,
   accessibility: 0.95,
@@ -85,7 +99,6 @@ try {
   if (failures.length) throw new Error(`Lighthouse budgets failed:\n${failures.join("\n")}`);
   console.log(`Lighthouse budgets passed: ${JSON.stringify(summary)}, bytes=${Math.round(totalBytes)}, LCP=${Math.round(lcp)}ms, CLS=${cls}.`);
 } finally {
-  preview.kill("SIGTERM");
-  chrome.kill("SIGTERM");
-  rmSync(profile, { recursive: true, force: true });
+  await Promise.all([stopProcess(preview), stopProcess(chrome)]);
+  rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 }
