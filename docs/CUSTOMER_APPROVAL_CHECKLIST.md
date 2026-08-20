@@ -29,7 +29,7 @@ Until all applicable rows are confirmed:
 - Every page remains `noindex,nofollow,noarchive` and `robots.txt` disallows crawling.
 - No custom domain is configured or switched.
 - No unconfirmed project photo or biography enters `dist`.
-- The pull request remains a draft and must not be merged for a live release.
+- GitHub Pages may host only the explicitly labelled PIN/noindex customer preview. Any release that disables these safeguards, enables the custom domain, or presents the site as final remains blocked.
 - The visible imprint contains no placeholder section; missing legal facts are managed here as a release blocker instead.
 
 The machine-readable mirror is `config/release-approvals.json`. A status may be changed to `approved` only when the written evidence exists.
