@@ -64,9 +64,10 @@ const budgets = {
   performance: 0.8,
   accessibility: 0.95,
   "best-practices": 0.9,
-  // The intentional noindex preview gate lowers Lighthouse SEO to 0.69.
-  // Static and browser gates assert that noindex stays active.
-  seo: 0.65,
+  // The intentional noindex/robots preview gate lowers Lighthouse SEO to
+  // 0.63–0.69 depending on the Pages base path. Static and browser gates
+  // assert the actual preview safeguards and canonical URLs separately.
+  seo: 0.6,
   totalBytes: 1_000_000,
   largestContentfulPaint: 4_000,
   cumulativeLayoutShift: 0.1,
