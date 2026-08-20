@@ -3,20 +3,21 @@ import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import ContactBand from "@/components/ContactBand.astro";
 import { siteConfig } from "@/config/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/lib/urls";
 ---
 
-<BaseLayout title="Betrieb | Rybinskyi BauXpert München" description="Rybinskyi BauXpert für Küchenmontage, Möbelmontage, Innenausbau und Renovierung in München und Umgebung.">
-  <div class="page-hero"><div class="shell"><p class="eyebrow">Der Betrieb</p><h1>Montage, Ausbau und Renovierung in München.</h1><p class="lead">Rybinskyi BauXpert bietet projektbezogene Arbeiten rund um Küchen, Möbel und Innenräume an. Welche Aufgaben tatsächlich übernommen werden, wird vor dem Auftrag konkret abgegrenzt.</p></div></div>
-  <Breadcrumbs items={[{label:"Betrieb"}]} />
+<BaseLayout title="Über mich | Denys Rybinskyi | BauXpert München" description="Denys Rybinskyi: von der selbst aufgebauten Baufirma in der Ukraine zum persönlichen Handwerksbetrieb Rybinskyi BauXpert in München.">
+  <div class="page-hero" data-approved-biography><div class="shell"><p class="eyebrow">Über mich</p><h1>Hallo, ich bin Denys Rybinskyi.</h1><p class="lead">Ich komme aus der Ukraine. Dort habe ich mir eine Baufirma mit mehreren Mitarbeitern aufgebaut. Wegen der Lage im Donbass musste ich den Betrieb leider aufgeben. In München baue ich mir nun ein neues Leben und einen neuen Handwerksbetrieb auf.</p></div></div>
+  <Breadcrumbs items={[{label:"Über mich"}]} />
 
   <section class="section about-section">
     <div class="shell about-grid">
-      <div class="identity-field" aria-label="Rybinskyi BauXpert"><span>RB</span><small>Rybinskyi BauXpert</small></div>
+      <div class="identity-field" aria-label="Rybinskyi BauXpert"><img src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="Rybinskyi BauXpert" width="320" height="320" loading="eager" /></div>
       <div>
-        <p class="eyebrow">Arbeitsbereich</p>
-        <h2>Bodenständig beschrieben.</h2>
+        <p class="eyebrow">Der Betrieb</p>
+        <h2>Erfahrung mitgebracht. Noch einmal selbst aufgebaut.</h2>
+        <p>In München baue ich mir nun ein neues Leben und einen neuen Handwerksbetrieb auf. Die Erfahrung aus meiner früheren Firma bringe ich heute persönlich in jedes Projekt ein.</p>
         <p>Im Mittelpunkt stehen Küchenmontage, Möbelmontage und Maßanpassung, Innenausbau, Böden sowie Renovierungsarbeiten in München und Umgebung.</p>
-        <p>Die Website nennt bewusst keine unbestätigten Projektzahlen, Erfahrungsjahre, Garantien, Festpreise, Reaktionszeiten oder Fachqualifikationen. Biografische Angaben werden erst nach ausdrücklicher Freigabe veröffentlicht.</p>
         <dl>
           <div><dt>Anbieter</dt><dd>{siteConfig.name}</dd></div>
           <div><dt>Kontaktperson</dt><dd>{siteConfig.owner}</dd></div>
@@ -26,15 +27,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <section class="section principles"><div class="shell"><p class="eyebrow">Grundsätze der Preview</p><h2>Nur zeigen, was geklärt ist.</h2><div><article><span>01</span><h3>Konkrete Leistungen</h3><p>Der tatsächliche Leistungsumfang muss vor dem Livegang von Denys bestätigt werden.</p></article><article><span>02</span><h3>Geklärte Bildrechte</h3><p>Projektfotos erscheinen erst nach dokumentierter Zustimmung und Rechteprüfung.</p></article><article><span>03</span><h3>Klare Fachgrenzen</h3><p>Elektro- und Sanitärfacharbeiten werden nicht pauschal als Eigenleistung beworben.</p></article></div></div></section>
+  <section class="section principles"><div class="shell"><p class="eyebrow">Grundsätze der Preview</p><h2>Nur zeigen, was geklärt ist.</h2><div><article><span>01</span><h3>Konkrete Leistungen</h3><p>Der tatsächliche Leistungsumfang muss vor dem Livegang von Denys bestätigt werden.</p></article><article><span>02</span><h3>Geklärte Bildrechte</h3><p>Die eingesetzten Preview-Bilder sind dokumentiert; die finale Bildfreigabe bleibt vor dem Livegang erforderlich.</p></article><article><span>03</span><h3>Klare Fachgrenzen</h3><p>Elektro- und Sanitärfacharbeiten werden nicht pauschal als Eigenleistung beworben.</p></article></div></div></section>
   <ContactBand title="Projekt konkret beschreiben." />
 </BaseLayout>
 
 <style>
   .about-grid { display:grid; grid-template-columns:minmax(320px,.7fr) minmax(0,1.3fr); align-items:center; gap:clamp(3rem,8vw,8rem); }
   .identity-field { display:grid; min-height:480px; place-items:center; align-content:center; gap:1rem; color:white; background:#171b18; }
-  .identity-field span { display:grid; width:180px; height:180px; place-items:center; border:1px solid rgba(255,255,255,.22); font-family:Georgia,serif; font-size:4rem; letter-spacing:.08em; }
-  .identity-field small { color:rgba(255,255,255,.62); font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+  .identity-field img { width:min(260px,72%); height:auto; }
   .about-grid h2 + p { margin-top:1.4rem; }
   .about-grid p { color:var(--ink-soft); }
   .about-grid p + p { margin-top:1rem; }

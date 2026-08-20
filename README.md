@@ -17,13 +17,13 @@ The preview remains intentionally blocked from a live release:
 
 ## Visual assets
 
-The existing customer logo and six selected project photos are included in the PIN/noindex preview on the repository owner's explicit instruction. The finished U-shaped kitchen is the hero in both website versions; sauna remains a secondary premium reference. The Kleinanzeigen route is a simple copy/download package with a title, advert text, one AI-assisted lead composite, and four real customer photos. Both website versions include a neutral visible “Über mich” section; the unconfirmed political/personal biography remains excluded. Final image and biography approval remain release blockers.
+The existing customer logo and six selected project photos are included in the PIN/noindex preview on the repository owner's explicit instruction. The finished U-shaped kitchen is the hero in both website versions; sauna remains a secondary premium reference. The Kleinanzeigen route is a simple copy/download package with a title, advert text, one AI-assisted lead composite, and four real customer photos. Both website versions and the dedicated about page include the historical Ukraine/Baufirma/Donbass biography following its explicit confirmation in the task thread on 2026-08-20. Final image approval remains a release blocker.
 
 The authoritative register is [`docs/ASSET_APPROVAL.md`](docs/ASSET_APPROVAL.md). `config/asset-approvals.json` is the machine-readable build allowlist. The advert copy and publication limits are documented in [`docs/KLEINANZEIGEN_PREVIEW.md`](docs/KLEINANZEIGEN_PREVIEW.md).
 
 ## Customer approval
 
-Provider details, actual services, regulated-work boundaries, service area, image rights, biography handling, and final design all require written customer confirmation. The checklist is [`docs/CUSTOMER_APPROVAL_CHECKLIST.md`](docs/CUSTOMER_APPROVAL_CHECKLIST.md); its machine-readable mirror is `config/release-approvals.json`.
+Provider details, actual services, regulated-work boundaries, service area, image rights, and final design still require written customer confirmation. The biography approval is documented in [`docs/CUSTOMER_APPROVAL_CHECKLIST.md`](docs/CUSTOMER_APPROVAL_CHECKLIST.md); its machine-readable mirror is `config/release-approvals.json`.
 
 ## Development
 

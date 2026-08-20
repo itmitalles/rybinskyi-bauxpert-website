@@ -1,6 +1,6 @@
 # Customer approval checklist
 
-Status: 2026-08-20. Every item below is a live-release blocker until Denys has confirmed it in writing. Current values are preview working data, not documented customer approvals.
+Status: 2026-08-20. Every row still marked `nein` is a live-release blocker until Denys has confirmed it in writing. Current values without confirmation are preview working data, not documented customer approvals.
 
 | Zu bestätigen | Aktueller Preview-Stand | Bestätigt | Datum / Nachweis | Offene Frage |
 | --- | --- | --- | --- | --- |
@@ -18,7 +18,7 @@ Status: 2026-08-20. Every item below is a live-release blocker until Denys has c
 | Umgang mit Sanitärarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Servicegebiet | München und Umgebung; bisher acht Stadtteile genannt | nein | — | Welche Orte oder welcher Radius werden tatsächlich bedient? |
 | Bildrechte | bestehendes Logo, sechs ausgewählte Projektfotos und ein daraus erstelltes KI-Titelbild auf ausdrückliche Nutzeranweisung in der PIN/noindex-Preview; keine finale Bestätigung von Denys | nein | — | Darf Denys die in `docs/ASSET_APPROVAL.md` exakt benannten Dateien einschließlich der Collage auf Website und Kleinanzeigen veröffentlichen? |
-| Biografie | neutrale „Über mich“-Abschnitte in Standard und Premium; Ukraine-/Baufirma-/Donbass-Geschichte weiterhin nicht im öffentlichen Build | nein | — | Hat Denys den exakten biografischen Text ausdrücklich freigegeben? Datum und Nachweis dokumentieren. |
+| Biografie | historischer Ukraine-/Baufirma-/Donbass-Text in Standard, Premium und auf der Über-mich-Seite | ja | 2026-08-20 · ausdrückliche Bestätigung im Task-Thread | — |
 | Finale Designfreigabe | Auswahlübersicht mit Standard-, Premium- und Kleinanzeigenvariante | nein | — | Eine Website-Richtung sowie den separaten Anzeigenentwurf ausdrücklich freigeben; Variantenübersicht danach wieder entfernen. |
 
 ## Release block
@@ -28,7 +28,7 @@ Until all applicable rows are confirmed:
 - `previewMode` remains `true`.
 - Every page remains `noindex,nofollow,noarchive` and `robots.txt` disallows crawling.
 - No custom domain is configured or switched.
-- The expressly requested preview copies of the logo and selected project photos may remain in `dist`; no additional unconfirmed image or biography enters the build.
+- The expressly requested preview copies of the logo and selected project photos may remain in `dist`; no additional unconfirmed image or claim enters the build.
 - GitHub Pages may host only the explicitly labelled PIN/noindex customer preview. Any release that disables these safeguards, enables the custom domain, or presents the site as final remains blocked.
 - The visible imprint contains no placeholder section; missing legal facts are managed here as a release blocker instead.
 

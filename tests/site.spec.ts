@@ -15,7 +15,7 @@ const inferredBasePath =
     : "";
 const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
 const sitePath = (path: string) => `${basePath}${path}`;
-const contentPaths = ["/", "/standard/", "/premium/", "/kleinanzeigen/", "/leistungen/", "/projekte/", "/kontakt/", "/impressum/", "/datenschutz/"];
+const contentPaths = ["/", "/standard/", "/premium/", "/kleinanzeigen/", "/leistungen/", "/projekte/", "/ueber-mich/", "/kontakt/", "/impressum/", "/datenschutz/"];
 
 const unlock = async (page: Page) => {
   await page.addInitScript(() => sessionStorage.setItem("rybinskyi-preview-access", "granted"));
@@ -65,7 +65,13 @@ test("overview exposes exactly three variants and every variant has a prominent 
     await expect(hero).toBeVisible();
     await expect(hero.locator("img").first()).toHaveAttribute("alt", /Küch/i);
     await expect(hero).not.toContainText(/Sauna/i);
-    if (variant !== "kleinanzeigen") await expect(page.locator("[data-about-section]")).toHaveCount(1);
+    if (variant !== "kleinanzeigen") {
+      await expect(page.locator("[data-about-section]")).toHaveCount(1);
+      await expect(page.locator("[data-approved-biography]")).toHaveCount(1);
+      await expect(page.locator("[data-approved-biography]")).toContainText("Ich komme aus der Ukraine.");
+      await expect(page.locator("[data-approved-biography]")).toContainText("Baufirma mit mehreren Mitarbeitern");
+      await expect(page.locator("[data-approved-biography]")).toContainText("Lage im Donbass");
+    }
     await returnBar.getByRole("link", { name: /Повернутися до вибору варіанта/ }).click();
     await expect(page.locator("[data-variant-overview]")).toBeVisible();
   }
@@ -93,6 +99,16 @@ test("Kleinanzeigen package provides copyable text and downloadable customer pho
   await page.getByRole("button", { name: "Text kopieren" }).click();
   await expect(page.getByRole("button", { name: "Kopiert ✓" })).toHaveCount(2);
   expect(externalRequests).toEqual([]);
+});
+
+test("dedicated about page contains the approved biography", async ({ page }) => {
+  await unlock(page);
+  await page.goto(sitePath("/ueber-mich/"));
+  const biography = page.locator("[data-approved-biography]");
+  await expect(biography).toHaveCount(1);
+  await expect(biography).toContainText("Hallo, ich bin Denys Rybinskyi.");
+  await expect(biography).toContainText("Baufirma mit mehreren Mitarbeitern");
+  await expect(biography).toContainText("Lage im Donbass");
 });
 
 for (const path of contentPaths) {
@@ -181,9 +197,9 @@ test("preview metadata, legal routes, sitemap, robots and 404 stay coherent", as
   expect((await request.get(sitePath("/release-gate-missing-page/"))).status()).toBe(404);
 });
 
-test("visual screenshots cover overview, all variants and contact on desktop and mobile", async ({ page }, testInfo) => {
+test("visual screenshots cover overview, all variants, about and contact on desktop and mobile", async ({ page }, testInfo) => {
   await unlock(page);
-  for (const [name, path] of [["overview", "/"], ["standard", "/standard/"], ["premium", "/premium/"], ["kleinanzeigen", "/kleinanzeigen/"], ["contact", "/kontakt/"]] as const) {
+  for (const [name, path] of [["overview", "/"], ["standard", "/standard/"], ["premium", "/premium/"], ["kleinanzeigen", "/kleinanzeigen/"], ["about", "/ueber-mich/"], ["contact", "/kontakt/"]] as const) {
     await page.goto(sitePath(path), { waitUntil: "networkidle" });
     const screenshotPath = testInfo.outputPath(`${name}.png`);
     await page.screenshot({ path: screenshotPath, fullPage: true });

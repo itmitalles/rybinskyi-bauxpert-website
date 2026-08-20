@@ -19,8 +19,10 @@ const release = validateFile("config/release-approvals.json", "config/release-ap
 validateFile("config/asset-approvals.json", "config/asset-approvals.schema.json");
 
 if (!release.previewOnly || release.customDomainApproved) failures.push("Release approvals must keep the site in preview-only mode");
-const unexpectedApproved = Object.entries(release.approvals).filter(([, value]) => value.status === "approved");
+const documentedApprovals = new Set(["biography"]);
+const unexpectedApproved = Object.entries(release.approvals).filter(([key, value]) => value.status === "approved" && !documentedApprovals.has(key));
 if (unexpectedApproved.length) failures.push(`Approvals marked complete without release evidence review: ${unexpectedApproved.map(([key]) => key).join(", ")}`);
+if (release.approvals.biography.status !== "approved" || !/2026-08-20/.test(release.approvals.biography.currentValue ?? "")) failures.push("Biography approval and its dated evidence are missing");
 
 const htmlFiles = [];
 const walk = (directory) => {
