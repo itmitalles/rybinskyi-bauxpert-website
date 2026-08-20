@@ -7,7 +7,17 @@ import { chromium } from "@playwright/test";
 
 const previewPort = Number(process.env.LIGHTHOUSE_PREVIEW_PORT ?? 4322);
 const debuggingPort = Number(process.env.LIGHTHOUSE_DEBUG_PORT ?? 9223);
-const url = `http://127.0.0.1:${previewPort}/`;
+const normalizeBasePath = (value) => {
+  if (!value || value === "/") return "";
+  return `/${value.replace(/^\/+|\/+$/g, "")}`;
+};
+const [githubOwner = "", githubRepository = ""] = (process.env.GITHUB_REPOSITORY ?? "").split("/");
+const inferredBasePath =
+  process.env.GITHUB_ACTIONS === "true" && githubRepository && githubRepository !== `${githubOwner}.github.io`
+    ? `/${githubRepository}`
+    : "";
+const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
+const url = `http://127.0.0.1:${previewPort}${basePath}/`;
 const profile = mkdtempSync(join(tmpdir(), "rybinskyi-lighthouse-"));
 const outputDirectory = resolve("test-results/lighthouse");
 mkdirSync(outputDirectory, { recursive: true });

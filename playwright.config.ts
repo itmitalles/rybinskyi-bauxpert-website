@@ -1,5 +1,17 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const normalizeBasePath = (value: string | undefined) => {
+  if (!value || value === "/") return "";
+  return `/${value.replace(/^\/+|\/+$/g, "")}`;
+};
+const [githubOwner = "", githubRepository = ""] = (process.env.GITHUB_REPOSITORY ?? "").split("/");
+const inferredBasePath =
+  process.env.GITHUB_ACTIONS === "true" && githubRepository && githubRepository !== `${githubOwner}.github.io`
+    ? `/${githubRepository}`
+    : "";
+const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
+const serverOrigin = "http://127.0.0.1:4321";
+
 export default defineConfig({
   testDir: "./tests",
   outputDir: "test-results/playwright",
@@ -9,13 +21,13 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? [["line"], ["html", { outputFolder: "playwright-report", open: "never" }]] : "line",
   use: {
-    baseURL: "http://127.0.0.1:4321",
+    baseURL: serverOrigin,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
   webServer: {
     command: "node scripts/serve-dist.mjs --host 127.0.0.1 --port 4321",
-    url: "http://127.0.0.1:4321/",
+    url: `${serverOrigin}${basePath}/`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

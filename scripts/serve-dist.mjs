@@ -9,6 +9,16 @@ const argument = (name, fallback) => {
 const host = argument("--host", "127.0.0.1");
 const port = Number(argument("--port", "4321"));
 const root = resolve("dist");
+const normalizeBasePath = (value) => {
+  if (!value || value === "/") return "";
+  return `/${value.replace(/^\/+|\/+$/g, "")}`;
+};
+const [githubOwner = "", githubRepository = ""] = (process.env.GITHUB_REPOSITORY ?? "").split("/");
+const inferredBasePath =
+  process.env.GITHUB_ACTIONS === "true" && githubRepository && githubRepository !== `${githubOwner}.github.io`
+    ? `/${githubRepository}`
+    : "";
+const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
 const mime = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -20,11 +30,19 @@ const mime = {
 };
 
 const resolveTarget = (pathname) => {
-  const decoded = decodeURIComponent(pathname).replace(/^\/+/, "");
+  const pathWithoutBase = !basePath
+    ? pathname
+    : pathname === basePath
+      ? "/"
+      : pathname.startsWith(`${basePath}/`)
+        ? pathname.slice(basePath.length)
+        : null;
+  if (pathWithoutBase === null) return null;
+  const decoded = decodeURIComponent(pathWithoutBase).replace(/^\/+/, "");
   const candidate = normalize(join(root, decoded));
   if (candidate !== root && !candidate.startsWith(`${root}${sep}`)) return null;
   const targets = [candidate];
-  if (pathname.endsWith("/")) targets.unshift(join(candidate, "index.html"));
+  if (pathWithoutBase.endsWith("/")) targets.unshift(join(candidate, "index.html"));
   if (!extname(candidate)) targets.push(`${candidate}.html`, join(candidate, "index.html"));
   return targets.find((target) => existsSync(target) && statSync(target).isFile()) ?? null;
 };
@@ -42,5 +60,5 @@ const server = createServer((request, response) => {
   else createReadStream(file).pipe(response);
 });
 
-server.listen(port, host, () => console.log(`Serving dist at http://${host}:${port}`));
+server.listen(port, host, () => console.log(`Serving dist at http://${host}:${port}${basePath}/`));
 for (const signal of ["SIGINT", "SIGTERM"]) process.on(signal, () => server.close(() => process.exit(0)));

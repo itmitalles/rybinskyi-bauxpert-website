@@ -4,6 +4,17 @@ import { expect, test, type Page } from "@playwright/test";
 const phone = "+491786930465";
 const whatsappNumber = phone.slice(1);
 const email = "info@rybinskyi-bauxpert.de";
+const normalizeBasePath = (value: string | undefined) => {
+  if (!value || value === "/") return "";
+  return `/${value.replace(/^\/+|\/+$/g, "")}`;
+};
+const [githubOwner = "", githubRepository = ""] = (process.env.GITHUB_REPOSITORY ?? "").split("/");
+const inferredBasePath =
+  process.env.GITHUB_ACTIONS === "true" && githubRepository && githubRepository !== `${githubOwner}.github.io`
+    ? `/${githubRepository}`
+    : "";
+const basePath = normalizeBasePath(process.env.PUBLIC_BASE_PATH ?? inferredBasePath);
+const sitePath = (path: string) => `${basePath}${path}`;
 const contentPaths = ["/", "/leistungen/", "/projekte/", "/kontakt/", "/impressum/", "/datenschutz/"];
 
 const unlock = async (page: Page) => {
@@ -11,7 +22,7 @@ const unlock = async (page: Page) => {
 };
 
 test("PIN gate rejects an invalid PIN and opens only the final concept", async ({ page }) => {
-  await page.goto("/");
+  await page.goto(sitePath("/"));
   await expect(page.locator("[data-pin-gate]")).toBeVisible();
   await page.locator("#preview-pin").fill("000000");
   await page.locator("[data-pin-form]").press("Enter");
@@ -29,7 +40,7 @@ test("PIN gate rejects an invalid PIN and opens only the final concept", async (
 
 test("home shows one kitchen-led concept and keeps sauna below the main area", async ({ page }) => {
   await unlock(page);
-  await page.goto("/");
+  await page.goto(sitePath("/"));
   await expect(page.locator("[data-final-concept]")).toHaveCount(1);
   const hero = page.locator('[data-hero-kind="kitchen"]');
   await expect(hero).toBeVisible();
@@ -52,7 +63,7 @@ for (const path of contentPaths) {
       const target = new URL(request.url());
       if (target.origin !== "http://127.0.0.1:4321") externalResources.push(request.url());
     });
-    const response = await page.goto(path, { waitUntil: "networkidle" });
+    const response = await page.goto(sitePath(path), { waitUntil: "networkidle" });
     expect(response?.ok()).toBeTruthy();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
@@ -66,7 +77,7 @@ for (const path of contentPaths) {
 test("mobile menu opens and exposes the final navigation", async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith("mobile"), "Mobile navigation check");
   await unlock(page);
-  await page.goto("/");
+  await page.goto(sitePath("/"));
   await page.locator("[data-menu-toggle]").click();
   await expect(page.locator("[data-menu-toggle]")).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("[data-mobile-menu]")).toBeVisible();
@@ -80,7 +91,7 @@ test("contact links are exact and the builder sends nothing before a conscious a
     const target = new URL(request.url());
     if (target.origin !== "http://127.0.0.1:4321") externalRequests.push(request.url());
   });
-  await page.goto("/kontakt/", { waitUntil: "networkidle" });
+  await page.goto(sitePath("/kontakt/"), { waitUntil: "networkidle" });
   await page.locator('input[name="name"]').fill("Testname");
   await page.locator('select[name="project"]').selectOption({ label: "Küchenmontage" });
   await page.locator('textarea[name="description"]').fill("Montageanfrage");
@@ -105,28 +116,28 @@ test("contact links are exact and the builder sends nothing before a conscious a
 
 test("preview metadata, legal routes, sitemap, robots and 404 stay coherent", async ({ page, request }) => {
   await unlock(page);
-  await page.goto("/");
+  await page.goto(sitePath("/"));
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,nofollow,noarchive");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://rybinskyi-bauxpert.de/");
 
-  const sitemap = await request.get("/sitemap.xml");
+  const sitemap = await request.get(sitePath("/sitemap.xml"));
   expect(sitemap.ok()).toBeTruthy();
   const sitemapBody = await sitemap.text();
   expect(sitemapBody).toContain("https://rybinskyi-bauxpert.de/");
   expect(sitemapBody).not.toContain("/premium/");
 
-  const robots = await request.get("/robots.txt");
+  const robots = await request.get(sitePath("/robots.txt"));
   expect(await robots.text()).toBe("User-agent: *\nDisallow: /\n");
-  expect((await request.get("/impressum/")).ok()).toBeTruthy();
-  expect((await request.get("/datenschutz/")).ok()).toBeTruthy();
-  expect((await request.get("/premium/")).status()).toBe(404);
-  expect((await request.get("/release-gate-missing-page/")).status()).toBe(404);
+  expect((await request.get(sitePath("/impressum/"))).ok()).toBeTruthy();
+  expect((await request.get(sitePath("/datenschutz/"))).ok()).toBeTruthy();
+  expect((await request.get(sitePath("/premium/"))).status()).toBe(404);
+  expect((await request.get(sitePath("/release-gate-missing-page/"))).status()).toBe(404);
 });
 
 test("visual screenshots cover final desktop and mobile layouts", async ({ page }, testInfo) => {
   await unlock(page);
   for (const [name, path] of [["home", "/"], ["services", "/leistungen/"], ["contact", "/kontakt/"]] as const) {
-    await page.goto(path, { waitUntil: "networkidle" });
+    await page.goto(sitePath(path), { waitUntil: "networkidle" });
     const screenshotPath = testInfo.outputPath(`${name}.png`);
     await page.screenshot({ path: screenshotPath, fullPage: true });
     await testInfo.attach(`${testInfo.project.name}-${name}`, { path: screenshotPath, contentType: "image/png" });
