@@ -68,7 +68,7 @@ test("overview exposes exactly three variants and every variant has a prominent 
   }
 });
 
-test("Kleinanzeigen proposal labels every generated image and keeps contact deliberate", async ({ page, context }) => {
+test("Kleinanzeigen package provides copyable text and downloadable customer photos", async ({ page, context }) => {
   await unlock(page);
   const externalRequests: string[] = [];
   context.on("request", (request) => {
@@ -77,15 +77,15 @@ test("Kleinanzeigen proposal labels every generated image and keeps contact deli
   });
   await page.goto(sitePath("/kleinanzeigen/"), { waitUntil: "networkidle" });
   await expect(page.getByText("Anzeigenentwurf · nicht veröffentlicht", { exact: true })).toBeVisible();
-  await expect(page.locator("[data-generated-visual]")).toHaveCount(4);
-  await expect(page.locator("[data-generated-visual] .visual-label")).toHaveCount(4);
-  for (const label of await page.locator("[data-generated-visual] .visual-label").all()) {
-    await expect(label).toBeVisible();
-    await expect(label).toHaveText("Visualisierung · kein Referenzfoto");
-  }
-  await expect(page.locator(`a[href="tel:${phone}"]`)).toBeVisible();
-  await expect(page.locator(`a[href="mailto:${email}"]`)).toBeVisible();
-  await expect(page.locator(`a[href^="https://wa.me/${whatsappNumber}?text="]`)).toBeVisible();
+  await expect(page.locator("[data-customer-photo]")).toHaveCount(4);
+  await expect(page.locator("[data-customer-photo] a[download]")).toHaveCount(4);
+  await expect(page.locator("#ad-title")).toHaveValue(/Küchenmontage, Möbelmontage/);
+  await expect(page.locator("#ad-text")).toHaveValue(/\+49 178 693 0465/);
+  await expect(page.locator("#ad-text")).toHaveValue(new RegExp(email.replace(/[.]/g, "\\.")));
+  await page.getByRole("button", { name: "Titel kopieren" }).click();
+  await expect(page.getByRole("button", { name: "Kopiert ✓" })).toBeVisible();
+  await page.getByRole("button", { name: "Text kopieren" }).click();
+  await expect(page.getByRole("button", { name: "Kopiert ✓" })).toHaveCount(2);
   expect(externalRequests).toEqual([]);
 });
 

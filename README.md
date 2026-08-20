@@ -4,7 +4,7 @@ Static Astro customer preview for Rybinskyi BauXpert in Munich. The project belo
 
 ## Current release status
 
-The current customer-comparison preview has one shared entry page and three explicitly named routes: a direct standard website, the restrained premium-derived website, and a new Kleinanzeigen advert proposal. Every variant has a prominent full-width return bar back to the overview. This comparison is temporary; customer approval must select the final website direction before live release.
+The current customer-comparison preview has one shared entry page, two website versions (`/standard/` and `/premium/`), and a separate copy-ready Kleinanzeigen package. Every route has a prominent full-width return bar back to the overview. This comparison is temporary; customer approval must select the final website direction before live release.
 
 The preview remains intentionally blocked from a live release:
 
@@ -17,9 +17,9 @@ The preview remains intentionally blocked from a live release:
 
 ## Visual assets
 
-No customer project photo has a documented rights approval. Customer raster images therefore remain in the repository but outside `dist`. The website variants use an original neutral kitchen vector labelled as a placeholder. The Kleinanzeigen route uses four newly generated, permanently labelled preview visualizations that are not customer references. After written approval, the preferred real website hero candidate is `src/assets/projects/kuechenmontage-u-form/fertig.jpg`.
+The existing customer logo and six selected project photos are included in the PIN/noindex preview on the repository owner's explicit instruction. The finished U-shaped kitchen is the hero in both website versions; sauna remains a secondary premium reference. The Kleinanzeigen route is a simple copy/download package with a title, advert text, and four real customer photos. Final image rights remain a release blocker until Denys confirms the exact files and uses.
 
-The authoritative register is [`docs/ASSET_APPROVAL.md`](docs/ASSET_APPROVAL.md). `config/asset-approvals.json` is the machine-readable build allowlist. The advert copy, visual prompts, and publication limits are documented in [`docs/KLEINANZEIGEN_PREVIEW.md`](docs/KLEINANZEIGEN_PREVIEW.md).
+The authoritative register is [`docs/ASSET_APPROVAL.md`](docs/ASSET_APPROVAL.md). `config/asset-approvals.json` is the machine-readable build allowlist. The advert copy and publication limits are documented in [`docs/KLEINANZEIGEN_PREVIEW.md`](docs/KLEINANZEIGEN_PREVIEW.md).
 
 ## Customer approval
 
@@ -42,7 +42,7 @@ npm run test:browser
 npm run test:lighthouse
 ```
 
-The gates cover Astro validation, build, static links and fragments, asset approval, JSON schemas and JSON-LD, noindex/canonical/sitemap/robots, legal routes, 404, contact links, PIN behavior, exactly three preview variants and their overview return path, kitchen-first heroes, generated-image disclosures, mobile navigation, WhatsApp privacy behavior, axe, horizontal overflow, desktop/mobile screenshots, Lighthouse budgets, and external tracker regression.
+The gates cover Astro validation, build, static links and fragments, the explicit preview asset allowlist, JSON schemas and JSON-LD, noindex/canonical/sitemap/robots, legal routes, 404, contact links, PIN behavior, the two website versions plus Kleinanzeigen package and their overview return path, kitchen-first heroes, advert copy/download controls, mobile navigation, WhatsApp privacy behavior, axe, horizontal overflow, desktop/mobile screenshots, Lighthouse budgets, and external tracker regression.
 
 Playwright uses its bundled Chromium. Install it once in a new environment with `npx playwright install chromium`; CI installs Chromium and required system dependencies automatically.
 

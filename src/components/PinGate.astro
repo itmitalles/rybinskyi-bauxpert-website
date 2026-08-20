@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "@/config/site";
+import { withBase } from "@/lib/urls";
 
 if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
   throw new Error("Preview PIN hash must be a SHA-256 hex digest.");
@@ -9,7 +10,7 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
 {siteConfig.previewMode && (
   <div class="pin-gate" data-pin-gate data-pin-hash={siteConfig.previewPinHash} role="dialog" aria-modal="true" aria-labelledby="pin-title">
     <div class="pin-panel" data-pin-panel>
-      <span class="pin-brand" aria-hidden="true">RB</span>
+      <img class="pin-brand-logo" src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
       <p class="eyebrow">Kundenansicht</p>
       <h1 id="pin-title">Website Preview</h1>
       <p>Bitte PIN eingeben, um den aktuellen Entwurf anzusehen.</p>
