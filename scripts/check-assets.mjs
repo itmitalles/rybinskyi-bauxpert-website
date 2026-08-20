@@ -40,13 +40,16 @@ for (const outputPath of builtImages.filter((path) => /\.(?:avif|gif|jpe?g|png|w
   if (asset.kind === "generated-preview-visual" && !outputPath.startsWith("preview/kleinanzeigen/")) {
     failures.push(`Generated preview visual is outside its isolated preview path: ${outputPath}`);
   }
+  if (asset.kind === "generated-preview-composite" && !outputPath.startsWith("preview/kleinanzeigen/")) {
+    failures.push(`Generated preview composite is outside its isolated preview path: ${outputPath}`);
+  }
   if (asset.kind === "customer-preview-photo" && !outputPath.startsWith("preview/customer/")) {
     failures.push(`Customer preview photo is outside its isolated preview path: ${outputPath}`);
   }
   if (asset.kind === "customer-preview-brand" && !outputPath.startsWith("brand/")) {
     failures.push(`Customer preview brand asset is outside the brand path: ${outputPath}`);
   }
-  if (!new Set(["generated-preview-visual", "customer-approved-photo", "customer-preview-photo", "customer-preview-brand"]).has(asset.kind)) {
+  if (!new Set(["generated-preview-visual", "generated-preview-composite", "customer-approved-photo", "customer-preview-photo", "customer-preview-brand"]).has(asset.kind)) {
     failures.push(`Raster image has an invalid approval kind: ${outputPath}`);
   }
 }

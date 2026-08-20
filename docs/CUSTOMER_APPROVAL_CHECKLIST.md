@@ -17,8 +17,8 @@ Status: 2026-08-20. Every item below is a live-release blocker until Denys has c
 | Umgang mit Elektroarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Umgang mit Sanitärarbeiten | keine pauschale Eigenleistung; Abgrenzung/Koordination mit geeignetem Fachbetrieb | nein | — | Welche erlaubten Handgriffe werden selbst ausgeführt, welche ausschließlich durch einen Fachbetrieb? |
 | Servicegebiet | München und Umgebung; bisher acht Stadtteile genannt | nein | — | Welche Orte oder welcher Radius werden tatsächlich bedient? |
-| Bildrechte | bestehendes Logo und sechs ausgewählte Projektfotos auf ausdrückliche Nutzeranweisung in der PIN/noindex-Preview; keine finale Bestätigung von Denys | nein | — | Darf Denys die in `docs/ASSET_APPROVAL.md` exakt benannten Dateien auf Website und Kleinanzeigen veröffentlichen? |
-| Biografie | nicht im öffentlichen Build | nein | — | Soll überhaupt eine Biografie erscheinen? Falls ja: exakten Text ausdrücklich bestätigen. |
+| Bildrechte | bestehendes Logo, sechs ausgewählte Projektfotos und ein daraus erstelltes KI-Titelbild auf ausdrückliche Nutzeranweisung in der PIN/noindex-Preview; keine finale Bestätigung von Denys | nein | — | Darf Denys die in `docs/ASSET_APPROVAL.md` exakt benannten Dateien einschließlich der Collage auf Website und Kleinanzeigen veröffentlichen? |
+| Biografie | neutrale „Über mich“-Abschnitte in Standard und Premium; Ukraine-/Baufirma-/Donbass-Geschichte weiterhin nicht im öffentlichen Build | nein | — | Hat Denys den exakten biografischen Text ausdrücklich freigegeben? Datum und Nachweis dokumentieren. |
 | Finale Designfreigabe | Auswahlübersicht mit Standard-, Premium- und Kleinanzeigenvariante | nein | — | Eine Website-Richtung sowie den separaten Anzeigenentwurf ausdrücklich freigeben; Variantenübersicht danach wieder entfernen. |
 
 ## Release block

@@ -64,7 +64,8 @@ for (const htmlPath of htmlFiles) {
   const html = readFileSync(htmlPath, "utf8");
   const label = relative(root, htmlPath);
   const isRedirect = /<meta http-equiv="refresh"/.test(html);
-  if (!/<html lang="de"/.test(html)) failures.push(`${label}: missing German document language`);
+  const expectedLanguage = label === "index.html" ? "uk" : "de";
+  if (!new RegExp(`<html lang="${expectedLanguage}"`).test(html)) failures.push(`${label}: missing expected ${expectedLanguage} document language`);
   if (!/<meta name="description" content="[^"]+"/.test(html)) failures.push(`${label}: missing meta description`);
   if (!/<meta name="robots" content="noindex,nofollow,noarchive"/.test(html) && !isRedirect) failures.push(`${label}: preview robots meta is missing`);
   if (isRedirect && !/<meta name="robots" content="noindex/.test(html)) failures.push(`${label}: redirect is indexable`);
@@ -95,6 +96,7 @@ const indexPath = join(root, "index.html");
 const indexHtml = readFileSync(indexPath, "utf8");
 if ((indexHtml.match(/data-variant-overview/g) ?? []).length !== 1) failures.push("index.html: variant overview marker is missing");
 if ((indexHtml.match(/data-variant-card=/g) ?? []).length !== 3) failures.push("index.html: expected exactly three preview variant cards");
+if (!/Усе в одному місці/.test(indexHtml) || /Alles auf einen Blick|Variante öffnen/.test(indexHtml)) failures.push("index.html: chooser is not consistently Ukrainian");
 for (const variant of ["standard", "premium", "kleinanzeigen"]) {
   if (!new RegExp(`data-variant-link="${variant}"`).test(indexHtml)) failures.push(`index.html: ${variant} variant link is missing`);
 }
@@ -109,7 +111,8 @@ for (const variant of ["standard", "premium", "kleinanzeigen"]) {
   }
   const html = readFileSync(variantPath, "utf8");
   if ((html.match(new RegExp(`data-preview-variant="${variant}"`, "g")) ?? []).length !== 1) failures.push(`${variant}: expected one matching variant marker`);
-  if (!/data-variant-back/.test(html) || !/Zurück zur Variantenübersicht/.test(html)) failures.push(`${variant}: prominent overview return link is missing`);
+  if (!/data-variant-back/.test(html) || !/Повернутися до вибору варіанта/.test(html)) failures.push(`${variant}: prominent Ukrainian overview return link is missing`);
+  if (["standard", "premium"].includes(variant) && (html.match(/data-about-section/g) ?? []).length !== 1) failures.push(`${variant}: visible about section is missing`);
   const heroStart = html.indexOf('data-hero-kind="kitchen"');
   if (heroStart === -1) failures.push(`${variant}: kitchen-led hero is missing`);
   else {
@@ -125,8 +128,9 @@ const listingPath = htmlPathForUrl("/kleinanzeigen/");
 if (listingPath) {
   const listingHtml = readFileSync(listingPath, "utf8");
   if ((listingHtml.match(/data-customer-photo/g) ?? []).length !== 4) failures.push("kleinanzeigen: expected four customer preview photos");
+  if ((listingHtml.match(/data-generated-composite/g) ?? []).length !== 1) failures.push("kleinanzeigen: expected one generated lead composite");
   if ((listingHtml.match(/data-copy-button=/g) ?? []).length !== 2) failures.push("kleinanzeigen: title and advert text need copy controls");
-  if ((listingHtml.match(/ download(?:\s|=|>)/g) ?? []).length !== 4) failures.push("kleinanzeigen: every selected photo needs a download link");
+  if ((listingHtml.match(/ download(?:\s|=|>)/g) ?? []).length !== 5) failures.push("kleinanzeigen: lead composite and every selected photo need download links");
   if (/data-generated-visual|Visualisierung · kein Referenzfoto/.test(listingHtml)) failures.push("kleinanzeigen: obsolete generated-visual presentation remains");
   if (!/Anzeigenentwurf · nicht veröffentlicht/.test(listingHtml)) failures.push("kleinanzeigen: draft publication status is missing");
   if (/Sauna|Ukraine|Donbass|Baufirma|mehreren Mitarbeiter/i.test(listingHtml)) failures.push("kleinanzeigen: unrelated or unapproved narrative is present");

@@ -2,6 +2,31 @@
 import { siteConfig } from "@/config/site";
 import { withBase } from "@/lib/urls";
 
+interface Props {
+  lang?: "de" | "uk";
+}
+
+const { lang = "de" } = Astro.props;
+const copy = lang === "uk"
+  ? {
+      eyebrow: "Перегляд для клієнта",
+      title: "Попередній перегляд сайту",
+      intro: "Введіть PIN-код, щоб переглянути актуальний варіант.",
+      label: "PIN-код",
+      open: "Відкрити",
+      error: "Неправильний PIN-код.",
+      note: "Цей захист відсіює випадкових відвідувачів, але не є повноцінним контролем доступу.",
+    }
+  : {
+      eyebrow: "Kundenansicht",
+      title: "Website Preview",
+      intro: "Bitte PIN eingeben, um den aktuellen Entwurf anzusehen.",
+      label: "Preview-PIN",
+      open: "Öffnen",
+      error: "Der PIN ist nicht richtig.",
+      note: "Dieser Schutz hält zufällige Besucher fern, ist aber keine sichere Zugangskontrolle.",
+    };
+
 if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
   throw new Error("Preview PIN hash must be a SHA-256 hex digest.");
 }
@@ -11,18 +36,18 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
   <div class="pin-gate" data-pin-gate data-pin-hash={siteConfig.previewPinHash} role="dialog" aria-modal="true" aria-labelledby="pin-title">
     <div class="pin-panel" data-pin-panel>
       <img class="pin-brand-logo" src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
-      <p class="eyebrow">Kundenansicht</p>
-      <h1 id="pin-title">Website Preview</h1>
-      <p>Bitte PIN eingeben, um den aktuellen Entwurf anzusehen.</p>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 id="pin-title">{copy.title}</h1>
+      <p>{copy.intro}</p>
       <form data-pin-form>
-        <label for="preview-pin">Preview-PIN</label>
+        <label for="preview-pin">{copy.label}</label>
         <div class="pin-input-row">
           <input id="preview-pin" name="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required autofocus />
-          <button class="button button-primary" type="submit">Öffnen</button>
+          <button class="button button-primary" type="submit">{copy.open}</button>
         </div>
-        <p class="pin-error" data-pin-error role="alert" hidden>Der PIN ist nicht richtig.</p>
+        <p class="pin-error" data-pin-error role="alert" hidden>{copy.error}</p>
       </form>
-      <small>Hinweis: Dieser Schutz hält zufällige Besucher fern, ist aber keine sichere Zugangskontrolle.</small>
+      <small>{copy.note}</small>
     </div>
   </div>
 )}

@@ -6,53 +6,57 @@ import { withBase } from "@/lib/urls";
 const variants = [
   {
     key: "standard",
-    eyebrow: "Variante A",
-    title: "Standard",
-    description: "Direkt, bodenständig und leistungsorientiert – mit klarer Navigation und Küchenmontage im Mittelpunkt.",
-    note: "Klassischer Website-Auftritt",
+    eyebrow: "Варіант A",
+    title: "Стандарт",
+    description: "Прямий, зрозумілий і орієнтований на послуги — з чіткою навігацією та монтажем кухонь у центрі уваги.",
+    note: "Класичний сайт",
+    action: "Відкрити варіант",
     href: "/standard/",
   },
   {
     key: "premium",
-    eyebrow: "Variante B",
-    title: "Premium",
-    description: "Ruhiger, hochwertiger und redaktioneller – mit der stärkeren visuellen Struktur der bisherigen Premiumfassung.",
-    note: "Hochwertige Website-Richtung",
+    eyebrow: "Варіант B",
+    title: "Преміум",
+    description: "Спокійніший, вишуканіший і більш редакційний — із сильнішою візуальною структурою преміумверсії.",
+    note: "Преміальний сайт",
+    action: "Відкрити варіант",
     href: "/premium/",
   },
   {
     key: "kleinanzeigen",
-    eyebrow: "Zusatz",
-    title: "Kleinanzeigen-Paket",
-    description: "Ein fertiger Anzeigentext zum Kopieren und vier ausgewählte Kundenfotos zum Herunterladen.",
-    note: "Text & Bilder · nicht veröffentlicht",
+    eyebrow: "Додатково",
+    title: "Пакет для Kleinanzeigen",
+    description: "Готовий текст оголошення, оформлене титульне зображення та чотири фото робіт для завантаження.",
+    note: "Текст і зображення · не опубліковано",
+    action: "Відкрити пакет",
     href: "/kleinanzeigen/",
   },
 ] as const;
 ---
 
 <BaseLayout
-  title="Variantenübersicht | Rybinskyi BauXpert Preview"
-  description="PIN-geschützte Kundenpreview mit drei Gestaltungs- und Kommunikationsvarianten für Rybinskyi BauXpert."
+  title="Вибір варіанта | Rybinskyi BauXpert Preview"
+  description="Захищений PIN-кодом попередній перегляд двох версій сайту та пакета Kleinanzeigen для Rybinskyi BauXpert."
   hideChrome={true}
+  lang="uk"
 >
   <div class="variant-overview" data-variant-overview>
     <header class="overview-header">
-      <a class="overview-brand" href={withBase("/")} aria-label="Rybinskyi BauXpert Variantenübersicht">
+      <a class="overview-brand" href={withBase("/")} aria-label="Вибір варіанта Rybinskyi BauXpert">
         <img src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
         <strong>Rybinskyi BauXpert</strong>
       </a>
-      <span class="preview-status">Kundenpreview · noindex</span>
+      <span class="preview-status">Попередній перегляд · noindex</span>
     </header>
 
     <main class="overview-main" aria-labelledby="overview-title">
       <div class="overview-intro">
-        <p class="overview-kicker">Ein Link · zwei Website-Versionen · ein Anzeigenpaket</p>
-        <h1 id="overview-title">Alles auf einen Blick.</h1>
-        <p>Vergleichen Sie Standard und Premium. Das Kleinanzeigen-Paket enthält separat den kopierfertigen Text und die passenden Bilder. Ganz oben führt auf jeder Seite eine große Leiste zurück.</p>
+        <p class="overview-kicker">Одне посилання · два варіанти сайту · один пакет оголошення</p>
+        <h1 id="overview-title">Усе в одному місці.</h1>
+        <p>Порівняйте стандартну та преміумверсію. Пакет Kleinanzeigen окремо містить готовий текст і зображення. Велика панель угорі кожної сторінки повертає до цього вибору.</p>
       </div>
 
-      <div class="variant-grid" aria-label="Drei Preview-Varianten">
+      <div class="variant-grid" aria-label="Три варіанти попереднього перегляду">
         {variants.map((variant, index) => (
           <article class:list={["variant-card", `variant-${variant.key}`]} data-variant-card={variant.key}>
             <div class="variant-number" aria-hidden="true">0{index + 1}</div>
@@ -63,23 +67,23 @@ const variants = [
               <p class="variant-description">{variant.description}</p>
             </div>
             <a class="variant-link" data-variant-link={variant.key} href={withBase(variant.href)}>
-              Variante öffnen <span aria-hidden="true">→</span>
+              {variant.action} <span aria-hidden="true">→</span>
             </a>
           </article>
         ))}
       </div>
 
-      <aside class="overview-notice" aria-label="Hinweise zur Preview">
-        <strong>Noch keine Live-Freigabe.</strong>
-        <p>Kontaktdaten, Anbieterangaben, Leistungsumfang, Bildrechte und finale Gestaltung müssen vor einer Veröffentlichung von Denys bestätigt werden. Die Kundenfotos sind auf ausdrückliche Anweisung in dieser PIN-Preview enthalten und werden vor dem endgültigen Livegang gemeinsam abgestimmt.</p>
+      <aside class="overview-notice" aria-label="Примітки до попереднього перегляду">
+        <strong>Ще не схвалено для остаточної публікації.</strong>
+        <p>Контактні дані, інформацію про виконавця, перелік послуг, права на зображення та фінальний дизайн Denys має підтвердити до публікації. Фото клієнта включені до цієї PIN-версії для спільного узгодження.</p>
       </aside>
     </main>
 
     <footer class="overview-footer">
-      <p>{siteConfig.name} · interne Kundenentscheidung</p>
-      <nav aria-label="Rechtliche Informationen">
-        <a href={withBase("/impressum/")}>Impressum</a>
-        <a href={withBase("/datenschutz/")}>Datenschutz</a>
+      <p>{siteConfig.name} · внутрішній вибір клієнта</p>
+      <nav aria-label="Юридична інформація">
+        <a href={withBase("/impressum/")}>Вихідні дані</a>
+        <a href={withBase("/datenschutz/")}>Захист даних</a>
       </nav>
     </footer>
   </div>
