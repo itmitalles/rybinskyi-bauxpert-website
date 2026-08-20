@@ -8,7 +8,7 @@ Read-only audit date: 2026-08-20. Repository: `rybinskyi-bauxpert-de/rybinskyi-b
 - The active administrator has direct push access; force-push and branch deletion are not rule-blocked.
 - Repository Actions allow all actions and do not require full-SHA pinning server-side.
 - Pages uses GitHub Actions, has no custom domain, enforces HTTPS, and its environment currently permits `main` deployments. Admin bypass is enabled.
-- The previous deploy workflow allowed manual dispatch. The repository workflow now limits deployment to a merged pull request targeting `main`; GitHub settings still need to enforce the matching policy.
+- The previous deploy workflow allowed manual dispatch. The repository workflow now listens only to `main` pushes and verifies through GitHub's commit-to-PR API that the pushed commit belongs to a merged pull request targeting `main`; a direct push fails before build or deployment. GitHub settings still need to enforce the matching policy.
 
 No setting was changed because the requested audit was read-only.
 
@@ -52,7 +52,7 @@ Open `Settings → Pages` and `Settings → Environments → github-pages`:
 4. Restrict deployment to `main` and disable administrator bypass.
 5. Do not add a manual deployment path.
 
-The Pages workflow runs only for a closed pull request whose base is `main` and whose `merged` flag is true. It uploads only `dist`.
+The Pages workflow runs only for `main`, then requires the triggering commit to be associated with a merged pull request whose base is `main`. This keeps the Pages environment's `main` restriction effective while rejecting direct-push deployments. It uploads only `dist`.
 
 ## Agent policy
 

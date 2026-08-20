@@ -1,12 +1,12 @@
 name: Deploy GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches: [main]
-    types: [closed]
 
 permissions:
   contents: read
+  pull-requests: read
   pages: write
   id-token: write
 
@@ -15,8 +15,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify-merged-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require a merged pull request for this main commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" --jq 'any(.[]; .merged_at != null and .base.ref == "main")' | grep -qx true
+
   build:
-    if: github.event.pull_request.merged == true
+    needs: verify-merged-pr
     runs-on: ubuntu-latest
     steps:
       - name: Checkout merged main
@@ -44,7 +52,6 @@ jobs:
           path: dist
 
   deploy:
-    if: github.event.pull_request.merged == true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
