@@ -1,213 +1,174 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
-import heroImage from "@/assets/projects/sauna/innenansicht.jpeg";
-import detailImage from "@/assets/projects/boden/fischgraet-parkett.png";
-import kitchenResult from "@/assets/projects/kuechenmontage-u-form/fertig.jpg";
-import kitchenProcess from "@/assets/projects/kuechenmontage-u-form/waehrend.jpg";
-import furnitureResult from "@/assets/projects/hochbett-montage/fertig.jpg";
-import ContactBand from "@/components/ContactBand.astro";
-import Icon from "@/components/Icon.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import SectionHeading from "@/components/SectionHeading.astro";
-import { siteConfig } from "@/config/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { whatsappUrl, withBase } from "@/lib/urls";
+import { siteConfig } from "@/config/site";
+import { withBase } from "@/lib/urls";
 
-const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
-const featuredProjects = (await getCollection("projects"))
-  .filter((project) => project.data.featured && project.data.slug !== "kuechenmontage-u-form-muenchen")
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
+const variants = [
+  {
+    key: "standard",
+    eyebrow: "Variante A",
+    title: "Standard",
+    description: "Direkt, bodenständig und leistungsorientiert – mit klarer Navigation und Küchenmontage im Mittelpunkt.",
+    note: "Klassischer Website-Auftritt",
+    href: "/standard/",
+  },
+  {
+    key: "premium",
+    eyebrow: "Variante B",
+    title: "Premium",
+    description: "Ruhiger, hochwertiger und redaktioneller – mit der stärkeren visuellen Struktur der bisherigen Premiumfassung.",
+    note: "Hochwertige Website-Richtung",
+    href: "/premium/",
+  },
+  {
+    key: "kleinanzeigen",
+    eyebrow: "Variante C",
+    title: "Kleinanzeigen",
+    description: "Ein überarbeiteter Anzeigenauftritt mit neuem Text, klarer Leistungsabgrenzung und eigens erzeugten Vorschaubildern.",
+    note: "Anzeigenentwurf · nicht veröffentlicht",
+    href: "/kleinanzeigen/",
+  },
+] as const;
 ---
 
-<BaseLayout>
-  <section class="home-hero">
-    <div class="home-hero-grid shell">
-      <div class="home-hero-copy">
-        <p class="eyebrow">München & Umgebung</p>
-        <h1>Renovierung & Sanierung in München.</h1>
-        <p class="hero-lead">Saubere Handwerksarbeit für Wohnung, Haus und Gewerbe – vom Rückbau bis zur Montage.</p>
-        <div class="button-row">
-          <a class="button button-primary" href={withBase("/kontakt/#anfrage")}><Icon name="mail" size={18} /> Kostenlos anfragen</a>
-          <a class="button button-secondary" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={18} /> WhatsApp</a>
-          <a class="hero-phone" href={`tel:${siteConfig.phoneHref}`}><Icon name="phone" size={17} /> {siteConfig.phoneDisplay}</a>
-        </div>
-        <ul class="trust-line" aria-label="Wichtige Informationen">
-          <li><Icon name="check" size={17} /> München & Umgebung</li>
-          <li><Icon name="check" size={17} /> Direkter Kontakt</li>
-          <li><Icon name="check" size={17} /> Echte Projektfotos</li>
-        </ul>
-      </div>
-      <figure class="home-hero-figure">
-        <Image src={heroImage} alt="Fertig ausgebauter Saunainnenraum mit Saunabänken aus Holz" widths={[640, 900, 1200]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" fetchpriority="high" />
-        <figcaption><span>Fertiges Projekt</span> Sauna-Ausbau · München & Umgebung</figcaption>
-      </figure>
-    </div>
-    <div class="hero-workmark" aria-hidden="true">BAU<span>X</span>PERT</div>
-  </section>
+<BaseLayout
+  title="Variantenübersicht | Rybinskyi BauXpert Preview"
+  description="PIN-geschützte Kundenpreview mit drei Gestaltungs- und Kommunikationsvarianten für Rybinskyi BauXpert."
+  hideChrome={true}
+>
+  <div class="variant-overview" data-variant-overview>
+    <header class="overview-header">
+      <a class="overview-brand" href={withBase("/")} aria-label="Rybinskyi BauXpert Variantenübersicht">
+        <span aria-hidden="true">RB</span>
+        <strong>Rybinskyi BauXpert</strong>
+      </a>
+      <span class="preview-status">Kundenpreview · noindex</span>
+    </header>
 
-  <section class="section services-home">
-    <div class="shell">
-      <SectionHeading eyebrow="Leistungen" title="Was ich konkret mache." intro="Renovierung und Ausbau funktionieren am besten, wenn die Arbeitsschritte zusammenpassen. Diese Bereiche können einzeln oder in einem abgestimmten Projekt angefragt werden." />
-      <div class="service-index">
-        {services.map((service, index) => (
-          <a href={withBase(`/leistungen/${service.id}/`)}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{service.data.shortTitle}</strong>
-            <p>{service.data.summary}</p>
-            <Icon name="arrow" size={22} />
-          </a>
+    <main class="overview-main" aria-labelledby="overview-title">
+      <div class="overview-intro">
+        <p class="overview-kicker">Ein Link · drei Ansichten</p>
+        <h1 id="overview-title">Welche Richtung überzeugt?</h1>
+        <p>Öffnen Sie jede Variante in Ruhe. Ganz oben führt auf jeder Seite eine große, farbige Leiste wieder hierher zurück.</p>
+      </div>
+
+      <div class="variant-grid" aria-label="Drei Preview-Varianten">
+        {variants.map((variant, index) => (
+          <article class:list={["variant-card", `variant-${variant.key}`]} data-variant-card={variant.key}>
+            <div class="variant-number" aria-hidden="true">0{index + 1}</div>
+            <div class="variant-copy">
+              <p>{variant.eyebrow}</p>
+              <h2>{variant.title}</h2>
+              <span>{variant.note}</span>
+              <p class="variant-description">{variant.description}</p>
+            </div>
+            <a class="variant-link" data-variant-link={variant.key} href={withBase(variant.href)}>
+              Variante öffnen <span aria-hidden="true">→</span>
+            </a>
+          </article>
         ))}
       </div>
-    </div>
-  </section>
 
-  <section class="section proof-section">
-    <div class="shell">
-      <SectionHeading eyebrow="Aus der Praxis" title="Küchenmontage & Möbelaufbau – sichtbar dokumentiert." intro="Keine Stockfotos: Hier stehen ein fertiges Ergebnis, derselbe Küchenauftrag während der Montage und ein separates Möbelprojekt nebeneinander." />
-      <div class="practice-showcase">
-        <a class="practice-photo practice-photo-main" href={withBase("/projekte/kuechenmontage-u-form-muenchen/")}>
-          <Image src={kitchenResult} alt="Fertig montierte graue Küche über drei Raumseiten mit weißen Oberschränken" widths={[540, 760, 1000]} sizes="(min-width: 900px) 58vw, 100vw" loading="lazy" />
-          <span><small>Fertiges Ergebnis</small><strong>Küchenmontage in U-Form</strong></span>
-        </a>
-        <a class="practice-photo practice-photo-process" href={withBase("/projekte/kuechenmontage-u-form-muenchen/")}>
-          <Image src={kitchenProcess} alt="Teilweise aufgebaute graue Unterschränke, Beschläge und Werkzeuge in einem Küchenraum" widths={[420, 640, 800]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
-          <span><small>Während der Montage</small><strong>Derselbe Auftrag im Aufbau</strong></span>
-        </a>
-        <a class="practice-photo practice-photo-furniture" href={withBase("/projekte/hochbett-montage-muenchen/")}>
-          <Image src={furnitureResult} alt="Weißes Kinder-Hochbett mit Treppe, Stauraum und Arbeitsbereich" widths={[420, 640, 800]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
-          <span><small>Möbelmontage</small><strong>Hochbett mit Stauraum</strong></span>
-        </a>
-      </div>
-      <h3 class="more-projects-title">Weitere echte Arbeiten</h3>
-      <div class="project-grid home-project-grid">
-        {featuredProjects.map((project) => <ProjectCard project={project} />)}
-      </div>
-      <div class="section-more"><a class="button button-secondary" href={withBase("/projekte/")}>Alle Projekte ansehen <Icon name="arrow" size={18} /></a></div>
-    </div>
-  </section>
-
-  <section class="section workflow-section">
-    <div class="shell workflow-grid">
-      <div>
-        <SectionHeading eyebrow="Arbeitsweise" title="Erst verstehen. Dann machen." intro="Fotos, eine kurze Beschreibung, Ort oder Stadtteil und der gewünschte Zeitraum reichen oft für die erste Einordnung. Vor dem Start werden Umfang, Schnittstellen und offene Punkte geklärt." />
-        <ol class="workflow-list">
-          <li><span>01</span><div><h3>Projekt beschreiben</h3><p>Ort, Umfang, ein paar Fotos und Ihr gewünschter Zeitraum.</p></div></li>
-          <li><span>02</span><div><h3>Vor Ort klären</h3><p>Wenn nötig, werden Flächen, Untergründe und Anschlüsse am Objekt geprüft.</p></div></li>
-          <li><span>03</span><div><h3>Arbeiten abstimmen</h3><p>Leistungen, Material und Reihenfolge werden für das konkrete Projekt festgelegt.</p></div></li>
-          <li><span>04</span><div><h3>Ausführen & prüfen</h3><p>Nach der Ausführung wird das Ergebnis gemeinsam durchgesehen.</p></div></li>
-        </ol>
-      </div>
-      <figure class="work-detail">
-        <Image src={detailImage} alt="Verlegter Fischgrätparkettboden mit sichtbarem Holzbild" widths={[540, 760]} sizes="(min-width: 900px) 38vw, 100vw" loading="lazy" />
-        <figcaption>Echte Detailaufnahme: verlegter Fischgrätboden in München</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section local-section">
-    <div class="shell local-grid">
-      <div>
-        <p class="eyebrow">Einsatzgebiet</p>
-        <h2>In München zuhause. In den Stadtteilen unterwegs.</h2>
-        <p>Rybinskyi BauXpert ist in München und Umgebung tätig. Auf der bisherigen Website sind diese Stadtteile ausdrücklich genannt:</p>
-        <div class="area-list">{siteConfig.areas.map((area) => <span>{area}</span>)}</div>
-      </div>
-      <aside>
-        <Icon name="pin" size={30} />
-        <h3>Ihr Ort fehlt?</h3>
-        <p>Schreiben Sie kurz, wo das Projekt liegt. Ob der Einsatz sinnvoll möglich ist, lässt sich direkt klären.</p>
-        <a class="text-link" href={withBase("/muenchen/")}>Zum Einsatzgebiet <Icon name="arrow" size={17} /></a>
+      <aside class="overview-notice" aria-label="Hinweise zur Preview">
+        <strong>Noch keine Live-Freigabe.</strong>
+        <p>Kontaktdaten, Anbieterangaben, Leistungsumfang, Bildrechte und finale Gestaltung müssen vor einer Veröffentlichung von Denys bestätigt werden. Die Bilder der Kleinanzeigenvariante sind gekennzeichnete Visualisierungen und keine Referenzfotos.</p>
       </aside>
-    </div>
-  </section>
+    </main>
 
-  <ContactBand title="Erzählen Sie kurz, was ansteht." text="Schicken Sie Fotos, eine kurze Beschreibung, Ort oder Stadtteil und Ihren gewünschten Zeitraum – per WhatsApp oder vorbereitet mit dem Anfrage-Builder." />
+    <footer class="overview-footer">
+      <p>{siteConfig.name} · interne Kundenentscheidung</p>
+      <nav aria-label="Rechtliche Informationen">
+        <a href={withBase("/impressum/")}>Impressum</a>
+        <a href={withBase("/datenschutz/")}>Datenschutz</a>
+      </nav>
+    </footer>
+  </div>
 </BaseLayout>
 
 <style>
-  .home-hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding-block: clamp(3.2rem, 7vw, 6.5rem); background: var(--paper); }
-  .home-hero::before { content: ""; position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(to right, var(--line) 1px, transparent 1px); background-size: 12.5vw 100%; pointer-events: none; }
-  .home-hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, .95fr) minmax(480px, 1.05fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
-  .home-hero-copy { padding-block: 1rem; }
-  .home-hero h1 { max-width: 720px; }
-  .hero-lead { max-width: 630px; margin: 1.5rem 0 1.8rem; color: var(--ink-soft); font-size: clamp(1.05rem, 2vw, 1.3rem); }
-  .hero-phone { display: inline-flex; align-items: center; gap: .4rem; align-self: center; margin-left: .2rem; color: var(--ink); font-size: .86rem; font-weight: 800; }
-  .trust-line { display: flex; flex-wrap: wrap; gap: 1rem 1.4rem; margin-top: 2rem; list-style: none; color: var(--ink-soft); font-size: .75rem; font-weight: 750; }
-  .trust-line li { display: flex; align-items: center; gap: .35rem; }
-  .home-hero-figure { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--ink); box-shadow: var(--shadow); }
-  .home-hero-figure img { width: 100%; height: 100%; object-fit: cover; }
-  .home-hero-figure figcaption { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; color: white; background: linear-gradient(transparent, rgba(20,20,18,.88)); font-size: .72rem; }
-  .home-hero-figure figcaption span { color: #f3cc7a; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-  .hero-workmark { position: absolute; z-index: 1; left: -.02em; bottom: -.2em; color: rgba(32,35,31,.035); font-family: Arial Black, sans-serif; font-size: clamp(7rem, 19vw, 23rem); font-weight: 900; line-height: .72; white-space: nowrap; }
-  .hero-workmark span { color: rgba(169,71,44,.08); }
-  .services-home { background: var(--white); }
-  .service-index { border-top: 1px solid var(--line); }
-  .service-index a { display: grid; grid-template-columns: 50px minmax(180px,.65fr) minmax(0,1.4fr) auto; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); padding: 1.15rem .4rem; text-decoration: none; transition: background .18s ease, padding .18s ease; }
-  .service-index a:hover { padding-inline: .8rem; background: var(--paper); }
-  .service-index span { color: var(--clay); font-family: Georgia, serif; }
-  .service-index strong { font-family: Georgia, serif; font-size: 1.22rem; font-weight: 500; }
-  .service-index p { color: var(--ink-soft); font-size: .86rem; }
-  .proof-section { background: var(--paper-deep); }
-  .practice-showcase { display: grid; grid-template-columns: minmax(0,1.18fr) minmax(320px,.82fr); grid-template-rows: repeat(2,minmax(260px,1fr)); gap: .85rem; min-height: 690px; margin-bottom: clamp(3rem,6vw,5rem); }
-  .practice-photo { position: relative; display: block; min-height: 0; overflow: hidden; color: white; background: var(--ink); text-decoration: none; }
-  .practice-photo-main { grid-row: 1 / -1; }
-  .practice-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
-  .practice-photo:hover img { transform: scale(1.018); }
-  .practice-photo > span { position: absolute; inset: auto 0 0; display: grid; gap: .2rem; padding: 4rem 1.1rem 1.1rem; background: linear-gradient(transparent,rgba(20,20,18,.9)); }
-  .practice-photo small { color: #f3cc7a; font-size: .66rem; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
-  .practice-photo strong { font-family: Georgia,serif; font-size: clamp(1.25rem,2.3vw,2.1rem); font-weight: 500; }
-  .practice-photo-main img { object-position: center; }
-  .practice-photo-process img { object-position: center 62%; }
-  .more-projects-title { margin-bottom: 1.2rem; font-size: clamp(1.5rem,3vw,2.2rem); }
-  .home-project-grid .project-card:first-child { grid-row: span 2; }
-  .home-project-grid .project-card:first-child .project-card-image { aspect-ratio: auto; flex: 1; min-height: 440px; }
-  .section-more { margin-top: 2rem; text-align: center; }
-  .workflow-section { background: var(--white); }
-  .workflow-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(370px,.7fr); align-items: start; gap: clamp(3rem,7vw,7rem); }
-  .workflow-list { display: grid; list-style: none; }
-  .workflow-list li { display: grid; grid-template-columns: 55px 1fr; gap: 1rem; border-top: 1px solid var(--line); padding: 1.2rem 0; }
-  .workflow-list li:last-child { border-bottom: 1px solid var(--line); }
-  .workflow-list > li > span { color: var(--clay); font-family: Georgia, serif; font-size: 1.15rem; }
-  .workflow-list h3 { margin-bottom: .3rem; font-size: 1.35rem; }
-  .workflow-list p { color: var(--ink-soft); font-size: .88rem; }
-  .work-detail { position: sticky; top: calc(var(--header-height) + 2rem); margin: 2rem 0 0; }
-  .work-detail img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-  .work-detail figcaption { border-left: 4px solid var(--clay); padding: .8rem; background: var(--paper); color: var(--ink-soft); font-size: .76rem; }
-  .local-section { color: white; background: var(--ink); }
-  .local-grid { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(280px,.6fr); gap: clamp(3rem,8vw,8rem); }
-  .local-section h2 { max-width: 760px; }
-  .local-section .eyebrow { color: #dfbd72; }
-  .local-section h2 + p { max-width: 680px; margin-top: 1.3rem; color: rgba(255,255,255,.68); }
-  .area-list { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.8rem; }
-  .area-list span { border: 1px solid rgba(255,255,255,.27); padding: .45rem .75rem; font-size: .78rem; }
-  .local-grid aside { align-self: end; border-left: 1px solid rgba(255,255,255,.2); padding-left: 2rem; }
-  .local-grid aside h3 { margin: 1rem 0 .6rem; color: white; }
-  .local-grid aside p { margin-bottom: 1rem; color: rgba(255,255,255,.64); }
-  .local-grid aside .text-link { color: #efc66f; }
-  @media (max-width: 900px) {
-    .home-hero-grid { grid-template-columns: 1fr; }
-    .home-hero-figure { aspect-ratio: 4 / 3; }
-    .workflow-grid, .local-grid { grid-template-columns: 1fr; }
-    .practice-showcase { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(470px,62vw) minmax(260px,38vw); min-height: 0; }
-    .practice-photo-main { grid-column: 1 / -1; grid-row: 1; }
-    .work-detail { position: static; margin-top: 0; }
-    .work-detail img { aspect-ratio: 4 / 3; }
-    .local-grid aside { border-top: 1px solid rgba(255,255,255,.2); border-left: 0; padding: 2rem 0 0; }
+  .variant-overview {
+    min-height: 100dvh;
+    color: #f7f2e8;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(196, 128, 79, .22), transparent 27rem),
+      linear-gradient(145deg, #141816 0%, #202720 55%, #131614 100%);
   }
-  @media (max-width: 700px) {
-    .home-hero { padding-top: 2.8rem; }
-    .home-hero .button-row .button { flex: 1; }
-    .hero-phone { width: 100%; margin-top: .5rem; margin-left: 0; }
-    .trust-line { display: grid; gap: .55rem; }
-    .home-hero-figure { aspect-ratio: 3 / 4; }
-    .practice-showcase { display: flex; flex-direction: column; }
-    .practice-photo { min-height: 310px; }
-    .practice-photo-main { min-height: 520px; }
-    .service-index a { grid-template-columns: 34px 1fr auto; }
-    .service-index p { display: none; }
-    .home-project-grid .project-card:first-child { grid-row: auto; }
-    .home-project-grid .project-card:first-child .project-card-image { min-height: 0; aspect-ratio: 4 / 3; }
+
+  .overview-header,
+  .overview-footer,
+  .overview-main {
+    width: min(100% - 40px, 1260px);
+    margin-inline: auto;
+  }
+
+  .overview-header {
+    display: flex;
+    min-height: 88px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
+  }
+
+  .overview-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .overview-brand span {
+    display: grid;
+    width: 45px;
+    height: 45px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .28);
+    font-family: Georgia, serif;
+    letter-spacing: .08em;
+  }
+
+  .overview-brand strong { font-size: .9rem; letter-spacing: .04em; }
+  .preview-status { color: #e0b486; font-size: .7rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+
+  .overview-main { padding-block: clamp(3rem, 8vw, 7rem); }
+  .overview-intro { display: grid; max-width: 900px; gap: 1rem; margin-bottom: clamp(2.4rem, 5vw, 4.5rem); }
+  .overview-kicker { color: #dda573; font-size: .72rem; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
+  .overview-intro h1 { max-width: 850px; color: white; font-size: clamp(3.2rem, 7vw, 7rem); line-height: .94; }
+  .overview-intro > p:last-child { max-width: 700px; color: rgba(255, 255, 255, .68); font-size: clamp(1rem, 2vw, 1.25rem); }
+
+  .variant-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid rgba(255, 255, 255, .14); background: rgba(255, 255, 255, .14); }
+  .variant-card { display: grid; min-height: 500px; grid-template-rows: auto 1fr auto; gap: 2rem; padding: clamp(1.5rem, 3vw, 2.5rem); background: #1b201c; }
+  .variant-card:hover { background: #232a24; }
+  .variant-standard { box-shadow: inset 0 5px #bd6b3f; }
+  .variant-premium { box-shadow: inset 0 5px #d1a778; }
+  .variant-kleinanzeigen { box-shadow: inset 0 5px #67a68a; }
+  .variant-number { color: rgba(255, 255, 255, .55); font-family: Georgia, serif; font-size: 2.2rem; }
+  .variant-copy > p:first-child { margin-bottom: .65rem; color: #dca779; font-size: .68rem; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+  .variant-copy h2 { color: white; font-size: clamp(2.3rem, 4vw, 4rem); }
+  .variant-copy > span { display: inline-block; margin: .9rem 0 1.4rem; border: 1px solid rgba(255, 255, 255, .2); padding: .35rem .5rem; color: rgba(255, 255, 255, .68); font-size: .65rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .variant-description { color: rgba(255, 255, 255, .64); }
+  .variant-link { display: flex; min-height: 54px; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid rgba(255, 255, 255, .18); padding-top: 1rem; color: white; font-weight: 850; text-decoration: none; }
+  .variant-link span { font-size: 1.5rem; transition: translate .18s ease; }
+  .variant-link:hover span, .variant-link:focus-visible span { translate: .3rem 0; }
+
+  .overview-notice { display: grid; grid-template-columns: minmax(180px, .35fr) 1fr; gap: 2rem; margin-top: 2.5rem; border-left: 5px solid #d09a6b; padding: 1.2rem 1.4rem; background: rgba(255, 255, 255, .07); }
+  .overview-notice strong { color: white; font-size: 1.1rem; }
+  .overview-notice p { color: rgba(255, 255, 255, .62); font-size: .86rem; }
+  .overview-footer { display: flex; min-height: 90px; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid rgba(255, 255, 255, .14); color: rgba(255, 255, 255, .52); font-size: .76rem; }
+  .overview-footer nav { display: flex; gap: 1rem; }
+  .overview-footer a { color: inherit; }
+
+  @media (max-width: 900px) {
+    .variant-grid { grid-template-columns: 1fr; }
+    .variant-card { min-height: 370px; }
+  }
+
+  @media (max-width: 600px) {
+    .overview-header, .overview-footer, .overview-main { width: min(100% - 28px, 1260px); }
+    .overview-header { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 1rem; }
+    .overview-intro h1 { font-size: clamp(2.75rem, 15vw, 4.6rem); }
+    .overview-notice { grid-template-columns: 1fr; gap: .6rem; }
+    .overview-footer { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 1.2rem; }
   }
 </style>

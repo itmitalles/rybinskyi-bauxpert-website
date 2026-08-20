@@ -9,8 +9,14 @@
     "preview": "astro preview",
     "typecheck": "astro check",
     "lint": "astro check",
-    "test": "node scripts/check-build.mjs",
-    "test:visual": "node scripts/visual-check.mjs"
+    "check:static": "node scripts/check-build.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "check:data": "node scripts/check-data.mjs",
+    "test": "npm run check:static && npm run check:assets && npm run check:data",
+    "test:browser": "playwright test",
+    "test:visual": "playwright test --grep \"visual screenshots\"",
+    "test:lighthouse": "node scripts/lighthouse-check.mjs",
+    "test:release": "npm run typecheck && npm run build && npm test && npm run test:browser && npm run test:lighthouse"
   },
   "dependencies": {
     "astro": "^7.2.1",
@@ -18,8 +24,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.2.0",
+    "ajv": "^8.20.0",
     "lighthouse": "^13.4.1",
     "typescript": "^5.9.3"
   }

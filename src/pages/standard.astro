@@ -1,0 +1,141 @@
+---
+import ContactBand from "@/components/ContactBand.astro";
+import Icon from "@/components/Icon.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+import { whatsappUrl, withBase } from "@/lib/urls";
+
+const services = [
+  ["01", "Küchenmontage", "Küchenmöbel aufbauen, ausrichten und im vereinbarten Umfang passend montieren."],
+  ["02", "Möbelmontage & Maßanpassung", "Schränke, Regale, Betten und geeignete Einbauteile montieren und ausrichten."],
+  ["03", "Innenausbau", "Abgestimmte Verkleidungs-, Montage- und Ausbauarbeiten für bestehende Räume."],
+  ["04", "Böden", "Flächen vorbereiten, geeignete Beläge verlegen, Sockelleisten und Übergänge ausführen."],
+  ["05", "Renovierung", "Bestehende Räume in klar vereinbarten Arbeitsschritten überarbeiten."],
+  ["06", "Kleinere Projekte", "Einzelne Möbel, Einbauten und überschaubare Anpassungen nach vorheriger Prüfung."],
+] as const;
+---
+
+<BaseLayout
+  title="Standard-Variante | Rybinskyi BauXpert Preview"
+  description="Bodenständige Website-Variante für Küchenmontage, Möbelmontage, Innenausbau, Böden und Renovierung in München."
+  showVariantBack={true}
+  variantLabel="Variante A · Standard"
+>
+  <div class="standard-page" data-preview-variant="standard">
+    <section class="standard-hero" data-hero-kind="kitchen">
+      <div class="standard-copy">
+        <p class="standard-kicker">Montage & Ausbau · München</p>
+        <h1>Sauber montiert. Passend ausgebaut.</h1>
+        <p class="standard-lead">Küchenmontage, Möbelmontage, Innenausbau, Böden und Renovierung – für konkret beschriebene Projekte in München und Umgebung.</p>
+        <div class="standard-actions">
+          <a class="standard-button" href={withBase("/kontakt/#anfrage")}>Projekt beschreiben <Icon name="arrow" size={18} /></a>
+          <a class="standard-button standard-button-light" href={whatsappUrl(siteConfig.whatsappText)} target="_blank" rel="noreferrer"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+        </div>
+        <p class="standard-contact"><a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a><span>·</span><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
+      </div>
+      <figure class="standard-visual" data-asset-status="approved-placeholder">
+        <img src={withBase("/hero-kitchen-placeholder.svg")} alt="Schematische Küchenillustration als Platzhalter für ein noch freizugebendes Küchenfoto" width="1600" height="1200" loading="eager" fetchpriority="high" />
+        <figcaption>Platzhalter · reales Küchenfoto erst nach Bildfreigabe</figcaption>
+      </figure>
+    </section>
+
+    <section class="standard-services" aria-labelledby="standard-services-title">
+      <div class="shell">
+        <header class="standard-section-heading">
+          <p class="standard-kicker">Leistungen</p>
+          <h2 id="standard-services-title">Worum es bei Ihrer Anfrage gehen kann.</h2>
+          <p>Der genaue Umfang wird für jedes Projekt einzeln geprüft und vereinbart.</p>
+        </header>
+        <div class="standard-grid">
+          {services.map(([number, title, text]) => (
+            <article>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="standard-info">
+      <div class="shell standard-info-grid">
+        <div>
+          <p class="standard-kicker">Für die erste Einordnung</p>
+          <h2>Ein paar konkrete Angaben helfen weiter.</h2>
+        </div>
+        <ul>
+          <li><span>01</span>Ort oder Stadtteil</li>
+          <li><span>02</span>Gewünschte Arbeiten</li>
+          <li><span>03</span>Maße, Plan oder Lieferumfang</li>
+          <li><span>04</span>Fotos des aktuellen Zustands</li>
+          <li><span>05</span>Gewünschter Zeitraum</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="standard-boundary">
+      <div class="shell">
+        <strong>Wichtig bei Elektro und Sanitär</strong>
+        <p>Elektro- und Sanitärfacharbeiten sind kein pauschaler Bestandteil. Es werden nur tatsächlich angebotene und erlaubte Eigenleistungen vereinbart; erforderliche Facharbeiten werden getrennt und mit geeigneten Fachbetrieben abgestimmt.</p>
+      </div>
+    </section>
+
+    <ContactBand title="Was soll montiert oder ausgebaut werden?" text="Senden Sie Ort, eine kurze Beschreibung sowie vorhandene Maße oder Fotos per Telefon, WhatsApp oder E-Mail." />
+  </div>
+</BaseLayout>
+
+<style>
+  .standard-page { --standard-dark: #22251f; --standard-orange: #963d22; --standard-paper: #f4efe5; color: var(--standard-dark); background: var(--standard-paper); }
+  .standard-kicker { color: var(--standard-orange); font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+  .standard-hero { display: grid; min-height: min(760px, calc(100dvh - var(--header-height) - var(--variant-bar-height))); grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr); background: #e6dfd2; }
+  .standard-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(3rem, 7vw, 7rem) clamp(1.4rem, 5vw, 5.5rem); background-image: linear-gradient(rgba(34, 37, 31, .055) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 37, 31, .055) 1px, transparent 1px); background-size: 34px 34px; }
+  .standard-copy h1 { max-width: 820px; margin: .8rem 0 1.4rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(3.2rem, 6vw, 6.6rem); font-weight: 900; letter-spacing: -.055em; line-height: .92; }
+  .standard-lead { max-width: 690px; font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+  .standard-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
+  .standard-button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: .5rem; border: 2px solid var(--standard-dark); padding: .75rem 1rem; color: white; background: var(--standard-dark); font-weight: 850; text-decoration: none; }
+  .standard-button-light { color: var(--standard-dark); background: transparent; }
+  .standard-contact { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; font-size: .82rem; font-weight: 800; }
+  .standard-contact a { color: inherit; }
+  .standard-contact span { color: var(--standard-orange); }
+  .standard-visual { position: relative; min-height: 600px; margin: 0; overflow: hidden; background: #2b302a; }
+  .standard-visual img { width: 100%; height: 100%; object-fit: cover; }
+  .standard-visual figcaption { position: absolute; inset: auto 1rem 1rem; border: 1px solid rgba(255,255,255,.45); padding: .55rem .7rem; color: white; background: rgba(24,27,24,.84); font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .standard-services { padding-block: clamp(4rem, 9vw, 8rem); }
+  .standard-section-heading { display: grid; max-width: 850px; gap: .8rem; margin-bottom: 2.5rem; }
+  .standard-section-heading h2 { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-weight: 900; letter-spacing: -.04em; }
+  .standard-section-heading > p:last-child { color: #64675f; }
+  .standard-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--standard-dark); border-left: 2px solid var(--standard-dark); }
+  .standard-grid article { min-height: 250px; border-right: 2px solid var(--standard-dark); border-bottom: 2px solid var(--standard-dark); padding: 1.4rem; }
+  .standard-grid span { color: var(--standard-orange); font-size: .76rem; font-weight: 900; }
+  .standard-grid h3 { margin: 2.8rem 0 .8rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.35rem; font-weight: 900; }
+  .standard-grid p { color: #62655f; font-size: .85rem; }
+  .standard-info { padding-block: clamp(4rem, 8vw, 7rem); color: white; background: var(--standard-dark); }
+  .standard-info .standard-kicker { color: #efa476; }
+  .standard-info-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(3rem, 8vw, 8rem); }
+  .standard-info h2 { margin-top: .7rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-weight: 900; letter-spacing: -.04em; }
+  .standard-info ul { list-style: none; border-top: 1px solid rgba(255,255,255,.23); }
+  .standard-info li { display: grid; grid-template-columns: 55px 1fr; border-bottom: 1px solid rgba(255,255,255,.23); padding: 1.15rem 0; font-weight: 800; }
+  .standard-info li span { color: #dc895e; }
+  .standard-boundary { border-bottom: 1px solid #cbc4b7; padding-block: 2rem; background: #e2d9ca; }
+  .standard-boundary .shell { display: grid; grid-template-columns: minmax(190px, .35fr) 1fr; gap: 2rem; }
+  .standard-boundary strong { font-size: 1.05rem; }
+  .standard-boundary p { color: #5e6159; font-size: .86rem; }
+  :global(.standard-page .contact-band) { background: #a14729; }
+
+  @media (max-width: 900px) {
+    .standard-hero { grid-template-columns: 1fr; }
+    .standard-visual { grid-row: 1; min-height: 55vw; }
+    .standard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .standard-info-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 620px) {
+    .standard-copy h1 { font-size: clamp(2.8rem, 15vw, 4.4rem); }
+    .standard-visual { min-height: 76vw; }
+    .standard-grid { grid-template-columns: 1fr; }
+    .standard-grid article { min-height: 210px; }
+    .standard-boundary .shell { grid-template-columns: 1fr; gap: .6rem; }
+    .standard-button { width: 100%; }
+  }
+</style>

@@ -1,34 +1,34 @@
 ---
-title: Bodenverlegung in München
-shortTitle: Bodenverlegung
-seoTitle: Bodenverlegung München | Parkett, Vinyl & Laminat
-description: Bodenverlegung in München – Parkett, Vinyl, Laminat und passende Sockelleisten auf vorbereitetem Untergrund.
-summary: Neue Bodenbeläge mit sauberen Übergängen, Randanschlüssen und Sockelleisten verlegen.
-intro: Die Haltbarkeit eines Bodens hängt nicht nur vom Belag ab. Ebenheit, Restfeuchte, Aufbauhöhe und Übergänge zu Türen und angrenzenden Räumen müssen vorab berücksichtigt werden.
+title: Bodenarbeiten in München
+shortTitle: Böden
+seoTitle: Bodenarbeiten München | Verlegung & Abschlüsse
+description: Bodenarbeiten in München – geeignete Bodenbeläge, Übergänge und Sockelleisten im vereinbarten Umfang ausführen.
+summary: Bodenflächen vorbereiten, geeignete Beläge verlegen und Übergänge sowie Sockelleisten ausführen.
+intro: Für einen passenden Bodenaufbau müssen Untergrund, Ebenheit, Feuchte, Aufbauhöhe und Übergänge betrachtet werden. Der konkrete Belag und die Verlegeart werden projektbezogen festgelegt.
 typicalWork:
-  - Parkett, Laminat und Vinyl verlegen
-  - Bestehende Beläge im vereinbarten Umfang entfernen
-  - Untergrund vorbereiten
+  - Geeignete Bodenbeläge verlegen
+  - Vorhandene Beläge im vereinbarten Umfang entfernen
+  - Untergrund für die Verlegung vorbereiten
   - Sockelleisten montieren
-  - Übergangsprofile und Detailanschlüsse herstellen
+  - Übergänge und Randanschlüsse ausführen
 process:
   - Räume und vorhandenen Aufbau prüfen
-  - Belag und Verlegeart abstimmen
-  - Untergrund vorbereiten
+  - Belag und Verlegeart festlegen
+  - Untergrund im vereinbarten Umfang vorbereiten
   - Flächen und Details verlegen
-  - Sockelleisten und Übergänge fertigstellen
+  - Sockelleisten und Übergänge kontrollieren
 suitableFor:
-  - Wohn- und Schlafzimmer
+  - Wohn- und Schlafräume
   - Flure und Küchen
-  - Einzelne Räume oder komplette Wohnungen
+  - Einzelne Räume
   - Renovierung im Bestand
 faqs:
-  - question: Muss der alte Boden immer entfernt werden?
-    answer: Nicht grundsätzlich. Aufbauhöhe, Zustand und Eignung des vorhandenen Bodens bestimmen, ob er bleiben kann.
-  - question: Wird das Material mitgebracht?
-    answer: Beschaffung und Anlieferung können je nach Projekt abgestimmt werden. Vor Auftrag werden Produkt, Menge und Verantwortlichkeiten klar festgehalten.
-order: 6
-featured: false
+  - question: Muss ein vorhandener Boden immer entfernt werden?
+    answer: Nicht grundsätzlich. Zustand, Eignung und Aufbauhöhe bestimmen, ob er bleiben kann. Das muss vor der Ausführung geprüft werden.
+  - question: Wird ein bestimmtes Material angeboten?
+    answer: Diese Preview macht keine unbestätigte Materialzusage. Belag, Beschaffung und Verarbeitung werden für das konkrete Projekt vereinbart.
+order: 4
+featured: true
 ---
 
-Das veröffentlichte Fischgrät-Projekt zeigt ein vorhandenes Referenzbeispiel der Bodenarbeiten.
+Material, Untergrundvorbereitung und gewünschter Abschluss werden für jedes Projekt einzeln abgestimmt.

@@ -3,7 +3,6 @@ import { getCollection, render } from "astro:content";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import ContactBand from "@/components/ContactBand.astro";
 import Icon from "@/components/Icon.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { withBase } from "@/lib/urls";
@@ -13,8 +12,6 @@ export async function getStaticPaths() {
 }
 const { service } = Astro.props;
 const { Content } = await render(service);
-const allProjects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
-const matchingProjects = allProjects.filter((project) => project.data.services.some((projectService) => projectService.toLowerCase().includes(service.data.shortTitle.toLowerCase().replace("arbeiten", "")))).slice(0, 2);
 const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: service.data.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) };
 ---
 
@@ -23,7 +20,6 @@ const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEn
   <Breadcrumbs items={[{ label: "Leistungen", href: "/leistungen/" }, { label: service.data.shortTitle }]} />
   <section class="section service-detail"><div class="shell detail-grid"><div><SectionHeading eyebrow="Typische Arbeiten" title={`Worum es bei ${service.data.shortTitle} geht.`} /><ul class="work-list">{service.data.typicalWork.map((item) => <li><Icon name="check" size={19} /> {item}</li>)}</ul><div class="markdown-note"><Content /></div></div><aside><p class="eyebrow">Geeignet für</p><ul>{service.data.suitableFor.map((item) => <li>{item}</li>)}</ul></aside></div></section>
   <section class="section process-section"><div class="shell"><SectionHeading eyebrow="Ablauf" title="So wird aus der Anfrage ein klarer Auftrag." /><ol>{service.data.process.map((step, index) => <li><span>{String(index + 1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></div></section>
-  {matchingProjects.length > 0 && <section class="section related-projects"><div class="shell"><SectionHeading eyebrow="Beispiele" title="Passende Arbeiten aus den Projekten." /><div class="project-grid">{matchingProjects.map((project) => <ProjectCard project={project} />)}</div></div></section>}
   <section class="section faq-section"><div class="shell faq-grid"><SectionHeading eyebrow="Häufige Fragen" title={`Fragen zu ${service.data.shortTitle} in München.`} /><div>{service.data.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div></div></section>
   <ContactBand title={`${service.data.shortTitle} konkret anfragen.`} />
 </BaseLayout>

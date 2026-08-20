@@ -1,8 +1,5 @@
 ---
-import logo from "@/assets/brand/logo.png";
-import { Image } from "astro:assets";
 import { siteConfig } from "@/config/site";
-import { withBase } from "@/lib/urls";
 
 if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
   throw new Error("Preview PIN hash must be a SHA-256 hex digest.");
@@ -12,7 +9,7 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
 {siteConfig.previewMode && (
   <div class="pin-gate" data-pin-gate data-pin-hash={siteConfig.previewPinHash} role="dialog" aria-modal="true" aria-labelledby="pin-title">
     <div class="pin-panel" data-pin-panel>
-      <Image src={logo} alt="Rybinskyi BauXpert" width={140} height={140} loading="eager" />
+      <span class="pin-brand" aria-hidden="true">RB</span>
       <p class="eyebrow">Kundenansicht</p>
       <h1 id="pin-title">Website Preview</h1>
       <p>Bitte PIN eingeben, um den aktuellen Entwurf anzusehen.</p>
@@ -26,31 +23,6 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
       </form>
       <small>Hinweis: Dieser Schutz hält zufällige Besucher fern, ist aber keine sichere Zugangskontrolle.</small>
     </div>
-    <div class="concept-panel" data-concept-panel hidden lang="uk">
-      <p class="concept-kicker">Презентація для клієнта</p>
-      <h1>Оберіть варіант дизайну</h1>
-      <p class="concept-intro">Обидва варіанти швидші, зручніші на телефоні та показують реальні роботи замість неперевірених рекламних обіцянок.</p>
-      <div class="concept-benefits" aria-label="Переваги порівняно зі старим сайтом">
-        <span>Реальні проєкти</span><span>Прямий контакт</span><span>Локальний пошук</span><span>Без трекінгу</span>
-      </div>
-      <div class="concept-grid">
-        <article>
-          <p class="concept-number">Варіант A</p>
-          <h2>Майстерня</h2>
-          <p>Теплий, прямий і приземлений стиль. У центрі — процес роботи, широкий спектр послуг і справжні фотографії.</p>
-          <strong>Перевага:</strong><p>Багато локальної довіри та дуже зрозумілий шлях до контакту.</p>
-          <a class="concept-link" href={withBase("/")} data-concept-link="workshop">Відкрити варіант A</a>
-        </article>
-        <article class="concept-featured">
-          <p class="concept-number">Варіант B</p>
-          <h2>Преміум</h2>
-          <p>Стриманіший і дорожчий візуальний стиль. У центрі — сауна, кухні, якість деталей і реальний процес монтажу.</p>
-          <strong>Перевага:</strong><p>Краще звертається до клієнтів з вищими вимогами — без штучного гламуру.</p>
-          <a class="concept-link" href={withBase("/premium/")} data-concept-link="premium">Відкрити варіант B</a>
-        </article>
-      </div>
-      <small>Стара сторінка не змінюється. Це два окремі нові напрями для порівняння.</small>
-    </div>
   </div>
 )}
 
@@ -59,20 +31,11 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
     const gate = document.querySelector("[data-pin-gate]");
     if (!gate) return;
     const sessionKey = "rybinskyi-preview-access";
-    const conceptKey = "rybinskyi-preview-concept";
-    const pinPanel = gate.querySelector("[data-pin-panel]");
-    const conceptPanel = gate.querySelector("[data-concept-panel]");
-    const showConcepts = () => {
-      pinPanel.hidden = true;
-      conceptPanel.hidden = false;
-      document.documentElement.classList.add("preview-locked");
-    };
-    if (sessionStorage.getItem(sessionKey) === "granted" && sessionStorage.getItem(conceptKey)) {
+    if (sessionStorage.getItem(sessionKey) === "granted") {
       gate.remove();
       document.documentElement.classList.remove("preview-locked");
       return;
     }
-    if (sessionStorage.getItem(sessionKey) === "granted") showConcepts();
     document.documentElement.classList.add("preview-locked");
     const form = gate.querySelector("[data-pin-form]");
     const input = gate.querySelector("input");
@@ -83,7 +46,8 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
       const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input.value));
       if (encodeHex(new Uint8Array(digest)) === gate.dataset.pinHash) {
         sessionStorage.setItem(sessionKey, "granted");
-        showConcepts();
+        gate.remove();
+        document.documentElement.classList.remove("preview-locked");
         return;
       }
       error.hidden = false;
@@ -92,8 +56,5 @@ if (!/^[a-f0-9]{64}$/i.test(siteConfig.previewPinHash)) {
       gate.querySelector(".pin-panel")?.classList.add("pin-invalid");
       window.setTimeout(() => gate.querySelector(".pin-panel")?.classList.remove("pin-invalid"), 250);
     });
-    gate.querySelectorAll("[data-concept-link]").forEach((link) => link.addEventListener("click", () => {
-      sessionStorage.setItem(conceptKey, link.dataset.conceptLink);
-    }));
   })();
 </script>

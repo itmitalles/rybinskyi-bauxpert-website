@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "previewOnly", "customDomainApproved", "approvals"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "previewOnly": { "const": true },
+    "customDomainApproved": { "const": false },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["companyName", "owner", "address", "phone", "email", "whatsapp", "taxStatus", "professionalTitle", "chamberOrRegistration", "actualServices", "electricalWork", "sanitaryWork", "serviceArea", "imageRights", "biography", "finalDesign"],
+      "properties": {
+        "companyName": { "$ref": "#/$defs/approval" },
+        "owner": { "$ref": "#/$defs/approval" },
+        "address": { "$ref": "#/$defs/approval" },
+        "phone": { "$ref": "#/$defs/approval" },
+        "email": { "$ref": "#/$defs/approval" },
+        "whatsapp": { "$ref": "#/$defs/approval" },
+        "taxStatus": { "$ref": "#/$defs/approval" },
+        "professionalTitle": { "$ref": "#/$defs/approval" },
+        "chamberOrRegistration": { "$ref": "#/$defs/approval" },
+        "actualServices": { "$ref": "#/$defs/approval" },
+        "electricalWork": { "$ref": "#/$defs/approval" },
+        "sanitaryWork": { "$ref": "#/$defs/approval" },
+        "serviceArea": { "$ref": "#/$defs/approval" },
+        "imageRights": { "$ref": "#/$defs/approval" },
+        "biography": { "$ref": "#/$defs/approval" },
+        "finalDesign": { "$ref": "#/$defs/approval" }
+      }
+    }
+  },
+  "$defs": {
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "currentValue"],
+      "properties": {
+        "status": { "enum": ["pending", "approved", "rejected"] },
+        "currentValue": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

@@ -1,72 +1,62 @@
-# Rybinskyi BauXpert Website
+# Rybinskyi BauXpert website
 
-Statische Astro-Website für Rybinskyi BauXpert in München. Das Projekt gehört zur GitHub-Organisation [`rybinskyi-bauxpert-de`](https://github.com/rybinskyi-bauxpert-de) und liegt im Repository [`rybinskyi-bauxpert-website`](https://github.com/rybinskyi-bauxpert-de/rybinskyi-bauxpert-website).
+Static Astro customer preview for Rybinskyi BauXpert in Munich. The project belongs to the GitHub organization [`rybinskyi-bauxpert-de`](https://github.com/rybinskyi-bauxpert-de) and is published from this repository through GitHub Pages.
 
-Die GitHub-Pages-Fassung unter <https://rybinskyi-bauxpert-de.github.io/rybinskyi-bauxpert-website/> ist eine `noindex`-Kundenpreview mit einfachem PIN-Gate. Der PIN-Schutz hält nur zufällige Besucher fern und ist keine sichere Zugriffskontrolle.
+## Current release status
 
-Nach Eingabe der PIN stehen genau zwei Entwürfe zur Auswahl:
+The current customer-comparison preview has one shared entry page and three explicitly named routes: a direct standard website, the restrained premium-derived website, and a new Kleinanzeigen advert proposal. Every variant has a prominent full-width return bar back to the overview. This comparison is temporary; customer approval must select the final website direction before live release.
 
-- `/` – bodenständige, praktische Werkstatt-Version
-- `/premium/` – hochwertigere Innenausbau-Version mit denselben echten Referenzen
+The preview remains intentionally blocked from a live release:
 
-Die Auswahl kann über den Preview-Schalter erneut geöffnet werden.
+- `previewMode` is enabled.
+- Every page contains `noindex,nofollow,noarchive`.
+- `robots.txt` disallows all crawling.
+- A lightweight PIN gate discourages casual access but is not secure access control.
+- No custom domain is configured or switched.
+- `/standard/`, `/premium/`, and `/kleinanzeigen/` are preview-only routes and are excluded from the sitemap.
 
-## Entwicklung
+## Visual assets
+
+No customer project photo has a documented rights approval. Customer raster images therefore remain in the repository but outside `dist`. The website variants use an original neutral kitchen vector labelled as a placeholder. The Kleinanzeigen route uses four newly generated, permanently labelled preview visualizations that are not customer references. After written approval, the preferred real website hero candidate is `src/assets/projects/kuechenmontage-u-form/fertig.jpg`.
+
+The authoritative register is [`docs/ASSET_APPROVAL.md`](docs/ASSET_APPROVAL.md). `config/asset-approvals.json` is the machine-readable build allowlist. The advert copy, visual prompts, and publication limits are documented in [`docs/KLEINANZEIGEN_PREVIEW.md`](docs/KLEINANZEIGEN_PREVIEW.md).
+
+## Customer approval
+
+Provider details, actual services, regulated-work boundaries, service area, image rights, biography handling, and final design all require written customer confirmation. The checklist is [`docs/CUSTOMER_APPROVAL_CHECKLIST.md`](docs/CUSTOMER_APPROVAL_CHECKLIST.md); its machine-readable mirror is `config/release-approvals.json`.
+
+## Development
 
 ```bash
 npm ci
 npm run dev
 ```
 
-## Build und Prüfung
+## Release checks
 
 ```bash
-npm run build
 npm run typecheck
-npm run lint
+npm run build
 npm test
+npm run test:browser
+npm run test:lighthouse
 ```
 
-`npm run typecheck` und `npm run lint` führen die strenge Astro-Prüfung aus. `npm run test:visual` prüft PIN-Gate, beide Varianten, Projektübersicht, Küchenprojekt und Kontakt in mehreren Desktop- und Mobilgrößen mit lokal installiertem Google Chrome. Dafür muss die Seite parallel unter `http://127.0.0.1:4321` laufen.
+The gates cover Astro validation, build, static links and fragments, asset approval, JSON schemas and JSON-LD, noindex/canonical/sitemap/robots, legal routes, 404, contact links, PIN behavior, exactly three preview variants and their overview return path, kitchen-first heroes, generated-image disclosures, mobile navigation, WhatsApp privacy behavior, axe, horizontal overflow, desktop/mobile screenshots, Lighthouse budgets, and external tracker regression.
 
-## Projektbilder und Quelle
+Playwright uses its bundled Chromium. Install it once in a new environment with `npx playwright install chromium`; CI installs Chromium and required system dependencies automatically.
 
-Ein Teil der neuen Küchen- und Möbelaufnahmen stammt aus der bestehenden [gewerblichen Kleinanzeigen-Anzeige des Kunden](https://www.kleinanzeigen.de/s-anzeige/moebel-aufbau-kuechenmontage-in-muenchen/3034324567-239-6427). Die ausgewählten Bilder liegen als lokale Dateien unter `src/assets/projects/`; die Website hotlinkt keine Kleinanzeigen-URLs. Die Werbegrafik und qualitativ schwache Aufnahmen werden nicht als Projektfotos verwendet.
+## Preview PIN
 
-Vor dem öffentlichen Livegang muss Denys die Rechtekette und Freigabe für alle Bilder bestätigen. Unbelegte Adressen, Stadtteile, Marken, Materialien oder Arbeitsphasen dürfen nicht ergänzt werden.
+The build accepts a SHA-256 digest through `PUBLIC_PREVIEW_PIN_HASH`. The clear PIN is never committed or compared directly. Because the hash and client logic are public in a static build, the gate is only a casual preview barrier.
 
-## Projekte und Bilder ergänzen
+## GitHub release flow
 
-1. Bilder unter `src/assets/projects/<projekt>/` ablegen und sinnvoll benennen, zum Beispiel `waehrend.jpg`, `detail.jpg` oder `fertig.jpg`.
-2. Eine Markdown-Datei unter `src/content/projects/` anlegen. Das Schema in `src/content.config.ts` erwartet Titel, Slug, Ort, Leistungen, Zusammenfassung, Cover, Bilder und ausgeführte Arbeiten.
-3. Nur sichtbar belegbare Phasen als `vorher`, `waehrend`, `detail` oder `nachher` kennzeichnen. Unterschiedliche Aufträge nicht zu einer Projektgruppe zusammenfassen.
-4. Alt-Texte beschreiben ausschließlich den sichtbaren Inhalt. Astro erzeugt responsive Größen und moderne Bildvarianten.
+- Pull requests targeting `main` run three stable required checks: `Static release gates`, `Browser release gates`, and `Lighthouse budgets`.
+- Every action is pinned to a full commit SHA.
+- Pages deploys only after a pull request targeting `main` is merged.
+- Only `dist` is uploaded.
+- Pull requests never deploy Pages.
+- Exact repository-settings steps are documented in [`docs/GITHUB_SETTINGS.md`](docs/GITHUB_SETTINGS.md).
 
-## Preview-PIN ändern
-
-1. Neuen PIN lokal hashen: `printf %s 'NEUER_PIN' | sha256sum`
-2. Den Hash in `src/config/site.ts` unter `previewPinHash` ersetzen oder beim Build als `PUBLIC_PREVIEW_PIN_HASH` setzen.
-
-Der Klartext-PIN wird weder gespeichert noch verglichen. Der Hash ist im statischen Build zwangsläufig öffentlich einsehbar.
-
-## Preview-Modus deaktivieren
-
-In `src/config/site.ts` setzen:
-
-```ts
-previewMode: false
-```
-
-Dadurch verschwinden PIN-Gate und `noindex`; `robots.txt` erlaubt dann das Crawling. Vorher müssen die offenen Pflichtangaben, Bildrechte und Inhalte geprüft werden.
-
-## GitHub Pages
-
-`.github/workflows/deploy-pages.yml` baut bei jedem Push auf `main`, leitet Owner und Repositorynamen aus `GITHUB_REPOSITORY` ab, setzt den Project-Pages-Unterpfad automatisch und deployt über die offiziellen Pages-Actions. In den Repository-Einstellungen muss als Pages-Quelle **GitHub Actions** gewählt sein.
-
-## Spätere Custom Domain
-
-Für `rybinskyi-bauxpert.de` später in GitHub Pages die Custom Domain eintragen, die von GitHub genannten DNS-Einträge beim DNS-Anbieter setzen und HTTPS aktivieren. Danach `PUBLIC_SITE_URL=https://rybinskyi-bauxpert.de` verwenden beziehungsweise ohne Project-Pages-Unterpfad bauen. Es wurden bewusst noch keine DNS-Änderungen vorgenommen.
-
-## Datenschutz
-
-Keine Analytics, externen Fonts, Karten, Videos, Formulardienste oder Tracking-Cookies. Der Anfrage-Builder erzeugt lokal einen `wa.me`- oder `mailto:`-Link. Die Datenschutzerklärung muss beim Wechsel des Hosters beziehungsweise auf die Hauptdomain nochmals an die reale Infrastruktur angepasst werden.
+Do not disable preview mode, configure the custom domain, or merge a live release while any required customer approval remains pending.

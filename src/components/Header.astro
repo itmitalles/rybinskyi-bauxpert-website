@@ -1,6 +1,4 @@
 ---
-import logo from "@/assets/brand/logo.png";
-import { Image } from "astro:assets";
 import { navigation, siteConfig } from "@/config/site";
 import { withBase } from "@/lib/urls";
 import Icon from "./Icon.astro";
@@ -11,7 +9,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(
 <header class="site-header" data-header>
   <div class="header-inner shell">
     <a class="brand" href={withBase("/")} aria-label={`${siteConfig.name} – Startseite`}>
-      <Image src={logo} alt="" width={64} height={64} class="brand-logo" loading="eager" />
+      <span class="brand-mark" aria-hidden="true">RB</span>
       <span class="brand-copy"><strong>Rybinskyi</strong><span>BauXpert · München</span></span>
     </a>
 
