@@ -66,11 +66,11 @@ const photos = [
   description="Kopierfertiger Kleinanzeigen-Text mit ausgewählten Kundenfotos für Rybinskyi BauXpert."
   hideChrome={true}
   showVariantBack={true}
-  variantLabel="Kleinanzeigen-Paket"
+  variantLabel="Пакет для Kleinanzeigen"
 >
   <div class="ad-package" data-preview-variant="kleinanzeigen">
     <header class="package-header">
-      <a class="package-brand" href={withBase("/")} aria-label="Zur Variantenübersicht">
+      <a class="package-brand" href={withBase("/")} aria-label="Повернутися до вибору варіанта">
         <img src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" />
         <strong>Rybinskyi BauXpert</strong>
       </a>
@@ -81,7 +81,7 @@ const photos = [
       <header class="package-intro">
         <p>Kleinanzeigen-Paket</p>
         <h1>Text kopieren, Bilder herunterladen, fertig.</h1>
-        <p>Der Vorschlag ist bewusst schlicht gehalten. Titel und Text lassen sich einzeln kopieren; die ausgewählten Kundenfotos können direkt heruntergeladen werden.</p>
+        <p>Der Vorschlag ist bewusst schlicht gehalten. Titel und Text lassen sich einzeln kopieren. Das gestaltete Titelbild steht zuerst; danach folgen vier echte Projektfotos zum Herunterladen.</p>
       </header>
 
       <section class="copy-card" aria-labelledby="ad-title-heading">
@@ -106,9 +106,16 @@ const photos = [
           <p>Projektfotos aus dem vorhandenen Kundenmaterial. Die finale Auswahl und Bildfreigabe wird mit Denys abgestimmt.</p>
         </div>
         <div class="photo-grid">
-          {photos.map((photo, index) => (
+          <figure class="photo-cover" data-generated-composite>
+            <img src={withBase("/preview/kleinanzeigen/kleinanzeigen-titelbild-ki-v1.webp")} alt="KI-gestaltetes Kleinanzeigen-Titelbild für Küchenmontage, Möbelmontage, Innenausbau und Böden in München" width="1254" height="1254" loading="eager" fetchpriority="high" />
+            <figcaption>
+              <strong>Titelbild · KI-gestaltete Collage</strong>
+              <a href={withBase("/preview/kleinanzeigen/kleinanzeigen-titelbild-ki-v1.webp")} download>Titelbild herunterladen</a>
+            </figcaption>
+          </figure>
+          {photos.map((photo) => (
             <figure data-customer-photo>
-              <img src={withBase(photo.src)} alt={photo.alt} width={photo.width} height={photo.height} loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
+              <img src={withBase(photo.src)} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" />
               <figcaption>
                 <strong>{photo.label}</strong>
                 <a href={withBase(photo.src)} download>Bild herunterladen</a>
@@ -169,6 +176,8 @@ const photos = [
   .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
   .photo-grid figure { min-width: 0; margin: 0; border: 1px solid #d5d8d3; background: #f1f1ee; }
   .photo-grid img { width: 100%; height: clamp(300px, 34vw, 430px); object-fit: cover; }
+  .photo-grid .photo-cover { grid-column: 1 / -1; }
+  .photo-grid .photo-cover img { height: auto; aspect-ratio: 1; }
   .photo-grid figcaption { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .8rem; font-size: .76rem; }
   .photo-grid figcaption a { color: #176b65; font-weight: 850; }
   .package-note { display: grid; grid-template-columns: minmax(190px, .35fr) 1fr; gap: 1rem; border-left: 5px solid #a94718; padding: 1rem 1.2rem; background: #fff2e9; }

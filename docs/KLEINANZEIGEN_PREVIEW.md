@@ -34,13 +34,14 @@ Current preview contact values, still requiring customer confirmation:
 - Telephone and WhatsApp: `+49 178 693 0465`
 - Email: `info@rybinskyi-bauxpert.de`
 
-## Included photos
+## Included images
 
-The route `/kleinanzeigen/` offers four customer-photo derivatives for direct download:
+The route `/kleinanzeigen/` offers one designed lead image followed by four customer-photo derivatives for direct download:
 
-1. Finished U-shaped kitchen.
-2. U-shaped kitchen during installation.
-3. Finished loft-bed assembly.
-4. Finished herringbone floor.
+1. AI-assisted square lead composite with the exact customer logo, finished kitchen, furniture and floor photos, core services, service area, and preview phone/WhatsApp number.
+2. Finished U-shaped kitchen.
+3. U-shaped kitchen during installation.
+4. Finished loft-bed assembly.
+5. Finished herringbone floor.
 
-The repository owner explicitly requested these photos for the PIN/noindex preview. Denys has not yet confirmed the rights for external publication. The exact source/output mapping is recorded in `docs/ASSET_APPROVAL.md`; publication of a real advert remains blocked until Denys approves the text, contact data, actual services, and exact photo use.
+The repository owner explicitly requested this composite and these photos for the PIN/noindex preview. Denys has not yet confirmed the rights for external publication. The exact source/output mapping is recorded in `docs/ASSET_APPROVAL.md`; publication of a real advert remains blocked until Denys approves the text, contact data, actual services, composite, and exact photo use.

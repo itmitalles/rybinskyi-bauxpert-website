@@ -26,6 +26,12 @@
       "approved": true
     },
     {
+      "sourcePath": "public/preview/kleinanzeigen/kleinanzeigen-titelbild-ki-v1.webp",
+      "outputPath": "preview/kleinanzeigen/kleinanzeigen-titelbild-ki-v1.webp",
+      "kind": "generated-preview-composite",
+      "approved": true
+    },
+    {
       "sourcePath": "public/preview/customer/kuechenmontage-u-form-fertig.webp",
       "outputPath": "preview/customer/kuechenmontage-u-form-fertig.webp",
       "kind": "customer-preview-photo",

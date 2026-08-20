@@ -15,7 +15,7 @@
         "properties": {
           "sourcePath": { "type": "string", "pattern": "^public/" },
           "outputPath": { "type": "string", "minLength": 1 },
-          "kind": { "enum": ["original-vector", "generated-preview-visual", "customer-approved-photo", "customer-preview-photo", "customer-preview-brand"] },
+          "kind": { "enum": ["original-vector", "generated-preview-visual", "generated-preview-composite", "customer-approved-photo", "customer-preview-photo", "customer-preview-brand"] },
           "approved": { "const": true }
         }
       }

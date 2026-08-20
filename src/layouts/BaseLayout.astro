@@ -17,6 +17,7 @@ interface Props {
   hideChrome?: boolean;
   showVariantBack?: boolean;
   variantLabel?: string;
+  lang?: "de" | "uk";
 }
 const {
   title = `${siteConfig.name} | Küchenmontage & Innenausbau München`,
@@ -27,6 +28,7 @@ const {
   hideChrome = false,
   showVariantBack = false,
   variantLabel = "Preview-Variante",
+  lang = "de",
 } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const canonicalPath = basePath && Astro.url.pathname.startsWith(basePath)
@@ -55,7 +57,7 @@ const baseSchema = {
 ---
 
 <!doctype html>
-<html lang="de" class:list={[siteConfig.previewMode && "preview-locked", showVariantBack && "has-variant-back"]}>
+<html lang={lang} class:list={[siteConfig.previewMode && "preview-locked", showVariantBack && "has-variant-back"]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -66,7 +68,7 @@ const baseSchema = {
     <meta name="author" content={siteConfig.name} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
-    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale" content={lang === "uk" ? "uk_UA" : "de_DE"} />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={title} />
@@ -82,8 +84,8 @@ const baseSchema = {
     <slot name="head" />
   </head>
   <body>
-    <a class="skip-link" href="#content">Zum Inhalt springen</a>
-    <PinGate />
+    <a class="skip-link" href="#content">{lang === "uk" ? "Перейти до вмісту" : "Zum Inhalt springen"}</a>
+    <PinGate lang={lang} />
     {showVariantBack && <VariantBackBar label={variantLabel} />}
     {!hideChrome && <Header />}
     <main id="content"><slot /></main>

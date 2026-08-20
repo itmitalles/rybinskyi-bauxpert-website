@@ -19,7 +19,7 @@ const services = [
   title="Standard-Variante | Rybinskyi BauXpert Preview"
   description="Bodenständige Website-Variante für Küchenmontage, Möbelmontage, Innenausbau, Böden und Renovierung in München."
   showVariantBack={true}
-  variantLabel="Variante A · Standard"
+  variantLabel="Варіант A · Стандарт"
 >
   <div class="standard-page" data-preview-variant="standard">
     <section class="standard-hero" data-hero-kind="kitchen">
@@ -68,6 +68,21 @@ const services = [
               <p>{text}</p>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="standard-about" data-about-section data-approved-biography aria-labelledby="standard-about-title">
+      <div class="shell standard-about-grid">
+        <div class="standard-about-brand" aria-hidden="true">
+          <img src={withBase("/brand/rybinskyi-bauxpert-logo.webp")} alt="" width="320" height="320" loading="lazy" />
+        </div>
+        <div class="standard-about-copy">
+          <p class="standard-kicker">Über mich</p>
+          <h2 id="standard-about-title">Hallo, ich bin Denys Rybinskyi.</h2>
+          <p>Ich komme aus der Ukraine. Dort habe ich mir eine Baufirma mit mehreren Mitarbeitern aufgebaut. Wegen der Lage im Donbass musste ich den Betrieb leider aufgeben.</p>
+          <p>In München baue ich mir nun ein neues Leben und einen neuen Handwerksbetrieb auf. Die Erfahrung aus meiner früheren Firma bringe ich heute persönlich in jedes Projekt ein.</p>
+          <a class="standard-about-link" href={withBase("/ueber-mich/")}>Mehr über mich <Icon name="arrow" size={18} /></a>
         </div>
       </div>
     </section>
@@ -129,6 +144,14 @@ const services = [
   .standard-photo-grid figure { position: relative; min-width: 0; aspect-ratio: 4 / 3; margin: 0; overflow: hidden; background: #d8d1c5; }
   .standard-photo-grid img { width: 100%; height: 100%; object-fit: cover; }
   .standard-photo-grid figcaption { position: absolute; inset: auto 0 0; padding: 2.5rem .8rem .7rem; color: white; background: linear-gradient(transparent, rgba(20,22,19,.86)); font-size: .75rem; font-weight: 850; }
+  .standard-about { padding-block: clamp(4rem, 8vw, 7rem); background: #ded5c6; }
+  .standard-about-grid { display: grid; grid-template-columns: minmax(280px, .75fr) minmax(0, 1.25fr); align-items: center; gap: clamp(2.5rem, 7vw, 7rem); }
+  .standard-about-brand { display: grid; min-height: 390px; place-items: center; background: var(--standard-dark); }
+  .standard-about-brand img { width: min(230px, 70%); height: auto; }
+  .standard-about-copy h2 { max-width: 760px; margin: .7rem 0 1.3rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-weight: 900; letter-spacing: -.04em; }
+  .standard-about-copy > p:not(.standard-kicker) { max-width: 690px; color: #4f524c; }
+  .standard-about-copy > p + p { margin-top: .9rem; }
+  .standard-about-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; color: var(--standard-orange); font-weight: 900; text-decoration: none; }
   .standard-info { padding-block: clamp(4rem, 8vw, 7rem); color: white; background: var(--standard-dark); }
   .standard-info .standard-kicker { color: #efa476; }
   .standard-info-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(3rem, 8vw, 8rem); }
@@ -148,6 +171,8 @@ const services = [
     .standard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .standard-photo-grid { grid-template-columns: 1fr 1fr; }
     .standard-photo-grid figure:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+    .standard-about-grid { grid-template-columns: 1fr; }
+    .standard-about-brand { min-height: 320px; }
     .standard-info-grid { grid-template-columns: 1fr; gap: 2rem; }
   }
 
