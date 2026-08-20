@@ -1,36 +1,54 @@
 ---
-import logo from "@/assets/brand/logo.png";
-import { Image } from "astro:assets";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import ContactBand from "@/components/ContactBand.astro";
 import { siteConfig } from "@/config/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Über mich | Denys Rybinskyi | BauXpert München" description="Denys Rybinskyi: von der selbst aufgebauten Baufirma in der Ukraine zum persönlichen Handwerksbetrieb Rybinskyi BauXpert in München.">
-  <div class="page-hero"><div class="shell"><p class="eyebrow">Über mich</p><h1>Hallo, ich bin Denys Rybinskyi.</h1><p class="lead">Ich komme aus der Ukraine. Dort habe ich mir eine Baufirma mit mehreren Mitarbeitern aufgebaut. Wegen der Lage im Donbass musste ich den Betrieb leider aufgeben. In München baue ich mir nun ein neues Leben und einen neuen Handwerksbetrieb auf.</p></div></div>
-  <Breadcrumbs items={[{label:"Über mich"}]} />
-  <section class="section about-section"><div class="shell about-grid"><div class="logo-field"><Image src={logo} alt="Logo von Rybinskyi BauXpert" width={520} height={520} loading="lazy"/></div><div><p class="eyebrow">Der Betrieb</p><h2>Erfahrung mitgebracht. Noch einmal selbst aufgebaut.</h2><p><strong>{siteConfig.owner}</strong> ist Inhaber von {siteConfig.name} und direkter Ansprechpartner. Die Verantwortung für eine eigene Baufirma und mehrere Mitarbeiter kennt er bereits aus der Ukraine. Heute bringt er diese Erfahrung in Renovierungs-, Ausbau- und Montageprojekte in München ein.</p><p>Auf der Website zählen deshalb keine erfundenen Titel oder großen Versprechen, sondern konkrete Arbeiten und echte Fotos. Ein persönliches Inhaberfoto fehlt noch und ist vor dem öffentlichen Livegang die wichtigste inhaltliche Ergänzung.</p><dl><div><dt>Inhaber</dt><dd>{siteConfig.owner}</dd></div><div><dt>Sitz</dt><dd>{siteConfig.address.postalCode} München</dd></div><div><dt>Kontakt</dt><dd>{siteConfig.phoneDisplay}</dd></div></dl></div></div></section>
-  <section class="section principles"><div class="shell"><p class="eyebrow">Worauf die Seite setzt</p><h2>Vertrauen durch nachvollziehbare Arbeit.</h2><div><article><span>01</span><h3>Echte Bilder</h3><p>Projektfotos werden nicht als Dekoration behandelt, sondern nach Auftrag geordnet und beschrieben.</p></article><article><span>02</span><h3>Klare Grenzen</h3><p>Unbelegte Zahlen, Garantien, Titel oder Zertifizierungen werden nicht übernommen.</p></article><article><span>03</span><h3>Direkter Weg</h3><p>Besucher können ohne Formulardienst per Telefon, WhatsApp oder E-Mail Kontakt aufnehmen.</p></article></div></div></section>
-  <ContactBand title="Erzählen Sie mir von Ihrem Projekt." />
+
+<BaseLayout title="Betrieb | Rybinskyi BauXpert München" description="Rybinskyi BauXpert für Küchenmontage, Möbelmontage, Innenausbau und Renovierung in München und Umgebung.">
+  <div class="page-hero"><div class="shell"><p class="eyebrow">Der Betrieb</p><h1>Montage, Ausbau und Renovierung in München.</h1><p class="lead">Rybinskyi BauXpert bietet projektbezogene Arbeiten rund um Küchen, Möbel und Innenräume an. Welche Aufgaben tatsächlich übernommen werden, wird vor dem Auftrag konkret abgegrenzt.</p></div></div>
+  <Breadcrumbs items={[{label:"Betrieb"}]} />
+
+  <section class="section about-section">
+    <div class="shell about-grid">
+      <div class="identity-field" aria-label="Rybinskyi BauXpert"><span>RB</span><small>Rybinskyi BauXpert</small></div>
+      <div>
+        <p class="eyebrow">Arbeitsbereich</p>
+        <h2>Bodenständig beschrieben.</h2>
+        <p>Im Mittelpunkt stehen Küchenmontage, Möbelmontage und Maßanpassung, Innenausbau, Böden sowie Renovierungsarbeiten in München und Umgebung.</p>
+        <p>Die Website nennt bewusst keine unbestätigten Projektzahlen, Erfahrungsjahre, Garantien, Festpreise, Reaktionszeiten oder Fachqualifikationen. Biografische Angaben werden erst nach ausdrücklicher Freigabe veröffentlicht.</p>
+        <dl>
+          <div><dt>Anbieter</dt><dd>{siteConfig.name}</dd></div>
+          <div><dt>Kontaktperson</dt><dd>{siteConfig.owner}</dd></div>
+          <div><dt>Ort</dt><dd>{siteConfig.address.postalCode} München</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section principles"><div class="shell"><p class="eyebrow">Grundsätze der Preview</p><h2>Nur zeigen, was geklärt ist.</h2><div><article><span>01</span><h3>Konkrete Leistungen</h3><p>Der tatsächliche Leistungsumfang muss vor dem Livegang von Denys bestätigt werden.</p></article><article><span>02</span><h3>Geklärte Bildrechte</h3><p>Projektfotos erscheinen erst nach dokumentierter Zustimmung und Rechteprüfung.</p></article><article><span>03</span><h3>Klare Fachgrenzen</h3><p>Elektro- und Sanitärfacharbeiten werden nicht pauschal als Eigenleistung beworben.</p></article></div></div></section>
+  <ContactBand title="Projekt konkret beschreiben." />
 </BaseLayout>
+
 <style>
   .about-grid { display:grid; grid-template-columns:minmax(320px,.7fr) minmax(0,1.3fr); align-items:center; gap:clamp(3rem,8vw,8rem); }
-  .logo-field { display:grid; place-items:center; min-height:480px; background:var(--ink); }
-  .logo-field img { width:min(86%,430px); }
+  .identity-field { display:grid; min-height:480px; place-items:center; align-content:center; gap:1rem; color:white; background:#171b18; }
+  .identity-field span { display:grid; width:180px; height:180px; place-items:center; border:1px solid rgba(255,255,255,.22); font-family:Georgia,serif; font-size:4rem; letter-spacing:.08em; }
+  .identity-field small { color:rgba(255,255,255,.62); font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
   .about-grid h2 + p { margin-top:1.4rem; }
   .about-grid p { color:var(--ink-soft); }
   .about-grid p + p { margin-top:1rem; }
   dl { margin:2rem 0 0; }
-  dl div { display:grid; grid-template-columns:110px 1fr; border-top:1px solid var(--line); padding:.7rem 0; }
+  dl div { display:grid; grid-template-columns:120px 1fr; border-top:1px solid var(--line); padding:.7rem 0; }
   dt { color:var(--ink-soft); font-size:.72rem; font-weight:800; text-transform:uppercase; }
   dd { margin:0; font-weight:700; }
-  .principles { color:white; background:var(--moss); }
-  .principles .eyebrow { color:white; }
+  .principles { color:white; background:#141816; }
+  .principles .eyebrow { color:#d19a6d; }
   .principles .shell > div { display:grid; grid-template-columns:repeat(3,1fr); margin-top:3rem; border-top:1px solid rgba(255,255,255,.25); }
   .principles article { border-right:1px solid rgba(255,255,255,.25); padding:2rem; }
   .principles article:first-child { border-left:1px solid rgba(255,255,255,.25); }
-  .principles span { color:#f2d18b; font-family:Georgia,serif; font-size:1.3rem; }
+  .principles span { color:#d19a6d; font-family:Georgia,serif; font-size:1.3rem; }
   .principles h3 { margin:1rem 0 .5rem; }
-  .principles p { color:rgba(255,255,255,.7); }
-  @media(max-width:800px){ .about-grid,.principles .shell > div { grid-template-columns:1fr; } .logo-field { min-height:360px; } .principles article,.principles article:first-child { border:0; border-top:1px solid rgba(255,255,255,.25); padding:1.5rem 0; } }
+  .principles p { color:rgba(255,255,255,.68); }
+  @media(max-width:800px){ .about-grid,.principles .shell > div { grid-template-columns:1fr; } .identity-field { min-height:360px; } .principles article,.principles article:first-child { border:0; border-top:1px solid rgba(255,255,255,.25); padding:1.5rem 0; } }
 </style>

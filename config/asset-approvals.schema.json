@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "approvedForBuild", "pendingRoots"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "approvedForBuild": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourcePath", "outputPath", "kind", "approved"],
+        "properties": {
+          "sourcePath": { "type": "string", "pattern": "^public/" },
+          "outputPath": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["original-vector", "customer-approved-photo"] },
+          "approved": { "const": true }
+        }
+      }
+    },
+    "pendingRoots": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^src/assets/" }
+    }
+  }
+}

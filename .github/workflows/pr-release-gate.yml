@@ -1,0 +1,96 @@
+name: Release Gate
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  PUBLIC_PREVIEW_PIN_HASH: 7c2523c985881fb2c2b4cfbe917eb12c4c4b61e898ad4e7160cfca487ca3c4f3
+  PREVIEW_PIN: "246810"
+
+jobs:
+  static-release-gates:
+    name: Static release gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Astro check
+        run: npm run typecheck
+      - name: Build
+        run: npm run build
+      - name: Static link, asset and JSON/schema checks
+        run: npm test
+
+  browser-release-gates:
+    name: Browser release gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Playwright desktop/mobile, axe and visual screenshots
+        run: npm run test:browser
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-release-evidence
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 14
+
+  lighthouse-budgets:
+    name: Lighthouse budgets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Enforce Lighthouse budgets
+        run: npm run test:lighthouse
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lighthouse-report
+          path: test-results/lighthouse
+          if-no-files-found: ignore
+          retention-days: 14

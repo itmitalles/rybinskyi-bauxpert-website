@@ -9,8 +9,8 @@ import { withBase } from "@/lib/urls";
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="Leistungen | Renovierung & Ausbau München | BauXpert" description="Renovierung, Sanierung, Trockenbau, Maler-, Fliesen-, Boden-, Montage- und Rückbauarbeiten in München.">
-  <div class="page-hero"><div class="shell"><p class="eyebrow">Leistungen</p><h1>Handwerksarbeit für Räume, die wieder funktionieren sollen.</h1><p class="lead">Vom einzelnen Montageauftrag bis zu zusammenhängenden Renovierungsarbeiten. Der genaue Umfang wird für jedes Objekt klar abgegrenzt.</p></div></div>
+<BaseLayout title="Leistungen | Küche, Möbel & Innenausbau München" description="Küchenmontage, Möbelmontage und Maßanpassung, Innenausbau, Böden, Renovierung und kleinere Ausbauprojekte in München.">
+  <div class="page-hero"><div class="shell"><p class="eyebrow">Leistungen</p><h1>Küche, Möbel und Innenausbau im Mittelpunkt.</h1><p class="lead">Die finale Reihenfolge beginnt bei Küchen- und Möbelmontage. Der tatsächliche Umfang wird für jedes Projekt klar abgegrenzt und muss vor dem Livegang vom Kunden bestätigt werden.</p></div></div>
   <Breadcrumbs items={[{ label: "Leistungen" }]} />
   <section class="section">
     <div class="shell services-list">
@@ -27,7 +27,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
       ))}
     </div>
   </section>
-  <section class="scope-note"><div class="shell"><h2>Wichtig bei Fachgewerken.</h2><p>Zulassungspflichtige Elektro-, Sanitär- oder andere Facharbeiten dürfen nur im Rahmen der tatsächlich vorhandenen Qualifikation beziehungsweise durch entsprechend qualifizierte Fachbetriebe ausgeführt werden. Welche Schnittstellen ein Projekt hat, wird vor Auftrag geklärt.</p></div></section>
+  <section class="scope-note"><div class="shell"><h2>Wichtig bei Fachgewerken.</h2><p>Ausgeführt werden nur tatsächlich erlaubte und ausdrücklich vereinbarte Eigenleistungen. Erforderliche Elektro-, Sanitär- oder andere Facharbeiten werden klar getrennt und mit geeigneten Fachbetrieben abgestimmt.</p></div></section>
   <ContactBand />
 </BaseLayout>
 

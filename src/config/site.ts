@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Rybinskyi BauXpert",
   owner: "Denys Rybinskyi",
-  claim: "Bauen. Sanieren. Leben.",
+  claim: "Montieren. Ausbauen. Renovieren.",
   description:
-    "Renovierung, Sanierung, Innenausbau und Montage in München und Umgebung – mit echten Projektbeispielen und direktem Kontakt.",
+    "Küchenmontage, Möbelmontage, Innenausbau, Böden und Renovierung in München und Umgebung – direkt per Telefon, WhatsApp oder E-Mail anfragen.",
   productionUrl: "https://rybinskyi-bauxpert.de",
   githubOwner: "rybinskyi-bauxpert-de",
   repositoryName: "rybinskyi-bauxpert-website",
@@ -32,13 +32,13 @@ export const siteConfig = {
     "Giesing",
   ],
   whatsappText:
-    "Hallo, ich interessiere mich für eine Renovierung/Sanierung in München und würde gerne kurz mein Projekt besprechen.",
+    "Hallo, ich möchte ein Montage- oder Ausbauprojekt in München besprechen.",
 } as const;
 
 export const navigation = [
   { label: "Leistungen", href: "/leistungen/" },
-  { label: "Projekte", href: "/projekte/" },
+  { label: "Referenzen", href: "/projekte/" },
   { label: "München", href: "/muenchen/" },
-  { label: "Über mich", href: "/ueber-mich/" },
+  { label: "Betrieb", href: "/ueber-mich/" },
   { label: "Kontakt", href: "/kontakt/" },
 ] as const;

@@ -1,15 +1,39 @@
 ---
-import { getCollection } from "astro:content";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import ContactBand from "@/components/ContactBand.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import SectionHeading from "@/components/SectionHeading.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 ---
-<BaseLayout title="Projekte & Referenzen München | Rybinskyi BauXpert" description="Echte Projektfotos von Renovierung, Innenausbau, Boden-, Fliesen- und Montagearbeiten in München und Umgebung.">
-  <div class="page-hero"><div class="shell"><p class="eyebrow">Projekte</p><h1>Echte Arbeiten. Ehrlich dokumentiert.</h1><p class="lead">Keine Stockfotos, keine erfundenen Fallstudien. Die vorhandenen Aufnahmen werden nach Projekt zusammengehalten und nur mit belegbaren Angaben beschrieben.</p></div></div>
-  <Breadcrumbs items={[{ label: "Projekte" }]} />
-  <section class="section"><div class="shell"><SectionHeading eyebrow={`${projects.length} Projektgruppen`} title="Aus München und Umgebung." intro="Unterschiedliche Aufträge bleiben getrennt. Wo mehrere eindeutig zusammengehörige Perspektiven oder Zwischenstände existieren, zeigen die Projektseiten den Verlauf ausführlicher." /><div class="project-grid">{projects.map((project) => <ProjectCard project={project} />)}</div></div></section>
-  <ContactBand title="Ein ähnliches Projekt geplant?" text="Schicken Sie ein paar Bilder vom aktuellen Zustand und schreiben Sie dazu, was sich ändern soll." />
+
+<BaseLayout title="Referenzen | Rybinskyi BauXpert München" description="Status der Projekt- und Bildfreigaben für die Kundenpreview von Rybinskyi BauXpert.">
+  <div class="page-hero"><div class="shell"><p class="eyebrow">Referenzen</p><h1>Projektfotos erst nach bestätigter Freigabe.</h1><p class="lead">Die vorhandenen Aufnahmen sind im Repository inventarisiert, werden aber bis zur dokumentierten Rechteklärung nicht veröffentlicht.</p></div></div>
+  <Breadcrumbs items={[{ label: "Referenzen" }]} />
+
+  <section class="section reference-status">
+    <div class="shell">
+      <header><p class="eyebrow">Geplante Reihenfolge</p><h2>Küche zuerst. Sauna nur ergänzend.</h2><p>Nach Freigabe wird das stärkste reale Küchenprojekt als erster visueller Nachweis eingebunden. Möbelmontage und Innenausbau folgen. Der Sauna-Ausbau bleibt eine nachrangige Referenz und wird nicht als Kernleistung dargestellt.</p></header>
+      <ol>
+        <li><span>01</span><div><h3>Küchenmontage</h3><p>Vorgesehene Hauptreferenz und künftiges Hero-Motiv.</p></div><strong>Freigabe offen</strong></li>
+        <li><span>02</span><div><h3>Möbelmontage & Innenausbau</h3><p>Ergänzende Projektgruppen nach eindeutiger Zuordnung und Rechtebestätigung.</p></div><strong>Freigabe offen</strong></li>
+        <li class="secondary"><span>03</span><div><h3>Sauna-Ausbau</h3><p>Weitere Referenz, nicht erster Eindruck und nicht Hauptleistung.</p></div><strong>Freigabe offen</strong></li>
+      </ol>
+      <aside><h3>Warum noch keine Bilder zu sehen sind</h3><p>Ein PIN-Gate schützt nicht vor dem Zugriff auf Dateien in einem öffentlichen Repository oder statischen Build. Unbestätigte Bilder bleiben deshalb vollständig außerhalb des Build-Artefakts.</p></aside>
+    </div>
+  </section>
+
+  <ContactBand title="Ein Montage- oder Ausbauprojekt geplant?" text="Beschreiben Sie kurz die Aufgabe. Eigene Fotos werden erst durch Ihre bewusste Aktion an WhatsApp oder Ihr E-Mail-Programm übergeben." />
 </BaseLayout>
+
+<style>
+  .reference-status { background:var(--paper); }
+  .reference-status header { display:grid; max-width:820px; gap:.8rem; margin-bottom:3rem; }
+  .reference-status header > p:last-child { color:var(--ink-soft); }
+  .reference-status ol { list-style:none; border-top:1px solid var(--line); }
+  .reference-status li { display:grid; grid-template-columns:56px minmax(0,1fr) auto; align-items:center; gap:1rem; border-bottom:1px solid var(--line); padding:1.4rem .4rem; }
+  .reference-status li > span { color:var(--clay); font-family:Georgia,serif; }
+  .reference-status li p { margin-top:.35rem; color:var(--ink-soft); }
+  .reference-status li > strong { color:var(--clay-dark); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; }
+  .reference-status li.secondary { background:rgba(20,24,22,.035); }
+  .reference-status aside { max-width:760px; margin-top:3rem; border-left:4px solid var(--gold); padding:1.2rem 1.4rem; background:var(--white); }
+  .reference-status aside p { margin-top:.55rem; color:var(--ink-soft); }
+  @media(max-width:650px){ .reference-status li { grid-template-columns:38px 1fr; } .reference-status li > strong { grid-column:2; } }
+</style>

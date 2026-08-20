@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "previewOnly": true,
+  "customDomainApproved": false,
+  "approvals": {
+    "companyName": { "status": "pending", "currentValue": "Rybinskyi BauXpert" },
+    "owner": { "status": "pending", "currentValue": "Denys Rybinskyi" },
+    "address": { "status": "pending", "currentValue": "Pfälzer-Wald-Straße 2, 81539 München" },
+    "phone": { "status": "pending", "currentValue": "+49 178 693 0465" },
+    "email": { "status": "pending", "currentValue": "info@rybinskyi-bauxpert.de" },
+    "whatsapp": { "status": "pending", "currentValue": "+49 178 693 0465" },
+    "taxStatus": { "status": "pending", "currentValue": null },
+    "professionalTitle": { "status": "pending", "currentValue": null },
+    "chamberOrRegistration": { "status": "pending", "currentValue": null },
+    "actualServices": { "status": "pending", "currentValue": null },
+    "electricalWork": { "status": "pending", "currentValue": "Keine pauschale Eigenleistung; Fachbetrieb abstimmen" },
+    "sanitaryWork": { "status": "pending", "currentValue": "Keine pauschale Eigenleistung; Fachbetrieb abstimmen" },
+    "serviceArea": { "status": "pending", "currentValue": "München und Umgebung" },
+    "imageRights": { "status": "pending", "currentValue": null },
+    "biography": { "status": "pending", "currentValue": "Nicht veröffentlicht" },
+    "finalDesign": { "status": "pending", "currentValue": "Premium-Struktur mit bodenständigen Texten" }
+  }
+}

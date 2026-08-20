@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "approvedForBuild": [
+    {
+      "sourcePath": "public/favicon.svg",
+      "outputPath": "favicon.svg",
+      "kind": "original-vector",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/hero-kitchen-placeholder.svg",
+      "outputPath": "hero-kitchen-placeholder.svg",
+      "kind": "original-vector",
+      "approved": true
+    },
+    {
+      "sourcePath": "public/og-default.svg",
+      "outputPath": "og-default.svg",
+      "kind": "original-vector",
+      "approved": true
+    }
+  ],
+  "pendingRoots": [
+    "src/assets/brand",
+    "src/assets/pending",
+    "src/assets/projects"
+  ]
+}
